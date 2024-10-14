@@ -1,4 +1,4 @@
-[[raspberry pi]], [[security]], [[networking]]
+# Setup SSH through Cloudflare
 
 1. (From SSH) Cloudflare Repository on the Raspberry Pi:
 

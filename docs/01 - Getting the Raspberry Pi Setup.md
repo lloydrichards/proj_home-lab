@@ -1,4 +1,4 @@
-[[raspberry pi]]
+# Getting the Raspberry Pi Setup
 
 1. Install Raspberry Pi OS (64bit) on the microSD card, using the
    [Raspberry Pi Imager](https://www.raspberrypi.com/documentation/computers/getting-started.html#raspberry-pi-imager).

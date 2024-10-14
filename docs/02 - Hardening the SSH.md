@@ -1,4 +1,4 @@
-[[raspberry pi]], [[security]]
+# Hardening the SSH
 
 1. Create ssh-users group:
 

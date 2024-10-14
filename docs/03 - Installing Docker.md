@@ -1,4 +1,4 @@
-[[raspberry pi]], [[docker]]
+# Installing Docker
 
 1. Install Docker:
 
