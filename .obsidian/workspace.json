@@ -18,8 +18,93 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "4d0fe04a8e023af8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "904001992349121f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0694526261b97180",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/01 - Getting the Raspberry Pi Setup.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "13d0f1a797986910",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/02 - Hardening the SSH.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "396499ec48bb1cea",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/04 - Setup SSH through Cloudflare.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b2f5d286d497e0e5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/03 - Installing Docker.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f28079f126f4b432",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "tags/docker.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -85,7 +170,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "tags/docker.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +187,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "tags/docker.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +210,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "tags/docker.md"
               }
             }
           }
@@ -146,6 +231,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "fea41d1203c6a86c",
-  "lastOpenFiles": []
+  "active": "ca559763d6577192",
+  "lastOpenFiles": [
+    "docs/03 - Installing Docker.md",
+    "tags/docker.md",
+    "tags/networking.md",
+    "docs/04 - Setup SSH through Cloudflare.md",
+    "docs/02 - Hardening the SSH.md",
+    "docs/01 - Getting the Raspberry Pi Setup.md",
+    "tags/security.md",
+    "tags/raspberry pi.md",
+    "README.md",
+    "docs",
+    "tags"
+  ]
 }
