@@ -4,14 +4,17 @@ Documentation and configurations on how my home lab server is setup.
 
 ## Hardware
 
-- [Raspberry Pi 4 Model B 8GB](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/)
-- [64GB SanDisk Ultra microSDXC UHS-I Card](https://www.sandisk.com/home/memory-cards/microsd-cards/ultra-microsd-400gb)
+- [Raspberry Pi 5 Model B 8GB](https://www.raspberrypi.com/products/raspberry-pi-5/)
+- [1 TB NVMe M.2 2280 SSD](https://www.seeedstudio.com/NVMe-M-2-2280-SSD-1TB-p-5767.html)
+- [Argon ONE V3 M.2 NVME Raspberry Pi 5 Case](https://argon40.com/products/argon-one-v3-m-2-nvme-case)
 
 ## Software
 
 - [Raspberry Pi OS (64bit)](https://www.raspberrypi.org/software/operating-systems/)
 - [Docker](https://www.docker.com/)
 - [Portainer](https://www.portainer.io/)
+- [Cloudflare](https://www.cloudflare.com/)
+- [Coolify](https://coolify.io/)
 
 ## Architecture
 
@@ -48,10 +51,5 @@ end
 
 G --ssh--> B --ssh--> A
 E --http--> H --https--> A
-
-
-
-
-
 
 ```
