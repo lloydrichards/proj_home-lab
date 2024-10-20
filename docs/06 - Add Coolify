@@ -1,0 +1,11 @@
+# Add Coolify
+
+1. Install Coolify through shell command:
+
+   ```shell
+   curl -fsSL https://cdn.coollabs.io/coolify/install.sh | sudo bash
+   ```
+
+1. Go to `http://<rpi hostname>:8000` to configure Coolify.
+1. Create a new account
+1. Select `localhost` as the server
