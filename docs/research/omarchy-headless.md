@@ -2,7 +2,7 @@
 
 User decision after this research: use an unencrypted disk for unattended restart. The [HP checklist](../hp-preparation.md) reflects that choice; the encryption options below document the tradeoff.
 
-Research checked on 6 November 2026. This is a proposed configuration for the HP EliteDesk 800 G6 Mini, i5-10500T, 32 GB RAM, and 1 TB SSD. No commands in this article have been executed on the HP. Inspect the installed release before applying them.
+Research checked on 6 November 2026. These findings concern the planned HP host; its specifications live in the [inventory](../reference/inventory.md). No commands in this article have been executed on the HP. Inspect the installed release before applying them.
 
 ## Install from the current ISO
 
@@ -88,19 +88,7 @@ Omarchy creates snapshots for updates and exposes `omarchy-snapshot create`. Rec
 
 Recommendation: keep separate encrypted off-host backups of repositories, uncommitted work, agent session files, and configuration. Test restoring one project. Retain a bootable USB and local console access for a failed network or boot update.
 
-## Acceptance checks before removing the monitor
-
-These are proposed checks, not completed results:
-
-- Confirm Ethernet, time synchronization, available disk space, and the actual installed versions.
-- Connect from the laptop through Tailscale in a second session before tightening SSH access.
-- Verify private administration is rejected from an unauthorized device.
-- Confirm a long-running agent survives laptop disconnect and reconnect.
-- Verify no development service unexpectedly listens on every interface.
-- Verify the host remains reachable after idle time and a controlled reboot.
-- Check the chosen disk-unlock procedure after a cold boot.
-- Restore a project from an off-host backup.
-- Record which firmware and boot-menu steps recover a failed upgrade.
+Upcoming work and checks live in the [HP preparation checklist](../hp-preparation.md). The findings above explain why boot, idle access, and recovery need separate attention.
 
 ## Install packages through Omarchy
 

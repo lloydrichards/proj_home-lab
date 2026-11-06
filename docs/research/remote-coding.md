@@ -23,7 +23,7 @@ npm install -g opencode-ai@1.19.5
 opencode --version
 ```
 
-Use the user-owned Node environment described below. Record both agent versions and recheck help before adopting later versions. [Official v1 installation options and v2 conflict notice](https://opencode.ai/docs/)
+A compatible user-owned Node environment is a prerequisite for these npm examples. Choose and verify that environment during the HP setup, then record the resolved tool versions in the resulting recipe. [Official v1 installation options and v2 conflict notice](https://opencode.ai/docs/)
 
 Pi's official npm installation requires Node.js 22.19 or newer. For a reproducible starting version, use a user-owned Node installation and pin the package:
 
@@ -109,10 +109,4 @@ Use one worktree or clone and one branch per task to prevent concurrent edits to
 
 Do not mount `/var/run/docker.sock`, give an agent membership in the host `docker` group, or grant privileged containers to simplify builds. Ordinary Docker daemon access can grant control over the host. Put Docker-dependent agent workloads in a dedicated VM with its own daemon when needed, separate from stable Coolify services. [Docker daemon security](https://docs.docker.com/engine/security/), [Docker group privileges](https://docs.docker.com/engine/install/linux-postinstall/)
 
-## Acceptance checks before leaving agents unattended
-
-- Confirm laptop disconnect/reconnect leaves a tmux task running.
-- Confirm OpenCode listens only on server loopback and passwordless API access fails. Check the browser and TUI through the tunnel.
-- Run representative projects with one agent, then three, then five conversations. Record peak RAM, swap pressure, build duration, and service responsiveness. Increase build/test concurrency separately from conversation count.
-- Confirm agents cannot read administrative SSH keys, production service secrets, or the other isolated account's files, and cannot use the host Docker socket.
-- Reboot deliberately and confirm Tailscale, the intended service supervisor, and any disk-unlock arrangement recover as expected. Saved agent sessions are not a substitute for service supervision or backups.
+Upcoming work and checks live in the [HP preparation checklist](../hp-preparation.md). The [capacity learning](../../.okf/learnings/measure-agent-capacity.md) explains why heavy build jobs must be measured separately from connected conversations.

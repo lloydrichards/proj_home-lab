@@ -16,6 +16,7 @@ Help Lloyd set things up, troubleshoot, and remember what we explored and why. M
 ## Keep only useful material
 
 - Keep `README.md` short: what runs where, known access details, the next task, and links when needed.
+- Keep `docs/hp-preparation.md` as the single list of upcoming HP work. Research and OKF explain the reasons and test details, linking to that list rather than maintaining parallel task lists.
 - Keep arriving hardware in a preparation checklist. Expand setup instructions when we perform the work, recording checks and recovery steps worth repeating.
 - Update device, service, and purchase facts in `docs/reference/` when new evidence changes them. Link related records rather than repeating full specifications.
 - Use `.okf/` for concepts, why we prefer an approach, alternatives considered, unresolved questions, and reusable learnings. The existing `.okf/decisions/` entries own choice reasoning; do not create parallel ADRs.

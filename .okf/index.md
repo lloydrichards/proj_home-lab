@@ -52,12 +52,8 @@ All concepts use `draft` while setup and research remain unsettled. A user-confi
 - Continuity and recovery: [tmux](technologies/tmux.md), [systemd](technologies/systemd.md), [boot preference](decisions/unattended-boot.md), and [backups](technologies/restic.md).
 - Existing hosting: [Coolify](technologies/coolify.md), [Cloudflare Tunnel](technologies/cloudflare-tunnel.md), [Docker](technologies/docker.md), and [migration boundaries](decisions/keep-pi-hosting-separate.md).
 
-## Gaps worth investigating
+## Next work
 
-- Inspect the Pi-hole DNS and possible DHCP role, then document recovery and client dependencies.
-- Inspect Coolify workloads, authentication, data locations, tunnel routing, and backups.
-- Select the HP backup destination, retention, schedule, and failure notification route.
-- Verify delivered HP hardware, installed tools, access denial, cold boot, restore, and workload capacity.
-- Design and test a disposable VM boundary if untrusted coding work is needed.
+Upcoming HP tasks live in `docs/hp-preparation.md`. Host-specific unknowns live in the inventory and service register; open technology questions stay with their concepts. Research supplies detailed evidence when a task needs it.
 
 Use `docs/README.md` to find recipes and `docs/research/` for detailed investigations. Keep raw private evidence in ignored `local/`.

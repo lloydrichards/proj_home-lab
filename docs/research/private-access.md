@@ -2,17 +2,9 @@
 
 Sources checked **2026-11-06**. This is a proposed configuration, not evidence that the HP or tailnet has been configured. Commands were checked against documentation; they have not been run on the new server. Replace example usernames, addresses and account identities before use.
 
-## Decision
+## How this research is used
 
-Use Tailscale on the laptop and HP as the private network. Use ordinary OpenSSH with a laptop-held key for shell access. Keep agent HTTP endpoints on `127.0.0.1`; reach them through an SSH local forward. Add Tailscale Serve only when a persistent browser URL is useful. Do not enable Funnel, router port forwarding, subnet routing or an exit node for this setup.
-
-```text
-Laptop -- Tailscale --> HP OpenSSH:22 -- localhost --> agent UI:3000
-Laptop -- Tailscale --> optional Serve HTTPS:443 -- localhost --> agent UI:3000
-HP agents -- outbound HTTPS --> model providers / Git hosting
-```
-
-This makes the access path private; it does not isolate a coding agent from files, credentials or network access granted to its Unix account. Avoid giving the agent account unrestricted sudo, Docker socket access or the laptop's SSH agent.
+The [private-development choice](../../.okf/decisions/private-development.md) owns the proposed access approach and its rationale. Upcoming setup and checks belong in the [HP checklist](../hp-preparation.md). The examples below explain the relevant mechanisms; adapt them when we perform the setup.
 
 ## OpenSSH over Tailscale versus Tailscale SSH
 
