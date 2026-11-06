@@ -1,0 +1,15 @@
+# Local inventory, credentials, and generated evidence
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.agekey
+*.p12
+*.pfx
+*.kdbx
+*.tfstate*
+secrets/
+private/
+local/
+.DS_Store
