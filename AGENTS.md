@@ -48,3 +48,7 @@ bun run ../proj_okf-graph/apps/okf-graph/src/index.ts graph neighbors .okf <conc
 ```
 
 Confirm tool availability. For substantial graph changes, run `eval .okf --json` and review findings without adding links just to improve metrics.
+
+## Commit and PR titles
+
+Use Conventional Commits without emojis or emoji shortcodes, such as `docs: simplify HP preparation`. Apply the same style to PR titles.
