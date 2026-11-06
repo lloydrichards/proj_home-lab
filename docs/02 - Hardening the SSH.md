@@ -1,3 +1,5 @@
+> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. Start with [the current HP guide](hp/00-design.md).
+
 # Hardening the SSH
 
 1. Create ssh-users group:

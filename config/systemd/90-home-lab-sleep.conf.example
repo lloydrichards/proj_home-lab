@@ -1,0 +1,7 @@
+# Review other drop-ins before installation.
+# Example destination: /etc/systemd/sleep.conf.d/90-home-lab.conf
+[Sleep]
+AllowSuspend=no
+AllowHibernation=no
+AllowSuspendThenHibernate=no
+AllowHybridSleep=no

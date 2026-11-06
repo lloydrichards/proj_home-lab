@@ -1,3 +1,5 @@
+> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. Start with [the current HP guide](hp/00-design.md).
+
 # Getting the Raspberry Pi Setup
 
 1. Install Raspberry Pi OS (64bit) on the microSD card, using the

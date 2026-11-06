@@ -1,3 +1,5 @@
+> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. Start with [the current HP guide](hp/00-design.md).
+
 # Setup SSH through Cloudflare
 
 1. (From SSH) Cloudflare Repository on the Raspberry Pi:
