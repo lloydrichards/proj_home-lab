@@ -7,9 +7,9 @@ sources:
   - id: source-1
     resource: "../../docs/05 - Add Postgres Server on Docker.md"
   - id: source-2
-    resource: "../../docs/hp/04-operations.md"
+    resource: "../../docs/research/backups.md"
   - id: source-3
-    resource: "../../docs/hp/06-security.md"
+    resource: "../../docs/research/remote-coding.md"
 ---
 
 # PostgreSQL
@@ -18,6 +18,6 @@ The historical guide describes a PostgreSQL container with persistent host stora
 
 The guide mixes the terms Adminer and pgAdmin while its image is pgAdmin. Treat that naming mismatch as a documentation gap before reusing the procedure. It also uses floating image tags; choose versions deliberately before a new deployment.
 
-For future HP use, the security guide prefers an unpublished database on a private [Docker](docker.md "can run under") network when only containers need it. Database recovery needs an application-consistent dump or a documented quiesce procedure rather than an unqualified copy of live files.
+For future HP use, the access research recommends an unpublished database on a private [Docker](docker.md "can run under") network when only containers need it. Database recovery needs an application-consistent dump or a documented quiesce procedure rather than an unqualified copy of live files.
 
 A real migration belongs under the [recovery-first decision](../decisions/recovery-before-reliance.md "requires"), with a restore check before cutover.

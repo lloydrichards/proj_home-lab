@@ -5,8 +5,6 @@ description: "Persistent terminal sessions across client disconnections."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/hp/03-remote-coding.md"
-  - id: source-2
     resource: "../../docs/research/remote-coding.md"
 ---
 

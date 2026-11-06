@@ -5,9 +5,9 @@ description: "Network reachability, service authentication, and OS permissions s
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/hp/06-security.md"
+    resource: "../../docs/research/remote-coding.md"
   - id: source-2
-    resource: "../../docs/hp/00-design.md"
+    resource: "../../docs/hp-preparation.md"
 ---
 
 # Private networking does not isolate agent tools
@@ -16,4 +16,4 @@ A private network controls who can reach a service. Service authentication contr
 
 The HP plan combines [Tailscale](../technologies/tailscale.md "controls reachability through"), authenticated [OpenSSH](../technologies/openssh.md "controls login through"), and a restricted coding account. [Agent isolation](../technologies/agent-isolation.md "controls tool authority through") remains necessary even when all administration is private.
 
-Loopback binding also leaves access possible from local processes. Keep authentication on agent APIs. This is a conclusion from the security guides, not a completed penetration test.
+Loopback binding also leaves access possible from local processes. Keep authentication on agent APIs. This is a conclusion from the security research, not a completed penetration test.

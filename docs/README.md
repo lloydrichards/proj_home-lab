@@ -1,27 +1,22 @@
-# Documentation workflow
+# Find a useful note
 
-Use this repository for the whole lab. Keep a running system's observed state separate from a proposed setup.
+Start with the [home page](../README.md) or [HP preparation checklist](hp-preparation.md). There is no reading sequence for this folder.
 
-| Material | Location | What belongs here |
-|---|---|---|
-| Devices and services | `reference/` | Current inventory, dependencies, BOM, and verification gaps |
-| Setup and operations | `hp/` and existing Pi guides | Repeatable procedures with checks and recovery steps |
-| Concepts and technologies | `../.okf/` | Short explanations, relationships, lab relevance, and links to evidence |
-| Research | `research/` | Questions, primary sources, findings, alternatives, and open questions |
-| Decisions | `decisions/` | Chosen approach, reasons, consequences, and superseded choices |
-| Logs and learnings | `logs/` | Dated changes, incidents, outcomes, and lessons |
-| Configuration | `../config/` | Reviewed examples without secrets |
-| Private evidence | `../local/` | Raw SSH output and private details, ignored by Git |
+## Existing Pi recipes
 
-## Record new work
+These are earlier instructions, not verified descriptions of what is running today. Check them against the machine before reuse.
 
-1. Start a research note for an unresolved question. Record source URLs, the date checked, and release-sensitive details.
-2. Add or update a concept when the finding is useful beyond that investigation. Link it to related concepts and the research note.
-3. Record a decision when an option is selected. A researched option does not mean it is installed.
-4. Update a guide when there is a repeatable procedure. Include verification and recovery steps.
-5. After a real change, add a dated log entry and update the inventory or service register from observed evidence.
-6. Validate the OKF bundle after concept edits.
+- [Initial Pi setup](01%20-%20Getting%20the%20Raspberry%20Pi%20Setup.md)
+- [SSH hardening](02%20-%20Hardening%20the%20SSH.md)
+- [Docker and Portainer](03%20-%20Installing%20Docker.md)
+- [SSH through Cloudflare](04%20-%20Setup%20SSH%20through%20Cloudflare.md)
+- [PostgreSQL on Docker](05%20-%20Add%20Postgres%20Server%20on%20Docker.md)
+- [Coolify](06%20-%20Add%20Coolify)
+- [Coolify with Cloudflare Tunnel](07%20-%20Setup%20Coolify%20with%20Cloudflare%20tunnel.md)
 
-Use [the research template](templates/research.md) and [the log template](templates/log-entry.md). Use `draft` for unsettled OKF concepts and `stable` for settled explanations. These statuses describe knowledge maturity, not deployment or live verification. State deployment and evidence explicitly in the text.
+## Other questions
 
-The repository includes the [OKF maintenance skill](../.agents/skills/okf/SKILL.md). Follow [AGENTS.md](../AGENTS.md) to keep concepts aligned with research, setup changes, decisions, and learnings. The [organization research](research/knowledge-organization.md) records the format and validation approach.
+- What is installed or owned? [Inventory](reference/inventory.md), [services](reference/services.md), and [BOM](reference/bom.md).
+- What have we explored? [Research](research/README.md) for sources and details; [OKF](../.okf/index.md) for connections, choices, and lessons.
+
+The assistant maintains these notes as we work. Keep recipes for repeatable setup and recovery, and add troubleshooting notes only when they help solve a recurring problem. Put the reason for a choice in its OKF concept. Use Git for change history, without separate ADRs or activity logs. See [agent instructions](../AGENTS.md).

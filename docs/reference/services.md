@@ -6,7 +6,7 @@ Recorded 6 November 2026 from the user's description. Live inspection is deferre
 |---|---|---|---|
 | Coolify | Existing Raspberry Pi | Cloudflare tunnel, user reported | Version, deployed apps, storage, backup, and tunnel implementation unknown |
 | Pi-hole | Raspberry Pi 4 | DNS service, user reported | Upstream DNS, DHCP ownership, client configuration, access, and backup unknown |
-| Remote coding | Future HP | Proposed OpenSSH over Tailscale | Not installed or verified. See [HP design](../hp/00-design.md). |
+| Remote coding | Future HP | Proposed OpenSSH over Tailscale | Not installed or verified. See [HP preparation](../hp-preparation.md). |
 
 ## Next inspection
 

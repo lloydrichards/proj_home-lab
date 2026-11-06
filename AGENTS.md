@@ -1,6 +1,6 @@
-# Working in this repository
+# Maintain an assistant-supported home lab notebook
 
-This repository records the home lab's hardware, services, setup procedures, research, decisions, and learnings. Start with `README.md` and `docs/README.md` for navigation and document ownership.
+Help Lloyd set things up, troubleshoot, and remember what we explored and why. Maintain this notebook as part of doing the work. The user should not need to read the repository end to end or synchronize several records by hand. Start with `README.md`; find the relevant recipe or research through `docs/README.md`.
 
 ## Plain-language responses
 
@@ -13,47 +13,37 @@ This repository records the home lab's hardware, services, setup procedures, res
 - Use a small concrete example when it helps explain a complex idea.
 - Before sending, check that the reader can find, understand, and use the information.
 
-## Keep the knowledge library current
+## Keep only useful material
 
-Use the repository's [OKF skill](.agents/skills/okf/SKILL.md) when exploring or maintaining `.okf/`. Read `.okf/index.md`, then inspect relevant concepts and their sources before changing them.
+- Keep `README.md` short: what runs where, known access details, the next task, and links when needed.
+- Keep arriving hardware in a preparation checklist. Expand setup instructions when we perform the work, recording checks and recovery steps worth repeating.
+- Update device, service, and purchase facts in `docs/reference/` when new evidence changes them. Link related records rather than repeating full specifications.
+- Use `.okf/` for concepts, why we prefer an approach, alternatives considered, unresolved questions, and reusable learnings. The existing `.okf/decisions/` entries own choice reasoning; do not create parallel ADRs.
+- Keep detailed research in `docs/research/` only when its sources or investigation help a real question. Recheck release-sensitive facts at the point of use.
+- Add a troubleshooting note when it helps diagnose or recover from a recurring problem. Do not create routine activity logs, copied historical snapshots, or completion reports. Git keeps change history.
+- Maintain the affected notes as we work and give the user a short account of the result and remaining uncertainties. Routine edits do not need new documents.
 
-After research, a setup change, a decision, or a useful learning, check whether the library's claims, relationships, or open questions have changed. Update affected concepts in the same task when authorized to edit the repository. A read-only request authorizes findings, not edits.
+## Maintain OKF alongside the work
 
-- Research belongs in `docs/research/`, with primary sources and dates for release-sensitive findings. Promote durable findings into the owning concepts and link related technologies, decisions, and learnings.
-- Setup and operating procedures belong in the guides. Update the inventory and service register from observed changes. Update concepts when the role, dependency, exposure, or recovery approach changes.
-- Decisions belong in `docs/decisions/`. Reflect their rationale and consequences in the relevant OKF decision and link affected technologies. Preserve the distinction between proposals and user-confirmed choices.
-- Record actual changes, incidents, and outcomes in `docs/logs/`. Capture reusable lessons in `.okf/learnings/` with their supporting evidence. Do not present a conclusion from documentation as an observed incident result.
-- Revise an existing concept before adding a near-duplicate. Add focused, meaningful relationships and update `.okf/index.md` for new entries.
-- Leave the library unchanged when existing claims remain accurate. Formatting changes, repeated checks, and routine file edits do not need new concepts or log entries.
+Use the [OKF skill](.agents/skills/okf/SKILL.md). Read `.okf/index.md`, then the relevant concepts and sources. Update existing concepts before adding new ones. Link meaningful relationships and update the index when adding an entry.
 
-Keep detailed commands and volatile version information in the owning guides or research notes. Concepts explain meaning, relationships, and lab relevance without duplicating those procedures. Cite repository evidence through file-relative `sources[].resource` metadata. Use file-relative Markdown links between concepts, with a short relation phrase in the link title when useful.
+Keep commands in a recipe or detailed research note. Keep their purpose and tradeoffs in OKF. Cite evidence through file-relative `sources[].resource` metadata and link concepts with file-relative Markdown links. User choices can be recorded directly in a concept with the date and context; do not invent a separate evidence document just to cite it.
 
-## Distinguish evidence from plans
+Distinguish user-reported facts, live observations with host and date, researched behavior, proposals, and unknowns. A written recipe is not evidence that its steps ran. `draft`, `stable`, and `deprecated` describe knowledge maturity, not deployment. Use `verified` only for claims actually checked. Report conflicts with a user choice rather than silently changing the choice.
 
-State whether a claim is user-reported, observed on a named host and date, researched in documentation, proposed, historical, or unknown. A setup guide is not evidence that its steps ran. A failed connection does not establish a machine's configuration.
+A read-only request authorizes findings, not edits. Keep secrets and raw private machine output outside Git, using ignored `local/` when useful.
 
-Use OKF `draft`, `stable`, and `deprecated` for document lifecycle, not deployment state. Add `verified` only for the claims a human or deterministic check actually verified. Structural validation does not verify hardware, security, or running services.
+## Check the result
 
-If observed behavior conflicts with a recorded decision, report the conflict. Do not silently rewrite the decision to match the machine. Preserve historical context when superseding a choice or recipe.
+Validate `.okf/` after concept edits and inspect affected graph neighborhoods. Check local links and source paths after moves or deletions. If a check cannot run, say so.
 
-Keep credentials, tokens, private keys, and raw private machine evidence outside Git. Use ignored `local/` for private output and add only reviewed summaries to tracked documents.
+With an installed CLI, use `okf-graph validate .okf --json` and `okf-graph graph neighbors .okf <concept-id> --json`. Concept IDs are bundle-relative paths without `.md`.
 
-## Validate knowledge changes
-
-Use the repository's configured CLI or check script if one is added. Otherwise, with `okf-graph` installed:
-
-```bash
-okf-graph validate .okf --json
-okf-graph graph neighbors .okf <changed-concept-id> --json
-```
-
-The existing sibling checkout is a local fallback when Bun and its dependencies are available:
+The sibling checkout is a fallback when Bun and its dependencies are available:
 
 ```bash
 bun run ../proj_okf-graph/apps/okf-graph/src/index.ts validate .okf --json
-bun run ../proj_okf-graph/apps/okf-graph/src/index.ts graph neighbors .okf <changed-concept-id> --json
+bun run ../proj_okf-graph/apps/okf-graph/src/index.ts graph neighbors .okf <concept-id> --json
 ```
 
-Concept IDs are bundle-relative paths without `.md`, such as `technologies/tailscale`. Confirm command availability rather than assuming the sibling checkout exists. Run `eval .okf --json` for substantial graph changes and review its findings without adding links merely to improve metrics.
-
-Check that source paths resolve as well as concept links. Fix validation errors and review warnings. Report changed concepts, checks performed, and unresolved gaps. If validation cannot run, state that explicitly.
+Confirm tool availability. For substantial graph changes, run `eval .okf --json` and review findings without adding links just to improve metrics.

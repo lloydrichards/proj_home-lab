@@ -5,11 +5,9 @@ description: "Boundaries around coding tools, credentials, and host administrati
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/hp/00-design.md"
+    resource: "../../docs/hp-preparation.md"
   - id: source-2
-    resource: "../../docs/hp/06-security.md"
-  - id: source-3
-    resource: "../../docs/hp/07-optional-services.md"
+    resource: "../../docs/research/remote-coding.md"
 ---
 
 # Agent isolation

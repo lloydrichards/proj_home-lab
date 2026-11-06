@@ -5,17 +5,19 @@ description: "The proposed HP access architecture and its exposure limits."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/decisions/0001-private-development-host.md"
+    resource: "../../docs/hp-preparation.md"
   - id: source-2
-    resource: "../../docs/hp/06-security.md"
+    resource: "../../docs/research/remote-coding.md"
 ---
 
 # Keep remote development private
 
-The architecture decision proposes Ethernet, [Tailscale](../technologies/tailscale.md "uses for connectivity"), and ordinary [OpenSSH](../technologies/openssh.md "uses for login") for the HP. Administration stays private; selected browser interfaces bind to loopback and use SSH forwarding.
+The proposed approach is Ethernet, [Tailscale](../technologies/tailscale.md "uses for connectivity"), and ordinary [OpenSSH](../technologies/openssh.md "uses for login"). The HP will run remote coding sessions, builds, and tests. Private access limits who can reach those tools without requiring public administration endpoints.
 
-Public SSH, router forwarding, Funnel, and public agent APIs are excluded from the baseline. Existing Pi hosting remains separate. This architecture is proposed; the user-confirmed choices recorded in the source are Pi coding agent identity and unencrypted unattended boot, not a completed installation.
+Prefer a separate maintenance account and an unprivileged coding account. Keep browser interfaces on loopback with selected SSH forwarding. Existing Pi hosting stays separate while we establish the HP workflow. These are proposals, not observed settings. Pi coding agent identity and unencrypted boot were user-confirmed on 6 November 2026.
 
-The coding account lacks administrative and Docker privileges. [Agent isolation](../technologies/agent-isolation.md "constrains") still needs separate treatment because private access does not make repository code trustworthy.
+Tailscale SSH remains an alternative with separate identity rules and recovery tests. A public Cloudflare or Funnel route would need a specific application use case and authentication plan; neither is needed for the initial coding workflow. A server distribution would be simpler to operate, but Omarchy is the chosen direction.
 
-The decision is implemented by the [remote-development workflow](../technologies/private-remote-development.md "governs") and depends on [recovery before reliance](recovery-before-reliance.md "requires").
+Private connectivity does not constrain tool execution. [Agent isolation](../technologies/agent-isolation.md "requires") and scoped credentials remain necessary. All agents sharing one account share its readable files.
+
+The [remote-development concept](../technologies/private-remote-development.md "governs") connects the tools. [Recovery before reliance](recovery-before-reliance.md "requires") covers backup and access failure. Revisit this approach if real use calls for different access or stronger isolation.

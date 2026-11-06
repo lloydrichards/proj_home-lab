@@ -1,6 +1,6 @@
 # Omarchy as a mostly headless development host
 
-User decision after this research: use an unencrypted disk for unattended restart. The main installation guide reflects that choice; the encryption options below document the tradeoff.
+User decision after this research: use an unencrypted disk for unattended restart. The [HP checklist](../hp-preparation.md) reflects that choice; the encryption options below document the tradeoff.
 
 Research checked on 6 November 2026. This is a proposed configuration for the HP EliteDesk 800 G6 Mini, i5-10500T, 32 GB RAM, and 1 TB SSD. No commands in this article have been executed on the HP. Inspect the installed release before applying them.
 

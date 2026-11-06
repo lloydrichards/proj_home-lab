@@ -5,16 +5,14 @@ description: "The planned HP workflow and the concepts it depends on."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/hp/00-design.md"
+    resource: "../../docs/hp-preparation.md"
   - id: source-2
-    resource: "../../docs/hp/03-remote-coding.md"
-  - id: source-3
-    resource: "../../docs/hp/05-acceptance.md"
+    resource: "../../docs/research/remote-coding.md"
 ---
 
 # Private remote development
 
-The arriving HP is intended as the main remote development and AI coding host. Its guides remain proposed and all acceptance checks remain unperformed.
+The arriving HP is intended as the main remote development and AI coding host. Its setup is still proposed; start with the preparation checklist.
 
 The [private-development decision](../decisions/private-development.md "is governed by") combines [Tailscale](tailscale.md "connects through") and [OpenSSH](openssh.md "authenticates through") with separate maintenance and coding accounts. [Omarchy](omarchy.md "runs on") supplies the planned operating system.
 

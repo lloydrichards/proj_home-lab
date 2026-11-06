@@ -4,9 +4,9 @@ For the new host, use [the OpenCode 2 note](opencode-v2.md). V1 commands below a
 
 Checked 2026-11-06 against first-party documentation and release source. Commands below were checked against those interfaces, not executed on the future server. `coder` is an example non-root account, `hp-lab` is the server's Tailscale hostname, and workspace paths must already exist.
 
-## Decision
+## Workflow findings
 
-Start with SSH over Tailscale and one tmux session per coding task. This works for both Pi and OpenCode, keeps the checkout and tools on the server, and survives a laptop disconnect. Add OpenCode's browser/server interface when it improves the workflow. Keep stable hosted services on the Raspberry Pi initially.
+The [remote-development choice](../../.okf/decisions/private-development.md) records why we prefer private terminal access. The researched starting workflow uses SSH over Tailscale and one tmux session per coding task. This works for both Pi and OpenCode, keeps the checkout and tools on the server, and survives a laptop disconnect. Add OpenCode's browser/server interface when it improves the workflow. Keep stable hosted services on the Raspberry Pi initially.
 
 Three to five agent conversations are a reasonable **starting experiment** on 32 GB RAM when model inference runs at a remote provider. That is not a measured concurrency guarantee. TypeScript checkers, test workers, browsers, language servers, and databases consume the local RAM and CPU. Initially allow only one or two heavy build/test jobs at once, leave roughly 8–12 GB for the OS and shared services, and measure memory pressure before increasing concurrency. These are planning estimates, not vendor requirements.
 

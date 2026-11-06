@@ -7,9 +7,7 @@ sources:
   - id: source-1
     resource: "../../docs/research/omarchy-headless.md"
   - id: source-2
-    resource: "../../docs/hp/04-operations.md"
-  - id: source-3
-    resource: "../../config/README.md"
+    resource: "../../docs/research/backups.md"
 ---
 
 # systemd

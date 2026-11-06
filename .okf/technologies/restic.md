@@ -5,14 +5,14 @@ description: "Proposed encrypted off-machine backup and restore tooling."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/hp/04-operations.md"
+    resource: "../../docs/research/backups.md"
   - id: source-2
-    resource: "../../docs/hp/05-acceptance.md"
+    resource: "../../docs/hp-preparation.md"
 ---
 
 # Restic
 
-The HP operations guide proposes an encrypted restic repository on another device or storage service. Destination, schedule, retention, and notifications remain undecided. No successful backup or restore is recorded.
+The backup research proposes an encrypted restic repository on another device or storage service. Destination, schedule, retention, and notifications remain undecided. No successful backup or restore is recorded.
 
 The backup scope includes uncommitted repositories, agent conversations, configuration, and recovery material. A Git push does not preserve all of that state. Keep the backup password available outside the HP.
 

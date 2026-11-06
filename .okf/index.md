@@ -4,11 +4,11 @@ okf_version: "0.2"
 
 # Home lab knowledge
 
-A linked library distilled from repository research, historical setup guides, and the HP plan. Start with [private remote development](technologies/private-remote-development.md) for the HP or [Coolify](technologies/coolify.md) for existing hosting.
+The assistant's context for the lab: technologies, the reasons for choices, alternatives, and reusable learnings. Start with [private remote development](technologies/private-remote-development.md) for the HP or [Coolify](technologies/coolify.md) for existing hosting.
 
-Operational records remain in `docs/reference/`. Procedures remain in `docs/hp/` and the historical Pi guides. Source metadata points to the owning documents without duplicating their commands. This expansion synthesizes existing research; it is not a fresh release or hardware verification.
+Machine and service facts live in `docs/reference/`. The HP starts with `docs/hp-preparation.md`; repeatable recipes are recorded as we do the setup. Research holds detailed sources. This library owns the why, with Git keeping previous versions.
 
-All concepts use `draft` while setup and research remain unsettled. A user-confirmed choice is identified in its decision text. Learning entries are conclusions from the guides unless an actual observation is stated. No HP acceptance check has been completed, and live Pi inspection is deferred.
+All concepts use `draft` while setup and research remain unsettled. A user-confirmed choice is identified in its decision text. Learning entries are conclusions from research unless an actual observation is stated. No HP setup check has been completed, and live Pi inspection is deferred.
 
 ## Technologies and workflows
 
@@ -28,7 +28,7 @@ All concepts use `draft` while setup and research remain unsettled. A user-confi
 - [Tailscale](technologies/tailscale.md)
 - [tmux](technologies/tmux.md)
 
-## Decisions
+## Choices and why
 
 - [Keep existing Pi hosting during HP setup](decisions/keep-pi-hosting-separate.md)
 - [Keep remote development private](decisions/private-development.md)
@@ -60,4 +60,4 @@ All concepts use `draft` while setup and research remain unsettled. A user-confi
 - Verify delivered HP hardware, installed tools, access denial, cold boot, restore, and workload capacity.
 - Design and test a disposable VM boundary if untrusted coding work is needed.
 
-Use `docs/README.md` for the contribution workflow and `docs/research/` for source-backed investigations. Keep raw private evidence in ignored `local/`.
+Use `docs/README.md` to find recipes and `docs/research/` for detailed investigations. Keep raw private evidence in ignored `local/`.

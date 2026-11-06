@@ -6,8 +6,6 @@ status: draft
 sources:
   - id: source-1
     resource: "../../docs/research/private-access.md"
-  - id: source-2
-    resource: "../../docs/hp/02-private-access.md"
 ---
 
 # Tailscale

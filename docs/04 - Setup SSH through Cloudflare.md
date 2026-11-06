@@ -1,4 +1,4 @@
-> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. Start with [the current HP guide](hp/00-design.md).
+> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](hp-preparation.md).
 
 # Setup SSH through Cloudflare
 

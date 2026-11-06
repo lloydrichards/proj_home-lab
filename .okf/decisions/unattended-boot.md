@@ -5,11 +5,9 @@ description: "A user-confirmed boot preference with physical-access consequences
 status: draft
 sources:
   - id: maintenance-guide
-    resource: "../../docs/hp/04-operations.md"
+    resource: "../../docs/research/backups.md"
   - id: source-1
-    resource: "../../docs/decisions/0001-private-development-host.md"
-  - id: source-2
-    resource: "../../docs/hp/00-design.md"
+    resource: "../../docs/hp-preparation.md"
   - id: source-3
     resource: "../../docs/research/omarchy-headless.md"
 ---

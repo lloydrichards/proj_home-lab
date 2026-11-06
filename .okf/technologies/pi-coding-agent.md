@@ -6,10 +6,8 @@ status: draft
 sources:
   - id: source-1
     resource: "../../docs/research/remote-coding.md"
-  - id: source-2
-    resource: "../../docs/hp/03-remote-coding.md"
   - id: source-3
-    resource: "../../docs/decisions/0001-private-development-host.md"
+    resource: "../../docs/hp-preparation.md"
 ---
 
 # Pi coding agent

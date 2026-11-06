@@ -9,7 +9,7 @@ sources:
   - id: source-2
     resource: "../../docs/07 - Setup Coolify with Cloudflare tunnel.md"
   - id: source-3
-    resource: "../../docs/hp/06-security.md"
+    resource: "../../docs/research/remote-coding.md"
   - id: source-4
     resource: "../../docs/reference/services.md"
 ---
