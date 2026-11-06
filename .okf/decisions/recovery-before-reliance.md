@@ -4,6 +4,8 @@ title: "Test recovery before relying on the HP"
 description: "A proposed acceptance rule for backups, access, and later services."
 status: draft
 sources:
+  - id: architecture-decision
+    resource: "../../docs/decisions/0001-private-development-host.md"
   - id: source-1
     resource: "../../docs/hp/05-acceptance.md"
   - id: source-2
@@ -14,7 +16,7 @@ sources:
 
 # Test recovery before relying on the HP
 
-The HP guides require working recovery paths before the machine becomes essential. All acceptance checks remain not run. A guide or enabled service is not evidence of a successful recovery.
+ADR 0001 owns the proposed rollout and recovery requirements. The guides turn those requirements into procedures and acceptance checks. All acceptance checks remain not run. A guide or enabled service is not evidence of a successful recovery.
 
 The initial evidence should include a fresh second SSH login, controlled cold boot, restored uncommitted files and agent state, and reachable local recovery tools. [Restic](../technologies/restic.md "uses for backup and restore") covers data recovery; it does not replace console access or boot recovery.
 

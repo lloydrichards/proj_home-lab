@@ -4,6 +4,8 @@ title: "Keep existing Pi hosting during HP setup"
 description: "A proposed rollout boundary between running services and new development."
 status: draft
 sources:
+  - id: architecture-decision
+    resource: "../../docs/decisions/0001-private-development-host.md"
   - id: source-1
     resource: "../../docs/hp/00-design.md"
   - id: source-2
@@ -14,7 +16,7 @@ sources:
 
 # Keep existing Pi hosting during HP setup
 
-The HP design keeps existing Coolify workloads on the Raspberry Pi while private development is established. The user reports the Pi hosting is running; workloads and backup arrangements remain uninspected.
+ADR 0001 owns the proposed rollout boundary that keeps existing Coolify workloads on the Raspberry Pi while private development is established. The user reports the Pi hosting is running; workloads and backup arrangements remain uninspected.
 
 A migration is conditional on capacity or reliability needs and a separate backup, restore, and network test plan. The HP's arrival is not itself a migration decision.
 

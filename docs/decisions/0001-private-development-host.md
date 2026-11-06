@@ -14,6 +14,12 @@ Use bare-metal Omarchy, Ethernet, Tailscale networking, and ordinary OpenSSH key
 
 Do not add router forwarding, Tailscale Funnel, public agent APIs, public SSH, or a public management dashboard. Keep existing Pi deployments separate.
 
+## Rollout and recovery requirements
+
+Keep Coolify on the existing Pi while establishing the HP development workflow. Consider migration only when capacity or reliability warrants it, with a separate data, restore, and network test plan before cutover. Inspect Pi-hole dependencies before DNS or network changes.
+
+Before relying on the HP, verify fresh private SSH access, cold boot, console recovery, and restoration of an uncommitted file and saved agent state from an off-machine backup. Add optional services after the base acceptance checks pass. Automate backups after a successful manual restore drill. These requirements are proposed and have not been tested on the arriving host.
+
 ## Consequences
 
 The laptop needs Tailscale. Coding does not require the graphical desktop. An unencrypted SSD can be read by someone with physical access; unattended startup still requires firmware, service, and network testing. All agents under one Unix account share its readable files and credentials. A backup destination and local recovery access are needed before relying on the host.

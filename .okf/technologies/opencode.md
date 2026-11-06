@@ -14,7 +14,7 @@ sources:
 
 # OpenCode
 
-The current HP guide follows the repository's OpenCode v2 research. It prefers an existing suitable Omarchy-managed executable available to the coding account before adding a competing installation. The installed version and behavior remain unknown.
+The HP remote-coding guide owns the installation, terminal, and browser procedures. The OpenCode v2 research owns dated package evidence, service behavior, and the reasons for those procedures. It prefers an existing suitable Omarchy-managed executable available to the coding account before adding a competing installation. The installed version and behavior remain unknown.
 
 The v2 note describes a shared background server per OS user and local browser pairing. Separate terminal sessions do not imply separate service identities. Use [OpenSSH forwarding](openssh.md "uses for private browser access") for the optional browser workflow and inspect the actual listening address and authentication.
 

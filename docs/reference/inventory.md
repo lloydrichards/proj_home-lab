@@ -14,6 +14,8 @@ Reviewed 6 November 2026. Purchased or reported specifications are not measureme
 | Rack | DeskPi RackMate T1 | Shelf, fasteners, cable clearance |
 | Client | Laptop | OS, SSH and Tailscale versions |
 | Coolify host | Earlier notes identify Raspberry Pi 5, RAM unresolved | Model, RAM, OS, storage, and running configuration |
+| Historical Pi storage | [1 TB NVMe M.2 2280 SSD](earlier-pi-overview.md#hardware) | Current use, model, capacity, and health |
+| Historical Pi enclosure | [Argon ONE V3 M.2 NVME case](earlier-pi-overview.md#hardware) | Current use and cooling configuration |
 | DNS host | Raspberry Pi 4 with Pi-hole, user reported | RAM, OS, storage, DNS upstream, and DHCP role |
 
 HP's [manufacturer datasheet](https://cdn.cs.1worldsync.com/syndication/feeds/hp/inline-content/GA/A/C/F/9/F/ACF9F36F11E43449CA2400614E308C88AF3ECC2E_source.PDF) describes two memory sockets, up to 64 GB RAM, and storage options. Refurbished modules and storage may differ from the original configuration.

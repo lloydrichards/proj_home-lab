@@ -48,7 +48,7 @@ Before an upgrade:
 
 1. Stop or finish important builds and save agent sessions.
 2. Confirm the latest off-machine backup succeeded and can be read.
-3. Confirm someone can reach the local console and unlock an encrypted boot.
+3. Confirm local-console and boot-recovery access for the [chosen unencrypted installation](01-install.md#use-the-chosen-cold-boot-behavior). If a later decision enables encryption, also confirm a working unlock method.
 4. Review the current Omarchy release notes and run `omarchy update`.
 5. Review failed units, disk space, the firewall, Tailscale, and fresh SSH access.
 6. Reboot only when needed, then repeat the private-access and workload checks.
@@ -62,7 +62,7 @@ Use `df -h`, `free -h`, `systemctl --failed`, and `journalctl -p warning -b` for
 | Failure | First action | Recovery |
 |---|---|---|
 | Laptop cannot connect | Check laptop Tailscale and HP power | Local console; inspect Ethernet, `tailscaled`, SSH, and expiry |
-| Boot waits for unlock | Use the agreed unlock method | Do not reset networking to solve a locked disk |
+| Unexpected disk-unlock prompt | Inspect from the local console; the chosen installation is unencrypted | Check the actual disk layout and boot entry. If encryption was deliberately enabled later, use its documented unlock method |
 | SSH change blocks login | Keep old session open | Restore the changed drop-in, run `sshd -t`, reload |
 | Bad update | Use local console and Limine recovery | Follow current Omarchy snapshot restore; `/home` remains separate |
 | SSD fails | Replace SSD and reinstall | Recreate users, restore selected backups, re-enroll Tailscale |

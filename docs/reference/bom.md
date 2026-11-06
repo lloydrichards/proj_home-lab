@@ -1,10 +1,12 @@
 # Bill of materials
 
-Recorded 6 November 2026. Prices, vendors, order dates, and exact part numbers have not been supplied.
+Recorded 6 November 2026. Prices and order dates have not been supplied. Historical component links are preserved below; current use remains unverified.
 
 | Item | Quantity | State | Known specification | Missing details |
 |---|---|---|---|---|
-| Coolify Raspberry Pi | 1 | In use, user reported | Earlier notes identify Pi 5, RAM unresolved | Model, RAM, storage, PSU, cooling, cost |
+| Coolify Raspberry Pi | 1 | In use, user reported | Earlier notes identify Pi 5, RAM unresolved | Model, RAM, current storage and enclosure, PSU, cooling configuration, cost |
+| Pi NVMe SSD | 1 historically documented | Current use unverified | [1 TB NVMe M.2 2280 SSD](earlier-pi-overview.md#hardware) | Installed device, health, purchase details, cost |
+| Pi enclosure | 1 historically documented | Current use unverified | [Argon ONE V3 M.2 NVME Raspberry Pi 5 Case](earlier-pi-overview.md#hardware) | Current enclosure, cooling configuration, purchase details, cost |
 | Raspberry Pi 4 | 1 | In use, user reported | Pi-hole host | RAM, storage, PSU, cooling, cost |
 | HP EliteDesk 800 G6 Desktop Mini | 1 | Purchased, arriving soon | i5-10500T, 32 GB RAM, 1 TB SSD | Exact product, PSU, delivered components, cost |
 | DeskPi RackMate T1 | 1 | Recorded in existing notes | 10-inch rack | Installed accessories, cost |
