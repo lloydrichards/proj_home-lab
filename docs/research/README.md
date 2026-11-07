@@ -2,6 +2,7 @@
 
 These notes hold dated source evidence and open questions. They are reference material for the assistant, not required reading or proof of installed behavior.
 
+- [HP post-install sources and other homelab examples](hp-post-install-sources.md)
 - [Omarchy and headless operation](omarchy-headless.md)
 - [Private access and network exposure](private-access.md)
 - [Pi, terminal sessions, and legacy OpenCode comparison](remote-coding.md)
