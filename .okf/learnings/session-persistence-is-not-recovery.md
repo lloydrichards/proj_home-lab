@@ -7,9 +7,9 @@ sources:
   - id: session-research
     resource: "../../docs/research/remote-coding.md"
   - id: service-research
-    resource: "../../docs/research/omarchy-headless.md"
+    resource: "../../docs/devices/home-lab/research/omarchy.md"
   - id: source-1
-    resource: "../../docs/hp-preparation.md"
+    resource: "../../docs/devices/home-lab/preparation.md"
   - id: client-research
     resource: "../../docs/research/remote-agent-tools.md"
 ---

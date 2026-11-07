@@ -1,4 +1,4 @@
-> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](hp-preparation.md).
+> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](../home-lab/preparation.md).
 
 # Add Postgres Server on Docker
 

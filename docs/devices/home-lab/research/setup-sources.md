@@ -1,6 +1,6 @@
 # Evidence for the HP post-install guide
 
-Sources checked on 7 November 2026. These are researched upstream behaviors and examples, not observations of the HP. Moving `master` links may differ from the installed release. Compare the local scripts and effective configuration during setup. The [HP preparation checklist](../hp-preparation.md) owns upcoming work; [Omarchy and headless operation](omarchy-headless.md), [private access](private-access.md), and [backups](backups.md) explain the existing recommendations.
+Sources checked on 7 November 2026. These are researched upstream behaviors and examples, not observations of the HP. Moving `master` links may differ from the installed release. Compare the local scripts and effective configuration during setup. The [HP preparation checklist](../preparation.md) owns upcoming work; [Omarchy and headless operation](omarchy.md), [private access](../../../research/private-access.md), and [backups](../../../research/backups.md) explain the existing recommendations.
 
 ## What Omarchy already supplies
 
@@ -15,7 +15,7 @@ Sources checked on 7 November 2026. These are researched upstream behaviors and 
 
 The [security manual](https://github.com/omacom/omarchy/blob/master/manual/48-security.md) describes encryption as the default with an installer opt-out. Lloyd's already recorded choice is an unencrypted HP for unattended restarts. Keep that choice and verify the actual layout. The same manual describes optional passwordless sudo, which grants all processes under that user unrestricted root access while enabled.
 
-The current [Omarchy updates manual](https://omarchy.org/manual/updates/) is the update authority for this derivative. Use `omarchy update` and inspect its installed help. The earlier [Omarchy research](omarchy-headless.md) records its combined migrations, configuration, package, and snapshot behavior. Avoid substituting generic Arch full-upgrade commands without checking Omarchy's current guard and mirror policy.
+The current [Omarchy updates manual](https://omarchy.org/manual/updates/) is the update authority for this derivative. Use `omarchy update` and inspect its installed help. The earlier [Omarchy research](omarchy.md) records its combined migrations, configuration, package, and snapshot behavior. Avoid substituting generic Arch full-upgrade commands without checking Omarchy's current guard and mirror policy.
 
 ## Arch maintenance that still matters
 
@@ -27,7 +27,7 @@ For our guide, schedule attended updates with time for recovery, keep a USB inst
 
 [Tailscale's firewall documentation](https://tailscale.com/docs/integrations/firewalls) says most networks need no extra inbound ports; relays provide a fallback when direct connections fail. Its [UFW tutorial](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw) demonstrates restricting ordinary incoming traffic to Tailscale. That tutorial targets Ubuntu, so use its access principle rather than its package/service commands or a firewall reset on Omarchy.
 
-Tailscale can manage its own packet-filtering path. A restrictive UFW input rule does not establish least-privilege access within the tailnet. Review tailnet grants separately, keep Tailscale SSH off for the chosen OpenSSH baseline, and test authorized tailnet access and denied LAN access independently. The detailed policy and lockout-safe procedure remain in [private access](private-access.md).
+Tailscale can manage its own packet-filtering path. A restrictive UFW input rule does not establish least-privilege access within the tailnet. Review tailnet grants separately, keep Tailscale SSH off for the chosen OpenSSH baseline, and test authorized tailnet access and denied LAN access independently. The detailed policy and lockout-safe procedure remain in [private access](../../../research/private-access.md).
 
 [Docker's firewall documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/) explains that published container traffic can bypass UFW input rules. Keep databases unpublished, bind development HTTP ports to `127.0.0.1`, and use SSH forwarding. Test from another LAN machine. Omarchy's `ufw-docker` integration is useful defense but does not remove the need to inspect actual published ports.
 

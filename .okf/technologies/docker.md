@@ -5,9 +5,9 @@ description: "Container hosting in historical Pi guides and a restricted option 
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/03 - Installing Docker.md"
+    resource: "../../docs/devices/remote-lab/docker.md"
   - id: source-2
-    resource: "../../docs/05 - Add Postgres Server on Docker.md"
+    resource: "../../docs/devices/remote-lab/postgres.md"
   - id: source-3
     resource: "../../docs/research/private-access.md"
   - id: source-4

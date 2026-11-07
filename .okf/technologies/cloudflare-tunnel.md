@@ -5,9 +5,9 @@ description: "Reported access to the existing Pi, distinct from planned private 
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/04 - Setup SSH through Cloudflare.md"
+    resource: "../../docs/devices/remote-lab/cloudflare-ssh.md"
   - id: source-2
-    resource: "../../docs/07 - Setup Coolify with Cloudflare tunnel.md"
+    resource: "../../docs/devices/remote-lab/coolify-cloudflare.md"
   - id: source-3
     resource: "../../docs/research/remote-coding.md"
   - id: source-4
@@ -22,4 +22,4 @@ Historical guides describe two uses: SSH through Cloudflare Access and public ap
 
 A connector route and a hostname do not establish who may use the application. The [private-network learning](../learnings/private-network-is-not-isolation.md "requires separate authentication reasoning from") distinguishes reachability from authentication and process permissions.
 
-The [HP private-development decision](../decisions/private-development.md "is separate from") instead proposes Tailscale and OpenSSH. Do not copy the historical public routing recipe into HP agent administration.
+The [HP private-development decision](../decisions/home-lab/private-development.md "is separate from") instead proposes Tailscale and OpenSSH. Do not copy the historical public routing recipe into HP agent administration.

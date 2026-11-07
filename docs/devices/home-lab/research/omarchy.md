@@ -1,8 +1,8 @@
 # Omarchy as a mostly headless development host
 
-User decision after this research: use an unencrypted disk for unattended restart. The [HP checklist](../hp-preparation.md) reflects that choice; the encryption options below document the tradeoff.
+User decision after this research: use an unencrypted disk for unattended restart. The [HP checklist](../preparation.md) reflects that choice; the encryption options below document the tradeoff.
 
-Research checked on 6 November 2026. These findings concern the planned HP host; its specifications live in the [inventory](../reference/inventory.md). No commands in this article have been executed on the HP. Inspect the installed release before applying them.
+Research checked on 6 November 2026. These findings concern the planned HP host; its specifications live in the [inventory](../../../reference/inventory.md). No commands in this article have been executed on the HP. Inspect the installed release before applying them.
 
 ## Install from the current ISO
 
@@ -88,7 +88,7 @@ Omarchy creates snapshots for updates and exposes `omarchy-snapshot create`. Rec
 
 Recommendation: keep separate encrypted off-host backups of repositories, uncommitted work, agent session files, and configuration. Test restoring one project. Retain a bootable USB and local console access for a failed network or boot update.
 
-Upcoming work and checks live in the [HP preparation checklist](../hp-preparation.md). The findings above explain why boot, idle access, and recovery need separate attention.
+Upcoming work and checks live in the [HP preparation checklist](../preparation.md). The findings above explain why boot, idle access, and recovery need separate attention.
 
 ## Install packages through Omarchy
 

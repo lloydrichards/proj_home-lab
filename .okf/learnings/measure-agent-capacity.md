@@ -5,7 +5,7 @@ description: "Cloud-hosted inference leaves build and browser costs on the HP."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/hp-preparation.md"
+    resource: "../../docs/devices/home-lab/preparation.md"
   - id: source-2
     resource: "../../docs/research/remote-coding.md"
   - id: vm-research

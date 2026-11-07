@@ -7,7 +7,7 @@ sources:
   - id: source-1
     resource: "../../docs/research/remote-coding.md"
   - id: source-3
-    resource: "../../docs/hp-preparation.md"
+    resource: "../../docs/devices/home-lab/preparation.md"
 ---
 
 # Pi coding agent

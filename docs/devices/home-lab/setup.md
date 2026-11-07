@@ -2,7 +2,7 @@
 
 Use this guide at the HP console after Omarchy is installed. It takes the machine from its first desktop login to private remote coding from the MacBook. Keep a monitor, keyboard, and bootable USB available until the reboot and recovery checks pass.
 
-Prepared on 7 November 2026 from upstream documentation and [setup research](research/hp-post-install-sources.md). These are proposed instructions, not steps already run on the HP. Recheck the installed release before making changes. Track progress only in the [HP preparation checklist](hp-preparation.md).
+Prepared on 7 November 2026 from upstream documentation and [setup research](research/setup-sources.md). These are proposed instructions, not steps already run on the HP. Recheck the installed release before making changes. Track progress only in the [HP preparation checklist](preparation.md).
 
 The starting arrangement is Ethernet, an unencrypted boot disk as already chosen, Tailscale for private connectivity, ordinary OpenSSH for login, and a separate unprivileged `coder` account. Existing Pi hosting stays where it is. The daily Mac client remains open; begin with SSH and tmux.
 
@@ -27,9 +27,9 @@ ip route
 systemctl --failed
 ```
 
-Confirm the delivered hardware against the [inventory](reference/inventory.md). Record hostname, installed Omarchy version from its About screen or installed version command, BIOS version, disk layout, and Ethernet address. Keep raw output and serial numbers in ignored `local/`, not Git.
+Confirm the delivered hardware against the [inventory](../../reference/inventory.md). Record hostname, installed Omarchy version from its About screen or installed version command, BIOS version, disk layout, and Ethernet address. Keep raw output and serial numbers in ignored `local/`, not Git.
 
-Use `home-lab` for the HP, following the [planned device names](reference/inventory.md#planned-device-names). Keep lowercase letters and hyphens, not underscores such as `home_lab`. This follows [systemd's hostname guidance](https://www.freedesktop.org/software/systemd/man/258/hostname.html) and gives us a name suitable for DNS.
+Use `home-lab` for the HP, following the [planned device names](../../reference/inventory.md#planned-device-names). Keep lowercase letters and hyphens, not underscores such as `home_lab`. This follows [systemd's hostname guidance](https://www.freedesktop.org/software/systemd/man/258/hostname.html) and gives us a name suitable for DNS.
 
 Set the name before enrolling in Tailscale:
 
@@ -95,7 +95,7 @@ sudo -l -U coder
 
 Choose a local recovery password and save it outside the HP. `coder` must not have sudo permission or membership in `wheel`, `docker`, or `disk`. Stop if `sudo -l -U coder` grants commands. Review `/etc/sudoers` and `/etc/sudoers.d/` with `visudo` before using agents. Do not enable Omarchy's optional passwordless sudo or sudoless Docker settings.
 
-Run `chmod 700 "$HOME"` while logged in as the maintenance account if its home is accessible to other users. This prevents ordinary reads by `coder`; it does not isolate projects that all run as `coder`. Keep maintenance keys, backup deletion credentials, and unrelated personal files out of that account. See [agent isolation](../.okf/technologies/agent-isolation.md).
+Run `chmod 700 "$HOME"` while logged in as the maintenance account if its home is accessible to other users. This prevents ordinary reads by `coder`; it does not isolate projects that all run as `coder`. Keep maintenance keys, backup deletion credentials, and unrelated personal files out of that account. See [agent isolation](../../../.okf/technologies/agent-isolation.md).
 
 ## 4. Prepare laptop SSH keys before restricting login
 
@@ -135,7 +135,7 @@ Follow the enrollment URL. In the Tailscale admin console, confirm this device i
 
 `tailscale up` is for initial enrollment; do not use reset or logout commands through your only working connection. This guide uses OpenSSH rather than Tailscale SSH.
 
-Review the tailnet access policy before relying on it. Allow your intended Mac identity or device to reach this HP on TCP 22. Review existing broad allow rules too; adding a narrow grant does not remove them. Preserve access needed by existing devices. The [private access research](research/private-access.md#tailnet-policy-and-device-identity) has an example to adapt, policy references, and device-expiry details. Review the HP's key expiry so it does not unexpectedly lose access. Keep router port forwarding, Tailscale Funnel, exit-node advertising, and subnet routing off for this baseline.
+Review the tailnet access policy before relying on it. Allow your intended Mac identity or device to reach this HP on TCP 22. Review existing broad allow rules too; adding a narrow grant does not remove them. Preserve access needed by existing devices. The [private access research](../../research/private-access.md#tailnet-policy-and-device-identity) has an example to adapt, policy references, and device-expiry details. Review the HP's key expiry so it does not unexpectedly lose access. Keep router port forwarding, Tailscale Funnel, exit-node advertising, and subnet routing off for this baseline.
 
 Inspect the firewall at the console:
 
@@ -272,7 +272,7 @@ Log in as `coder`. Create `~/projects`, configure your Git name and email, and c
 
 Install only that project's required runtimes and package manager. Omarchy uses mise for many tools, but the new account does not automatically inherit the desktop user's setup. Check `command -v git node mise` and the project's version files. Follow the runtime's official setup instructions under `coder`; do not copy the administrator's entire home or run package scripts as root. See [Omarchy development tools](https://omarchy.org/manual/development-tools/).
 
-Install one agent, Pi or OpenCode, from its current official instructions linked in [remote coding research](research/remote-coding.md) and [OpenCode research](research/opencode-v2.md). Confirm the exact executable and version. Use a scoped provider credential, store it privately, and verify the account's file permissions. Keep approvals on for actions that need review. A private connection does not sandbox shell commands.
+Install one agent, Pi or OpenCode, from its current official instructions linked in [remote coding research](../../research/remote-coding.md) and [OpenCode research](../../research/opencode-v2.md). Confirm the exact executable and version. Use a scoped provider credential, store it privately, and verify the account's file permissions. Keep approvals on for actions that need review. A private connection does not sandbox shell commands.
 
 Start a persistent terminal:
 
@@ -305,11 +305,11 @@ ports:
   - "127.0.0.1:3000:3000"
 ```
 
-Do not publish databases needed only by other containers. Avoid host networking, privileged containers, and mounting the Docker socket into agent tools. Inspect `sudo docker ps` port mappings and test from another LAN device. Docker publishing can bypass ordinary UFW filtering; keep Docker's own firewall management enabled. Verify the current engine's localhost-publishing behavior against [Docker's firewall documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/). See [network exposure research](research/private-access.md#firewall-and-docker).
+Do not publish databases needed only by other containers. Avoid host networking, privileged containers, and mounting the Docker socket into agent tools. Inspect `sudo docker ps` port mappings and test from another LAN device. Docker publishing can bypass ordinary UFW filtering; keep Docker's own firewall management enabled. Verify the current engine's localhost-publishing behavior against [Docker's firewall documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/). See [network exposure research](../../research/private-access.md#firewall-and-docker).
 
 ## 10. Make and restore the first off-machine backup
 
-Choose the destination before relying on the HP. Use another device or a storage service, with encrypted restic data and recovery credentials saved outside the HP. Root snapshots and Git pushes do not protect all home-directory work. See [backup research](research/backups.md).
+Choose the destination before relying on the HP. Use another device or a storage service, with encrypted restic data and recovery credentials saved outside the HP. Root snapshots and Git pushes do not protect all home-directory work. See [backup research](../../research/backups.md).
 
 Before the backup, create a small uncommitted file in the test project and save an agent conversation. Identify both exact absolute paths and stop agents for a consistent first copy. Include any Git worktrees and their common repository data, even when they live outside `~/projects`.
 
@@ -338,7 +338,7 @@ Once this works, configure a daily backup timer for the chosen backend. It must 
 
 ## 11. Prove access and recovery before putting it in the rack
 
-Run the matching checks in the [preparation checklist](hp-preparation.md) and record measured facts in the inventory and service register.
+Run the matching checks in the [preparation checklist](preparation.md) and record measured facts in the inventory and service register.
 
 1. Open fresh SSH sessions to both accounts. Confirm password login, root login, and a key absent from `authorized_keys` fail. Confirm `coder` cannot use sudo or read maintenance credentials.
 2. From another LAN device, try the HP's LAN address on port 22 and each application port. These connections must fail. Test IPv6 too if the HP has it. Use `nc -vz -w 3 ADDRESS PORT` or a browser as appropriate.
