@@ -15,6 +15,7 @@ Hardware and name details live in the shared [inventory](../reference/inventory.
 - [Recovery before reliance](../.okf/decisions/recovery-before-reliance.md) sets the initial recovery checks.
 - [Keep existing Pi hosting separate](../.okf/decisions/keep-pi-hosting-separate.md) explains the rollout boundary.
 - [Omarchy research](research/omarchy.md) and [post-install sources](research/setup-sources.md) support the setup guide.
+- [Remote desktop research](research/omarchy-remote-desktop.md) compares Mac access, headless operation, responsiveness, and when to retain a monitor.
 - [Shared research](../research/README.md) covers private access, backups, and Mac-to-HP tools.
 
 See the [remote-development concept](../.okf/technologies/private-remote-development.md) for how the tools fit together, or return to [all devices and lab records](../README.md).
