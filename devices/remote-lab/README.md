@@ -4,9 +4,9 @@ The Raspberry Pi 5 is the user-reported Coolify and Cloudflare Tunnel host. `rem
 
 ## Start here
 
-Keep existing workloads in place during HP setup. When access is available, use the [service register's inspection guidance](../reference/services.md#next-inspection) to establish what runs here before changing it. Check name and network dependencies before applying the planned hostname.
+Keep existing workloads in place during HP setup. When access is available, use the [service register's inspection guidance](../_reference/services.md#next-inspection) to establish what runs here before changing it. Check name and network dependencies before applying the planned hostname.
 
-The shared [inventory](../reference/inventory.md) owns hardware and naming facts. The [service register](../reference/services.md) owns service placement and access gaps. Purchases stay in the [BOM](../reference/bom.md).
+The shared [inventory](../_reference/inventory.md) owns hardware and naming facts. The [service register](../_reference/services.md) owns service placement and access gaps. Purchases stay in the [BOM](../_reference/bom.md).
 
 ## Historical recipes
 
@@ -22,6 +22,6 @@ These earlier Pi recipes are grouped here for reference. They have not been chec
 
 ## Choices and knowledge
 
-The shared [keep-existing-hosting decision](../.okf/decisions/keep-pi-hosting-separate.md) explains why this machine keeps its services during HP setup. [Coolify](../.okf/technologies/coolify.md), [Cloudflare Tunnel](../.okf/technologies/cloudflare-tunnel.md), [Docker](../.okf/technologies/docker.md), and [PostgreSQL](../.okf/technologies/postgresql.md) record the related knowledge and open questions.
+The shared [keep-existing-hosting decision](../../.okf/decisions/keep-pi-hosting-separate.md) explains why this machine keeps its services during HP setup. [Coolify](../../.okf/technologies/coolify.md), [Cloudflare Tunnel](../../.okf/technologies/cloudflare-tunnel.md), [Docker](../../.okf/technologies/docker.md), and [PostgreSQL](../../.okf/technologies/postgresql.md) record the related knowledge and open questions.
 
-There are no separate confirmed Pi 5 decisions yet. Add device-specific decisions under `.okf/decisions/remote-lab/` when needed and link them here. Return to [all devices and lab records](../README.md).
+There are no separate confirmed Pi 5 decisions yet. Add device-specific decisions under `.okf/decisions/remote-lab/` when needed and link them here. Return to [all devices and lab records](../../README.md).

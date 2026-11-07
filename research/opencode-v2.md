@@ -1,6 +1,6 @@
 # OpenCode v2 research
 
-Checked 6 November 2026 against official v2 documentation and a tagged release. These findings were documentation-checked, not tested on the HP. These notes are reference material for the [HP preparation checklist](../home-lab/preparation.md). Write the actual recipe when we try the installed tool.
+Checked 6 November 2026 against official v2 documentation and a tagged release. These findings were documentation-checked, not tested on the HP. These notes are reference material for the [HP preparation checklist](../devices/home-lab/preparation.md). Write the actual recipe when we try the installed tool.
 
 ## Package identity and installation rationale
 

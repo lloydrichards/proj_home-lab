@@ -5,9 +5,9 @@ description: "A proposed rollout boundary between running services and new devel
 status: draft
 sources:
   - id: architecture-decision
-    resource: "../../home-lab/preparation.md"
+    resource: "../../devices/home-lab/preparation.md"
   - id: source-3
-    resource: "../../reference/services.md"
+    resource: "../../devices/_reference/services.md"
 ---
 
 # Keep existing Pi hosting during HP setup

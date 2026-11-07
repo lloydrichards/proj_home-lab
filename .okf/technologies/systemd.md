@@ -5,7 +5,7 @@ description: "Service supervision, power policy, and proposed scheduled operatio
 status: draft
 sources:
   - id: source-1
-    resource: "../../home-lab/research/omarchy.md"
+    resource: "../../devices/home-lab/research/omarchy.md"
   - id: source-2
     resource: "../../research/backups.md"
 ---

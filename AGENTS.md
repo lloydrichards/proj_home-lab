@@ -16,13 +16,13 @@ Help Lloyd set things up, troubleshoot, and remember what we explored and why. M
 ## Keep only useful material
 
 - Keep `README.md` short: what runs where, known access details, the next task, and links when needed.
-- Keep `home-lab/preparation.md` as the single list of upcoming HP work. Research and OKF explain the reasons and test details, linking to that list rather than maintaining parallel task lists.
-- Keep device guides in root-level directories, starting with `home-lab`, `remote-lab`, and `admin-lab`. Each device README links its status, guides, research, and relevant OKF decisions. A directory name is not evidence that the hostname has been applied.
+- Keep `devices/home-lab/preparation.md` as the single list of upcoming HP work. Research and OKF explain the reasons and test details, linking to that list rather than maintaining parallel task lists.
+- Keep device guides under `devices/`, starting with `home-lab`, `remote-lab`, and `admin-lab`. Each device README links its status, guides, research, and relevant OKF decisions. A directory name is not evidence that the hostname has been applied.
 - Keep arriving hardware in a preparation checklist. Expand setup instructions when we perform the work, recording checks and recovery steps worth repeating.
-- Keep lab-wide inventory, BOM, and the service register in `reference/`. Update these owning records when device, service, or purchase facts change. Device pages summarize purpose and status and link the records rather than copying specifications or maintaining another inventory.
+- Keep lab-wide inventory, BOM, and the service register in `devices/_reference/`. Update these owning records when device, service, or purchase facts change. Device pages summarize purpose and status and link the records rather than copying specifications or maintaining another inventory.
 - Use `.okf/` for concepts, why we prefer an approach, alternatives considered, unresolved questions, and reusable learnings. Keep device-specific choices in `.okf/decisions/<device>/` and cross-device choices directly in `.okf/decisions/`. Link decisions from the relevant device README. Do not create parallel ADRs or duplicate decisions in device guide directories.
-- Keep research spanning devices or the Mac client in `research/`. Put device-specific research under `<device>/research/`. Retain research only when its sources or investigation help a real question, and recheck release-sensitive facts at the point of use.
-- Add future devices with a directory and a short README. Create guide, research, or decision directories only when they have useful content. Keep historical Pi recipes marked as unverified after moves; reorganizing a recipe does not validate its commands or deploy its services.
+- Keep research spanning devices or the Mac client in `research/`. Put device-specific research under `devices/<device>/research/`. Retain research only when its sources or investigation help a real question, and recheck release-sensitive facts at the point of use.
+- Add future devices under `devices/` with a directory and a short README. Create guide, research, or decision directories only when they have useful content. Keep historical Pi recipes marked as unverified after moves; reorganizing a recipe does not validate its commands or deploy its services.
 - Add a troubleshooting note when it helps diagnose or recover from a recurring problem. Do not create routine activity logs, copied historical snapshots, or completion reports. Git keeps change history.
 - Maintain the affected notes as we work and give the user a short account of the result and remaining uncertainties. Routine edits do not need new documents.
 

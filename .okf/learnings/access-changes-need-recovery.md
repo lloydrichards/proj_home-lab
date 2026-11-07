@@ -7,7 +7,7 @@ sources:
   - id: source-1
     resource: "../../research/private-access.md"
   - id: source-3
-    resource: "../../reference/services.md"
+    resource: "../../devices/_reference/services.md"
 ---
 
 # Keep recovery access during access changes

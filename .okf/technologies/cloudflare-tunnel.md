@@ -5,13 +5,13 @@ description: "Reported access to the existing Pi, distinct from planned private 
 status: draft
 sources:
   - id: source-1
-    resource: "../../remote-lab/cloudflare-ssh.md"
+    resource: "../../devices/remote-lab/cloudflare-ssh.md"
   - id: source-2
-    resource: "../../remote-lab/coolify-cloudflare.md"
+    resource: "../../devices/remote-lab/coolify-cloudflare.md"
   - id: source-3
     resource: "../../research/remote-coding.md"
   - id: source-4
-    resource: "../../reference/services.md"
+    resource: "../../devices/_reference/services.md"
 ---
 
 # Cloudflare Tunnel
