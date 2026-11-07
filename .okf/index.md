@@ -4,7 +4,7 @@ okf_version: "0.2"
 
 # Home lab knowledge
 
-The assistant's context for the lab: technologies, the reasons for choices, alternatives, and reusable learnings. Start with [private remote development](technologies/private-remote-development.md) for the HP or [Coolify](technologies/coolify.md) for existing hosting.
+The assistant's context for the lab: technologies, the reasons for choices, alternatives, and reusable learnings. Start with [private remote development](technologies/private-remote-development.md) for home-lab, [Coolify](technologies/coolify.md) for remote-lab hosting, or [Pi-hole](technologies/pi-hole.md) for admin-lab DNS.
 
 Machine and service facts live in `docs/reference/`. The HP starts with `docs/devices/home-lab/preparation.md`; repeatable recipes are recorded as we do the setup. Device pages under `docs/devices/` link their guides and decisions. Research lives with its device or in `docs/research/` when shared. This library owns the why, with Git keeping previous versions.
 

@@ -30,6 +30,18 @@ Help Lloyd set things up, troubleshoot, and remember what we explored and why. M
 
 Use the [OKF skill](.agents/skills/okf/SKILL.md). Read `.okf/index.md`, then the relevant concepts and sources. Update existing concepts before adding new ones. Link meaningful relationships and update the index when adding an entry.
 
+### Find context before researching
+
+Before new research, setup proposals, or troubleshooting, use OKF to find the existing context:
+
+1. Read `.okf/index.md` or run `okf-graph bundle index .okf`. Start with the relevant device's entry point and narrow the question.
+2. Use `rg` on concept titles, descriptions, and cited source paths to find the owning concept. Read it with `okf-graph concept .okf <concept-id>`, then inspect `okf-graph graph neighbors .okf <concept-id> --json`.
+3. Follow the relevant decisions, related concepts, and `sources[].resource` files before browsing. Use `okf-graph graph path .okf <from-id> <to-id> --json` when you need to understand how two topics connect. A graph path suggests related context; read the relationships before treating it as a dependency.
+4. Research the unanswered question or recheck facts that may have changed. Existing notes can direct the investigation, but dated research and historical recipes do not prove current versions or deployment.
+5. Incorporate durable findings into the owning concept and its source note. Add file-relative links to concepts whose relationship matters, with a clear relation in the link title. Create a concept only when none owns the topic; link it from the index and the relevant concept or device page. Preserve user choices and distinguish proposals from observations.
+
+Use the installed CLI when available, otherwise the Bun fallback below. Keep discovery focused; do not read the whole bundle or add reciprocal links solely to improve metrics. For a read-only task, report findings without editing the notebook.
+
 Keep commands in a recipe or detailed research note. Keep their purpose and tradeoffs in OKF. Cite evidence through file-relative `sources[].resource` metadata and link concepts with file-relative Markdown links. User choices can be recorded directly in a concept with the date and context; do not invent a separate evidence document just to cite it.
 
 Distinguish user-reported facts, live observations with host and date, researched behavior, proposals, and unknowns. A written recipe is not evidence that its steps ran. `draft`, `stable`, and `deprecated` describe knowledge maturity, not deployment. Use `verified` only for claims actually checked. Report conflicts with a user choice rather than silently changing the choice.
@@ -45,11 +57,15 @@ With an installed CLI, use `okf-graph validate .okf --json` and `okf-graph graph
 The sibling checkout is a fallback when Bun and its dependencies are available:
 
 ```bash
-bun run ../proj_okf-graph/apps/okf-graph/src/index.ts validate .okf --json
+bun run ../proj_okf-graph/apps/okf-graph/src/index.ts bundle index .okf
+bun run ../proj_okf-graph/apps/okf-graph/src/index.ts concept .okf <concept-id>
 bun run ../proj_okf-graph/apps/okf-graph/src/index.ts graph neighbors .okf <concept-id> --json
+bun run ../proj_okf-graph/apps/okf-graph/src/index.ts graph path .okf <from-id> <to-id> --json
+bun run ../proj_okf-graph/apps/okf-graph/src/index.ts validate .okf --json
+bun run ../proj_okf-graph/apps/okf-graph/src/index.ts eval .okf --json
 ```
 
-Confirm tool availability. For substantial graph changes, run `eval .okf --json` and review findings without adding links just to improve metrics.
+Confirm tool availability. For substantial graph changes, run `eval .okf --json` and review findings alongside the changed concepts and sources. Evaluation describes structure and navigation; it does not certify factual accuracy, freshness, or deployment. Report tool findings separately from your content assessment. Do not invent a numeric tool grade or add links just to improve metrics.
 
 ## Commit and PR titles
 
