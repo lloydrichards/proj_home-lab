@@ -10,6 +10,8 @@ An assistant-maintained notebook for setting things up, troubleshooting, and rem
 | Raspberry Pi 4 | Pi-hole, user reported | SSH details not yet recorded |
 | HP EliteDesk 800 G6 Mini | Arriving soon for remote development and AI coding | Not set up yet |
 
+Use devvm locally on the MacBook for selected projects that need isolation. Use the HP for ordinary remote coding and work that should continue while the Mac sleeps. HP project VMs are deferred. This is the chosen direction, not an installed setup.
+
 ## Next
 
 [Prepare for the HP](docs/hp-preparation.md). Leave the existing Pi services in place while we get it working.
