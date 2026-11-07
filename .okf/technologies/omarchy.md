@@ -4,6 +4,8 @@ title: "Omarchy"
 description: "The selected operating system for the arriving HP."
 status: draft
 sources:
+  - id: hp-setup
+    resource: "../../docs/hp-setup.md"
   - id: source-1
     resource: "../../docs/research/omarchy-headless.md"
   - id: source-3
@@ -18,4 +20,4 @@ The research separates desktop idle controls from system-wide power policy and f
 
 The research recommends Omarchy's supported update path and maintenance windows with recovery access. Its researched root snapshots exclude home data, which motivates [separate backups](restic.md "needs for home data") and the [snapshot learning](../learnings/snapshots-are-not-backups.md "illustrates").
 
-Installer and release-sensitive commands remain in the research notes. Check them against the actual installed release.
+The post-install guide cited in source `hp-setup` checks installed defaults before changing services and keeps the desktop for initial recovery. Commands in that guide and the research need checking against the installed release. No HP configuration has been performed. Progress remains in the preparation checklist.

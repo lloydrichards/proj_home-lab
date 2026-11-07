@@ -2,6 +2,10 @@
 
 Start with the [home page](../README.md) or [HP preparation checklist](hp-preparation.md). There is no reading sequence for this folder.
 
+## HP setup
+
+After Omarchy is installed, follow [Set up the HP](hp-setup.md). It covers configuration, private access, hardening, coding tools, backup restoration, and reboot checks. Track progress in the [preparation checklist](hp-preparation.md).
+
 ## Existing Pi recipes
 
 These are earlier instructions, not verified descriptions of what is running today. Check them against the machine before reuse.
