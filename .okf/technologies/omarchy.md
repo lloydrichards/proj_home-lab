@@ -10,11 +10,17 @@ sources:
     resource: "../../home-lab/research/omarchy.md"
   - id: source-3
     resource: "../../research/backups.md"
+  - id: remote-desktop
+    resource: "../../home-lab/research/omarchy-remote-desktop.md"
 ---
 
 # Omarchy
 
-The HP plan selects bare-metal Omarchy with a local desktop for installation and recovery. Normal remote coding uses [OpenSSH](openssh.md "supports headless access through") rather than a remote desktop. This is an installation plan, not a running host description.
+The HP plan selects bare-metal Omarchy with a local desktop for installation and recovery. Normal remote coding starts with [OpenSSH](openssh.md "supports headless access through"). A remote desktop can complement that access. This is an installation plan, not a running host description.
+
+Research on 7 November 2026 recommends trying Sunshine on the HP with Moonlight on the Mac for the full desktop, while retaining SSH for coding and recovery. Native `hypr-rdp` is a desktop-focused alternative that needs version and authentication checks. WayVNC is another option for occasional graphical access. These are proposals, not a selected or tested deployment. Gliff is an upstream alternative for Hyprland clients, but its current requirement for Hyprland at both ends does not fit the Mac client.
+
+Headless desktop access still needs a running graphical session, an available display output, and working capture and input permissions. A virtual output can replace the physical monitor, but hardware encoding and reconnection after reboot need host tests. Unencrypted boot does not by itself establish desktop availability. Keep a monitor and keyboard available for firmware, boot-menu, and network recovery. The remote-desktop source compares options and defines the proposed checks; the preparation checklist remains the single task list.
 
 The research separates desktop idle controls from system-wide power policy and firmware AC-loss recovery. An always-on host needs cold-boot, idle, and reconnect tests; see the [unattended-boot decision](../decisions/home-lab/unattended-boot.md "must support").
 
