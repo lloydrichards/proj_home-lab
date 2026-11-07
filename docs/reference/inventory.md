@@ -12,7 +12,7 @@ Reviewed 6 November 2026. Purchased or reported specifications are not measureme
 | SSD | 1 TB | Model, interface, health, capacity |
 | Network | Ethernet; purchased offer excluded Wi-Fi | Interface name and link speed |
 | Rack | DeskPi RackMate T1 | Shelf, fasteners, cable clearance |
-| Client | Laptop | OS, SSH and Tailscale versions |
+| Client | MacBook, user confirmed 6 November 2026 | Model, macOS, SSH and Tailscale versions |
 | Coolify host | Earlier notes identify Raspberry Pi 5, RAM unresolved | Model, RAM, OS, storage, and running configuration |
 | Historical Pi storage | [1 TB NVMe M.2 2280 SSD](https://www.seeedstudio.com/NVMe-M-2-2280-SSD-1TB-p-5767.html) | Current use, model, capacity, and health |
 | Historical Pi enclosure | [Argon ONE V3 M.2 NVME case](https://argon40.com/products/argon-one-v3-m-2-nvme-case) | Current use and cooling configuration |

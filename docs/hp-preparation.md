@@ -2,6 +2,8 @@
 
 The purchased HP is arriving soon. Hardware details are in the [inventory](reference/inventory.md). No installation or live checks have run.
 
+Chosen on 7 November 2026: use devvm locally on the MacBook for selected projects, and ordinary remote coding on the HP over Tailscale and SSH. HP project VMs are deferred. The daily client is still undecided.
+
 This is the single list of upcoming HP work. Research explains the options and checks; it does not maintain another task list.
 
 ## Before it arrives
@@ -15,8 +17,9 @@ This is the single list of upcoming HP work. Research explains the options and c
 - [ ] Check the delivered hardware, firmware, memory, and SSD health; update the inventory.
 - [ ] Recheck the current Omarchy installer and install using the chosen unencrypted boot route.
 - [ ] Establish private laptop access and separate maintenance from coding permissions; check key-only login and rejection of unauthorized access.
-- [ ] Try one trusted project with Pi or OpenCode and a persistent terminal session. Measure resource use before adding concurrent jobs.
+- [ ] Try one trusted project with Pi or OpenCode and a persistent terminal session. Compare a Mac client from the [remote agent tools research](research/remote-agent-tools.md) before choosing the daily interface. Use separate worktrees for concurrent tasks and measure resource use before adding more jobs.
 - [ ] Check fresh login, disconnect/reconnect, idle access, reboot, and unintended network exposure, including browser authentication if used. Keep console and boot recovery available.
+- [ ] Check a Git handoff between a Mac project and an HP checkout. Keep each active task on one machine and preserve uncommitted work separately from branch transfers.
 - [ ] Back up and restore an uncommitted file and saved agent session before relying on the host.
 
 Write and verify each setup recipe as we do it. Keep only instructions worth repeating or useful for recovery.
