@@ -7,9 +7,9 @@ sources:
   - id: inventory
     resource: "../../docs/reference/inventory.md"
   - id: hp-setup
-    resource: "../../docs/hp-setup.md"
+    resource: "../../docs/devices/home-lab/setup.md"
   - id: source-1
-    resource: "../../docs/hp-preparation.md"
+    resource: "../../docs/devices/home-lab/preparation.md"
   - id: source-2
     resource: "../../docs/research/remote-coding.md"
   - id: source-3
@@ -22,7 +22,7 @@ The arriving HP is intended as the main remote development and AI coding host. I
 
 On 6 November 2026, Lloyd confirmed the client is a MacBook and requested several ways to move coding work onto the HP. The desired split keeps the interface on the Mac and the repository, agent tools, builds, and tests on the HP. Model inference can remain with a hosted provider. No particular client was selected.
 
-The [private-development decision](../decisions/private-development.md "is governed by") combines [Tailscale](tailscale.md "connects through") and [OpenSSH](openssh.md "authenticates through") with separate maintenance and coding accounts. [Omarchy](omarchy.md "runs on") supplies the planned operating system.
+The [private-development decision](../decisions/home-lab/private-development.md "is governed by") combines [Tailscale](tailscale.md "connects through") and [OpenSSH](openssh.md "authenticates through") with separate maintenance and coding accounts. [Omarchy](omarchy.md "runs on") supplies the planned operating system.
 
 [Pi coding agent](pi-coding-agent.md "can run") and [OpenCode](opencode.md "can run") are independent terminal options. [Tmux](tmux.md "uses for continuity") preserves their running terminal sessions after laptop disconnection. It does not replace [backups](restic.md "needs for data recovery") or reboot recovery.
 

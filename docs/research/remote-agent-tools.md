@@ -1,6 +1,6 @@
 # Coding agents on the HP from the MacBook
 
-Researched on 2026-11-06, with T3 Code and Herdr workflows refreshed on 2026-11-07 against the primary sources linked below. These are documented capabilities, not installation or runtime checks on the HP. The user intends to run Omarchy and use Tailscale. Upcoming work stays in the [HP checklist](../hp-preparation.md).
+Researched on 2026-11-06, with T3 Code and Herdr workflows refreshed on 2026-11-07 against the primary sources linked below. These are documented capabilities, not installation or runtime checks on the HP. The user intends to run Omarchy and use Tailscale. Upcoming work stays in the [HP checklist](../devices/home-lab/preparation.md).
 
 ## What to try first
 
@@ -140,4 +140,4 @@ Stop an unused project VM with `devvm stop` rather than deleting it. Its process
 
 Use one noncritical repository on the HP. Compare a plain persistent SSH session with T3 and one terminal candidate. Keep one checkout per active task using branches or worktrees; separate machines should exchange changes through Git rather than concurrently writing a network-mounted `.git` directory.
 
-The useful outcomes are whether work continues when the Mac sleeps, whether approvals and completed work are easy to find on reconnect, whether tests and preview servers really run on the HP, and whether a second task interferes with the first. Check reboot recovery separately. Local devvm trials are separate from HP preparation. Revisit HP VMs only if a specific remote project needs isolation. These are proposals; the [HP checklist](../hp-preparation.md) owns the actual upcoming tasks.
+The useful outcomes are whether work continues when the Mac sleeps, whether approvals and completed work are easy to find on reconnect, whether tests and preview servers really run on the HP, and whether a second task interferes with the first. Check reboot recovery separately. Local devvm trials are separate from HP preparation. Revisit HP VMs only if a specific remote project needs isolation. These are proposals; the [HP checklist](../devices/home-lab/preparation.md) owns the actual upcoming tasks.

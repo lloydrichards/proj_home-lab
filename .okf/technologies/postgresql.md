@@ -5,7 +5,7 @@ description: "A database documented in the earlier Pi Compose setup."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/05 - Add Postgres Server on Docker.md"
+    resource: "../../docs/devices/remote-lab/postgres.md"
   - id: source-2
     resource: "../../docs/research/backups.md"
   - id: source-3

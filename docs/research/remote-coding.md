@@ -6,7 +6,7 @@ Checked 2026-11-06 against first-party documentation and release source. Command
 
 ## Workflow findings
 
-The [remote-development choice](../../.okf/decisions/private-development.md) records why we prefer private terminal access. The researched starting workflow uses SSH over Tailscale and one tmux session per coding task. This works for both Pi and OpenCode, keeps the checkout and tools on the server, and survives a laptop disconnect. Add OpenCode's browser/server interface when it improves the workflow. Keep stable hosted services on the Raspberry Pi initially.
+The [remote-development choice](../../.okf/decisions/home-lab/private-development.md) records why we prefer private terminal access. The researched starting workflow uses SSH over Tailscale and one tmux session per coding task. This works for both Pi and OpenCode, keeps the checkout and tools on the server, and survives a laptop disconnect. Add OpenCode's browser/server interface when it improves the workflow. Keep stable hosted services on the Raspberry Pi initially.
 
 Three to five agent conversations are a reasonable **starting experiment** on 32 GB RAM when model inference runs at a remote provider. That is not a measured concurrency guarantee. TypeScript checkers, test workers, browsers, language servers, and databases consume the local RAM and CPU. Initially allow only one or two heavy build/test jobs at once, leave roughly 8–12 GB for the OS and shared services, and measure memory pressure before increasing concurrency. These are planning estimates, not vendor requirements.
 
@@ -109,4 +109,4 @@ Use one worktree or clone and one branch per task to prevent concurrent edits to
 
 Do not mount `/var/run/docker.sock`, give an agent membership in the host `docker` group, or grant privileged containers to simplify builds. Ordinary Docker daemon access can grant control over the host. Put Docker-dependent agent workloads in a dedicated VM with its own daemon when needed, separate from stable Coolify services. [Docker daemon security](https://docs.docker.com/engine/security/), [Docker group privileges](https://docs.docker.com/engine/install/linux-postinstall/)
 
-Upcoming work and checks live in the [HP preparation checklist](../hp-preparation.md). The [capacity learning](../../.okf/learnings/measure-agent-capacity.md) explains why heavy build jobs must be measured separately from connected conversations.
+Upcoming work and checks live in the [HP preparation checklist](../devices/home-lab/preparation.md). The [capacity learning](../../.okf/learnings/measure-agent-capacity.md) explains why heavy build jobs must be measured separately from connected conversations.

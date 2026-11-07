@@ -16,4 +16,4 @@ Tailscale supplies connectivity and tailnet access policy. [OpenSSH](openssh.md 
 
 The access research warns that a narrow new grant does not cancel an existing broad allow. Review effective access across existing ACLs and grants, and test denial from an unauthorized device. Device expiry and recovery also need an explicit plan.
 
-Tailscale Serve is a researched option for private HTTPS. Funnel publishes publicly and is excluded from the [private development decision](../decisions/private-development.md "implements"). Neither private transport nor a policy rule replaces [application authentication](../learnings/private-network-is-not-isolation.md "does not replace").
+Tailscale Serve is a researched option for private HTTPS. Funnel publishes publicly and is excluded from the [private development decision](../decisions/home-lab/private-development.md "implements"). Neither private transport nor a policy rule replaces [application authentication](../learnings/private-network-is-not-isolation.md "does not replace").

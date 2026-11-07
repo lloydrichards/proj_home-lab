@@ -1,10 +1,10 @@
-> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](hp-preparation.md).
+> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](../home-lab/preparation.md).
 
 # Setup Coolify with Cloudflare tunnel
 
 1. Buy or add a domain to Cloudflare.
 1. Add a new tunnel in the Zero Trust tab (separate from SSH in
-   [#04](./04%20-%20Setup%20SSH%20through%20Cloudflare.md)).
+   [SSH through Cloudflare](cloudflare-ssh.md)).
 1. Use the Docker image to add the new tunnel, be sure to name it:
 
    ```bash

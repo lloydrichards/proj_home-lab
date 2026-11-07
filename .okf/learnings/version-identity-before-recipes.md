@@ -9,7 +9,7 @@ sources:
   - id: source-2
     resource: "../../docs/research/remote-coding.md"
   - id: source-3
-    resource: "../../docs/research/omarchy-headless.md"
+    resource: "../../docs/devices/home-lab/research/omarchy.md"
 ---
 
 # Identify the version before copying a recipe

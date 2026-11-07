@@ -1,26 +1,23 @@
 # Find a useful note
 
-Start with the [home page](../README.md) or [HP preparation checklist](hp-preparation.md). There is no reading sequence for this folder.
+Start with the relevant device. Names below are the planned hostnames, not verified access addresses.
 
-## HP setup
+| Device | Purpose | Start here |
+|---|---|---|
+| [home-lab](devices/home-lab/README.md) | HP development and AI coding | [Preparation checklist](devices/home-lab/preparation.md), then [post-install setup](devices/home-lab/setup.md) |
+| [remote-lab](devices/remote-lab/README.md) | Pi 5 hosting with Coolify and Cloudflare Tunnel | Device status and historical Pi recipes |
+| [admin-lab](devices/admin-lab/README.md) | Pi 4 with Pi-hole | Known gaps and DNS dependency checks |
 
-After Omarchy is installed, follow [Set up the HP](hp-setup.md). It covers configuration, private access, hardening, coding tools, backup restoration, and reboot checks. Track progress in the [preparation checklist](hp-preparation.md).
+Each device page links its guides, research, and relevant decisions. Historical recipes and researched plans are identified as such; neither proves installed behavior.
 
-## Existing Pi recipes
+## Shared lab records
 
-These are earlier instructions, not verified descriptions of what is running today. Check them against the machine before reuse.
+- [Inventory](reference/inventory.md) owns hardware facts, planned names, and verification gaps.
+- [BOM](reference/bom.md) owns purchases, costs, and shared rack parts.
+- [Service register](reference/services.md) owns service placement, access, and dependencies.
+- [Shared research](research/README.md) covers topics that span devices or the Mac client.
+- [OKF notebook](../.okf/index.md) owns concepts, decisions, alternatives, and reusable learnings.
 
-- [Initial Pi setup](01%20-%20Getting%20the%20Raspberry%20Pi%20Setup.md)
-- [SSH hardening](02%20-%20Hardening%20the%20SSH.md)
-- [Docker and Portainer](03%20-%20Installing%20Docker.md)
-- [SSH through Cloudflare](04%20-%20Setup%20SSH%20through%20Cloudflare.md)
-- [PostgreSQL on Docker](05%20-%20Add%20Postgres%20Server%20on%20Docker.md)
-- [Coolify](06%20-%20Add%20Coolify)
-- [Coolify with Cloudflare Tunnel](07%20-%20Setup%20Coolify%20with%20Cloudflare%20tunnel.md)
+Keep device procedures in `docs/devices/<device>/`. Put device-specific research in that device's `research/` directory when needed. Decisions live once in `.okf/decisions/<device>/` and are linked from the device page; decisions spanning the lab stay directly under `.okf/decisions/`. Shared technologies and learnings stay in their existing OKF directories.
 
-## Other questions
-
-- What is installed or owned? [Inventory](reference/inventory.md), [services](reference/services.md), and [BOM](reference/bom.md).
-- What have we explored? [Research](research/README.md) for sources and details; [OKF](../.okf/index.md) for connections, choices, and lessons.
-
-The assistant maintains these notes as we work. Keep recipes for repeatable setup and recovery, and add troubleshooting notes only when they help solve a recurring problem. Put the reason for a choice in its OKF concept. Use Git for change history, without separate ADRs or activity logs. See [agent instructions](../AGENTS.md).
+Add a new device with a directory and a short `README.md`. Create more files or subdirectories only when there is useful material to put in them. Keep one source for each fact and link related records. See [agent instructions](../AGENTS.md) or return to the [home page](../README.md).

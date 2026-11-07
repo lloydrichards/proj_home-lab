@@ -6,7 +6,7 @@ okf_version: "0.2"
 
 The assistant's context for the lab: technologies, the reasons for choices, alternatives, and reusable learnings. Start with [private remote development](technologies/private-remote-development.md) for the HP or [Coolify](technologies/coolify.md) for existing hosting.
 
-Machine and service facts live in `docs/reference/`. The HP starts with `docs/hp-preparation.md`; repeatable recipes are recorded as we do the setup. Research holds detailed sources. This library owns the why, with Git keeping previous versions.
+Machine and service facts live in `docs/reference/`. The HP starts with `docs/devices/home-lab/preparation.md`; repeatable recipes are recorded as we do the setup. Device pages under `docs/devices/` link their guides and decisions. Research lives with its device or in `docs/research/` when shared. This library owns the why, with Git keeping previous versions.
 
 All concepts use `draft` while setup and research remain unsettled. A user-confirmed choice is identified in its decision text. Learning entries are conclusions from research unless an actual observation is stated. No HP setup check has been completed, and live Pi inspection is deferred.
 
@@ -30,10 +30,12 @@ All concepts use `draft` while setup and research remain unsettled. A user-confi
 
 ## Choices and why
 
+Device-specific choices live under `decisions/<device>/`. Choices spanning devices stay directly under `decisions/`; technologies and learnings remain shared. The device READMEs provide navigation without duplicating decision text.
+
 - [Keep existing Pi hosting during HP setup](decisions/keep-pi-hosting-separate.md)
-- [Keep remote development private](decisions/private-development.md)
+- [Keep remote development private](decisions/home-lab/private-development.md)
 - [Test recovery before relying on the HP](decisions/recovery-before-reliance.md)
-- [Choose unencrypted unattended boot](decisions/unattended-boot.md)
+- [Choose unencrypted unattended boot](decisions/home-lab/unattended-boot.md)
 
 ## Learnings
 
@@ -47,13 +49,13 @@ All concepts use `draft` while setup and research remain unsettled. A user-confi
 
 ## Read across topics
 
-- Private access: [architecture](decisions/private-development.md), [Tailscale](technologies/tailscale.md), [OpenSSH](technologies/openssh.md), and [effective exposure](learnings/test-effective-exposure.md).
+- Private access: [architecture](decisions/home-lab/private-development.md), [Tailscale](technologies/tailscale.md), [OpenSSH](technologies/openssh.md), and [effective exposure](learnings/test-effective-exposure.md).
 - Agent execution: [isolation](technologies/agent-isolation.md), [Pi](technologies/pi-coding-agent.md), [OpenCode](technologies/opencode.md), and [capacity](learnings/measure-agent-capacity.md).
-- Continuity and recovery: [tmux](technologies/tmux.md), [systemd](technologies/systemd.md), [boot preference](decisions/unattended-boot.md), and [backups](technologies/restic.md).
+- Continuity and recovery: [tmux](technologies/tmux.md), [systemd](technologies/systemd.md), [boot preference](decisions/home-lab/unattended-boot.md), and [backups](technologies/restic.md).
 - Existing hosting: [Coolify](technologies/coolify.md), [Cloudflare Tunnel](technologies/cloudflare-tunnel.md), [Docker](technologies/docker.md), and [migration boundaries](decisions/keep-pi-hosting-separate.md).
 
 ## Next work
 
-Upcoming HP tasks live in `docs/hp-preparation.md`. Host-specific unknowns live in the inventory and service register; open technology questions stay with their concepts. Research supplies detailed evidence when a task needs it.
+Upcoming HP tasks live in `docs/devices/home-lab/preparation.md`. Host-specific unknowns live in the inventory and service register; open technology questions stay with their concepts. Research supplies detailed evidence when a task needs it.
 
-Use `docs/README.md` to find recipes and `docs/research/` for detailed investigations. Keep raw private evidence in ignored `local/`.
+Use `docs/README.md` to find device guides, device research, and shared investigations. Keep raw private evidence in ignored `local/`.

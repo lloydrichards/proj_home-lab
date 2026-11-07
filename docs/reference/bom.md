@@ -11,4 +11,4 @@ Purchase and quantity notes, recorded 6 November 2026. Prices and order dates ha
 | [HP development host](inventory.md) | 1 purchased | Cost, vendor, and order date unknown |
 | [Rack](inventory.md) | 1 recorded in earlier notes | Cost and order details unknown |
 
-No HP mounting hardware purchase is recorded. Preparation belongs in the [HP checklist](../hp-preparation.md). Add purchase details or receipts here after removing private information.
+No HP mounting hardware purchase is recorded. Preparation belongs in the [HP checklist](../devices/home-lab/preparation.md). Add purchase details or receipts here after removing private information.

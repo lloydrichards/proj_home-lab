@@ -5,7 +5,7 @@ description: "A proposed acceptance rule for backups, access, and later services
 status: draft
 sources:
   - id: architecture-decision
-    resource: "../../docs/hp-preparation.md"
+    resource: "../../docs/devices/home-lab/preparation.md"
   - id: source-2
     resource: "../../docs/research/backups.md"
 ---
@@ -18,4 +18,4 @@ The initial evidence should include a fresh second SSH login, controlled cold bo
 
 Add optional services one at a time after the basic workflow and recovery checks. Back up, restore, and test network behavior before migrating existing workloads. Automate backups after the manual drill.
 
-This connects [safe access changes](../learnings/access-changes-need-recovery.md "requires"), [backup scope](../learnings/snapshots-are-not-backups.md "depends on"), and [unattended boot](unattended-boot.md "must verify").
+This connects [safe access changes](../learnings/access-changes-need-recovery.md "requires"), [backup scope](../learnings/snapshots-are-not-backups.md "depends on"), and [unattended boot](home-lab/unattended-boot.md "must verify").

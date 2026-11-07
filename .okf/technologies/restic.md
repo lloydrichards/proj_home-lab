@@ -7,7 +7,7 @@ sources:
   - id: source-1
     resource: "../../docs/research/backups.md"
   - id: source-2
-    resource: "../../docs/hp-preparation.md"
+    resource: "../../docs/devices/home-lab/preparation.md"
 ---
 
 # Restic

@@ -9,7 +9,7 @@ sources:
   - id: source-2
     resource: "../../docs/research/remote-coding.md"
   - id: source-3
-    resource: "../../docs/hp-preparation.md"
+    resource: "../../docs/devices/home-lab/preparation.md"
 ---
 
 # Test effective network exposure
@@ -18,4 +18,4 @@ The remote-coding and access research calls for checking host listeners, contain
 
 [Docker](../technologies/docker.md "requires checking mappings for") publishes ports through its own networking rules, so an ordinary UFW deny is insufficient evidence. [Tailscale](../technologies/tailscale.md "requires checking effective policy for") grants must be reviewed with existing broad rules.
 
-Loopback publication reduces network exposure but does not replace authentication against local clients. These are proposed checks, not recorded test results. They support the [private-development decision](../decisions/private-development.md "validates").
+Loopback publication reduces network exposure but does not replace authentication against local clients. These are proposed checks, not recorded test results. They support the [private-development decision](../decisions/home-lab/private-development.md "validates").
