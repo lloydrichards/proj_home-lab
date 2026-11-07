@@ -16,7 +16,7 @@ sources:
 
 # Docker
 
-The historical Pi guide installs Docker and Portainer; another guide runs PostgreSQL in Compose. These recipes establish prior documentation, not which containers are running now. The user reports [Coolify](coolify.md "supports deployment managed by") on the existing Pi, but live inspection is deferred.
+The historical Pi guide installs Docker and Portainer; another guide runs [PostgreSQL](postgresql.md "hosts in the historical Compose recipe") in Compose. These recipes establish prior documentation, not which containers are running now. The user reports [Coolify](coolify.md "supports deployment managed by") on the existing Pi, but live inspection is deferred.
 
 The proposed HP baseline gives the coding account neither Docker group membership nor access to the host socket. The Docker group and daemon socket grant extensive host control. A container with privileged mode or the host socket does not provide the intended [agent isolation](agent-isolation.md "can undermine").
 
