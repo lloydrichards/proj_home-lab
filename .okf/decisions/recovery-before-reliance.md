@@ -5,7 +5,7 @@ description: "A proposed acceptance rule for backups, access, and later services
 status: draft
 sources:
   - id: architecture-decision
-    resource: "../../home-lab/preparation.md"
+    resource: "../../devices/home-lab/preparation.md"
   - id: source-2
     resource: "../../research/backups.md"
 ---

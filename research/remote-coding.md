@@ -109,4 +109,4 @@ Use one worktree or clone and one branch per task to prevent concurrent edits to
 
 Do not mount `/var/run/docker.sock`, give an agent membership in the host `docker` group, or grant privileged containers to simplify builds. Ordinary Docker daemon access can grant control over the host. Put Docker-dependent agent workloads in a dedicated VM with its own daemon when needed, separate from stable Coolify services. [Docker daemon security](https://docs.docker.com/engine/security/), [Docker group privileges](https://docs.docker.com/engine/install/linux-postinstall/)
 
-Upcoming work and checks live in the [HP preparation checklist](../home-lab/preparation.md). The [capacity learning](../.okf/learnings/measure-agent-capacity.md) explains why heavy build jobs must be measured separately from connected conversations.
+Upcoming work and checks live in the [HP preparation checklist](../devices/home-lab/preparation.md). The [capacity learning](../.okf/learnings/measure-agent-capacity.md) explains why heavy build jobs must be measured separately from connected conversations.

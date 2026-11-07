@@ -5,11 +5,11 @@ description: "The planned HP workflow and the concepts it depends on."
 status: draft
 sources:
   - id: inventory
-    resource: "../../reference/inventory.md"
+    resource: "../../devices/_reference/inventory.md"
   - id: hp-setup
-    resource: "../../home-lab/setup.md"
+    resource: "../../devices/home-lab/setup.md"
   - id: source-1
-    resource: "../../home-lab/preparation.md"
+    resource: "../../devices/home-lab/preparation.md"
   - id: source-2
     resource: "../../research/remote-coding.md"
   - id: source-3

@@ -7,7 +7,7 @@ sources:
   - id: source-1
     resource: "../../research/remote-coding.md"
   - id: source-2
-    resource: "../../home-lab/preparation.md"
+    resource: "../../devices/home-lab/preparation.md"
 ---
 
 # Private networking does not isolate agent tools

@@ -9,7 +9,7 @@ sources:
   - id: source-2
     resource: "../../research/remote-coding.md"
   - id: source-3
-    resource: "../../home-lab/preparation.md"
+    resource: "../../devices/home-lab/preparation.md"
 ---
 
 # Test effective network exposure

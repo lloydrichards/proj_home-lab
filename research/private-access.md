@@ -4,7 +4,7 @@ Sources checked **2026-11-06**. This is a proposed configuration, not evidence t
 
 ## How this research is used
 
-The [private-development choice](../.okf/decisions/home-lab/private-development.md) owns the proposed access approach and its rationale. Upcoming setup and checks belong in the [HP checklist](../home-lab/preparation.md). The examples below explain the relevant mechanisms; adapt them when we perform the setup.
+The [private-development choice](../.okf/decisions/home-lab/private-development.md) owns the proposed access approach and its rationale. Upcoming setup and checks belong in the [HP checklist](../devices/home-lab/preparation.md). The examples below explain the relevant mechanisms; adapt them when we perform the setup.
 
 ## OpenSSH over Tailscale versus Tailscale SSH
 

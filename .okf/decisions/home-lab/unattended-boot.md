@@ -7,9 +7,9 @@ sources:
   - id: maintenance-guide
     resource: "../../../research/backups.md"
   - id: source-1
-    resource: "../../../home-lab/preparation.md"
+    resource: "../../../devices/home-lab/preparation.md"
   - id: source-3
-    resource: "../../../home-lab/research/omarchy.md"
+    resource: "../../../devices/home-lab/research/omarchy.md"
 ---
 
 # Choose unencrypted unattended boot

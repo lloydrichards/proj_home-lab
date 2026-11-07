@@ -1,12 +1,12 @@
 # Omarchy without a permanently attached monitor
 
-Researched 2026-11-07 against upstream documentation and source. No remote desktop software or headless boot has been tested on the HP. Hardware details remain [user-reported](../../reference/inventory.md).
+Researched 2026-11-07 against upstream documentation and source. No remote desktop software or headless boot has been tested on the HP. Hardware details remain [user-reported](../../_reference/inventory.md).
 
 ## Recommendation
 
 Keep Omarchy's desktop available, establish SSH first, then trial Sunshine on the HP with Moonlight on the Mac. This is the first candidate for a responsive shared desktop. Try `hypr-rdp` next if clipboard integration, resizing, and desktop work matter more than streaming smoothness. Keep a monitor and keyboard available for installation and recovery; a permanently connected monitor is not inherently required.
 
-This is a proposal, not a change to the accepted access setup. All upcoming HP work stays in the [preparation checklist](../preparation.md). Existing [private access choices](../../.okf/decisions/home-lab/private-development.md) still apply.
+This is a proposal, not a change to the accepted access setup. All upcoming HP work stays in the [preparation checklist](../preparation.md). Existing [private access choices](../../../.okf/decisions/home-lab/private-development.md) still apply.
 
 There are two different needs. SSH lets builds and agents run without a graphical login. Remote desktop lets the Mac show and control Linux applications, but adds a running desktop, screen capture, encoding, and client decoding. For terminal work, local Mac applications with SSH remain the simpler route. Full remote desktop earns its extra setup when we want the actual Omarchy environment, Linux GUI applications, or the same desktop at a physical monitor and on the Mac.
 
