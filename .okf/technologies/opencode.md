@@ -5,9 +5,9 @@ description: "A researched terminal and browser coding workflow for the HP."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/research/opencode-v2.md"
+    resource: "../../research/opencode-v2.md"
   - id: source-2
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
 ---
 
 # OpenCode

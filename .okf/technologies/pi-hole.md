@@ -5,9 +5,9 @@ description: "User-reported DNS service on the Raspberry Pi 4."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/reference/services.md"
+    resource: "../../reference/services.md"
   - id: source-2
-    resource: "../../docs/reference/inventory.md"
+    resource: "../../reference/inventory.md"
 ---
 
 # Pi-hole

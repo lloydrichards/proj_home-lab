@@ -5,11 +5,11 @@ description: "Declared firewall intent does not establish service reachability."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/research/private-access.md"
+    resource: "../../research/private-access.md"
   - id: source-2
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
   - id: source-3
-    resource: "../../docs/devices/home-lab/preparation.md"
+    resource: "../../home-lab/preparation.md"
 ---
 
 # Test effective network exposure

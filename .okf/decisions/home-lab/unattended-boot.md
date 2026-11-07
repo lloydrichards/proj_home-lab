@@ -5,11 +5,11 @@ description: "A user-confirmed boot preference with physical-access consequences
 status: draft
 sources:
   - id: maintenance-guide
-    resource: "../../../docs/research/backups.md"
+    resource: "../../../research/backups.md"
   - id: source-1
-    resource: "../../../docs/devices/home-lab/preparation.md"
+    resource: "../../../home-lab/preparation.md"
   - id: source-3
-    resource: "../../../docs/devices/home-lab/research/omarchy.md"
+    resource: "../../../home-lab/research/omarchy.md"
 ---
 
 # Choose unencrypted unattended boot

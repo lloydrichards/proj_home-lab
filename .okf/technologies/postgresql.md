@@ -5,11 +5,11 @@ description: "A database documented in the earlier Pi Compose setup."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/devices/remote-lab/postgres.md"
+    resource: "../../remote-lab/postgres.md"
   - id: source-2
-    resource: "../../docs/research/backups.md"
+    resource: "../../research/backups.md"
   - id: source-3
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
 ---
 
 # PostgreSQL

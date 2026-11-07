@@ -5,11 +5,11 @@ description: "Commands and package names can change across product generations."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/research/opencode-v2.md"
+    resource: "../../research/opencode-v2.md"
   - id: source-2
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
   - id: source-3
-    resource: "../../docs/devices/home-lab/research/omarchy.md"
+    resource: "../../home-lab/research/omarchy.md"
 ---
 
 # Identify the version before copying a recipe

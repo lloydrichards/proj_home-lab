@@ -18,4 +18,4 @@ Restore a selected uncommitted file and agent session into a separate private di
 
 Choose automation after that experiment works. Check mount availability and last successful backup, report failures, and review retention before deleting snapshots. Avoid giving the coding account the only credentials capable of deleting every copy.
 
-The [restic concept](../../.okf/technologies/restic.md) records lab relevance. The [recovery choice](../../.okf/decisions/recovery-before-reliance.md) explains why we test restoration before depending on the machine. Write the actual recipe when we choose a destination and perform the experiment.
+The [restic concept](../.okf/technologies/restic.md) records lab relevance. The [recovery choice](../.okf/decisions/recovery-before-reliance.md) explains why we test restoration before depending on the machine. Write the actual recipe when we choose a destination and perform the experiment.

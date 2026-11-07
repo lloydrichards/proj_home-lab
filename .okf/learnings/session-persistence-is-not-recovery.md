@@ -5,13 +5,13 @@ description: "Disconnection, reboot, and storage loss need different recovery me
 status: draft
 sources:
   - id: session-research
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
   - id: service-research
-    resource: "../../docs/devices/home-lab/research/omarchy.md"
+    resource: "../../home-lab/research/omarchy.md"
   - id: source-1
-    resource: "../../docs/devices/home-lab/preparation.md"
+    resource: "../../home-lab/preparation.md"
   - id: client-research
-    resource: "../../docs/research/remote-agent-tools.md"
+    resource: "../../research/remote-agent-tools.md"
 ---
 
 # Session persistence is not recovery

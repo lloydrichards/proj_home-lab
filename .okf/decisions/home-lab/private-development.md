@@ -5,9 +5,9 @@ description: "The chosen local-isolation and private remote-coding approach."
 status: draft
 sources:
   - id: source-1
-    resource: "../../../docs/devices/home-lab/preparation.md"
+    resource: "../../../home-lab/preparation.md"
   - id: source-2
-    resource: "../../../docs/research/remote-coding.md"
+    resource: "../../../research/remote-coding.md"
 ---
 
 # Keep remote development private

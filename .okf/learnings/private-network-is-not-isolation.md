@@ -5,9 +5,9 @@ description: "Network reachability, service authentication, and OS permissions s
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
   - id: source-2
-    resource: "../../docs/devices/home-lab/preparation.md"
+    resource: "../../home-lab/preparation.md"
 ---
 
 # Private networking does not isolate agent tools

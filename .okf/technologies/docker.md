@@ -5,13 +5,13 @@ description: "Container hosting in historical Pi guides and a restricted option 
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/devices/remote-lab/docker.md"
+    resource: "../../remote-lab/docker.md"
   - id: source-2
-    resource: "../../docs/devices/remote-lab/postgres.md"
+    resource: "../../remote-lab/postgres.md"
   - id: source-3
-    resource: "../../docs/research/private-access.md"
+    resource: "../../research/private-access.md"
   - id: source-4
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
 ---
 
 # Docker

@@ -1,6 +1,6 @@
 # OpenCode v2 research
 
-Checked 6 November 2026 against official v2 documentation and a tagged release. These findings were documentation-checked, not tested on the HP. These notes are reference material for the [HP preparation checklist](../devices/home-lab/preparation.md). Write the actual recipe when we try the installed tool.
+Checked 6 November 2026 against official v2 documentation and a tagged release. These findings were documentation-checked, not tested on the HP. These notes are reference material for the [HP preparation checklist](../home-lab/preparation.md). Write the actual recipe when we try the installed tool.
 
 ## Package identity and installation rationale
 
@@ -24,4 +24,4 @@ Remote pairing through OpenTunnel exposes the server to the internet. It is a di
 
 For an optional supervised foreground service, v2 documents `opencode serve` and a matching client using `opencode --server URL`. Its authentication variable is `OPENCODE_PASSWORD`, with generated authentication by default. V1 instead uses `OPENCODE_SERVER_PASSWORD` and a different attach recipe. Keep the [legacy research](remote-coding.md) separate. A dedicated foreground service is deferred until needed and reviewed. [Standalone service and authentication](https://opencode.ai/v2/docs/cli/web/#standalone)
 
-Pairing, transport encryption, and service authentication restrict access to the agent. They do not isolate its commands from files available to `coder`. See [agent isolation](../../.okf/technologies/agent-isolation.md) for the proposed account, credential, and untrusted-work boundaries.
+Pairing, transport encryption, and service authentication restrict access to the agent. They do not isolate its commands from files available to `coder`. See [agent isolation](../.okf/technologies/agent-isolation.md) for the proposed account, credential, and untrusted-work boundaries.
