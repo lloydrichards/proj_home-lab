@@ -5,11 +5,11 @@ description: "Boundaries around coding tools, credentials, and host administrati
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/devices/home-lab/preparation.md"
+    resource: "../../home-lab/preparation.md"
   - id: source-2
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
   - id: client-isolation-research
-    resource: "../../docs/research/remote-agent-tools.md"
+    resource: "../../research/remote-agent-tools.md"
 ---
 
 # Agent isolation

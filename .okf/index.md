@@ -6,7 +6,7 @@ okf_version: "0.2"
 
 The assistant's context for the lab: technologies, the reasons for choices, alternatives, and reusable learnings. Start with [private remote development](technologies/private-remote-development.md) for home-lab, [Coolify](technologies/coolify.md) for remote-lab hosting, or [Pi-hole](technologies/pi-hole.md) for admin-lab DNS.
 
-Machine and service facts live in `docs/reference/`. The HP starts with `docs/devices/home-lab/preparation.md`; repeatable recipes are recorded as we do the setup. Device pages under `docs/devices/` link their guides and decisions. Research lives with its device or in `docs/research/` when shared. This library owns the why, with Git keeping previous versions.
+Machine and service facts live in `reference/`. The HP starts with `home-lab/preparation.md`; repeatable recipes are recorded as we do the setup. Root-level device pages link their guides and decisions. Research lives with its device or in `research/` when shared. This library owns the why, with Git keeping previous versions.
 
 All concepts use `draft` while setup and research remain unsettled. A user-confirmed choice is identified in its decision text. Learning entries are conclusions from research unless an actual observation is stated. No HP setup check has been completed, and live Pi inspection is deferred.
 
@@ -56,6 +56,6 @@ Device-specific choices live under `decisions/<device>/`. Choices spanning devic
 
 ## Next work
 
-Upcoming HP tasks live in `docs/devices/home-lab/preparation.md`. Host-specific unknowns live in the inventory and service register; open technology questions stay with their concepts. Research supplies detailed evidence when a task needs it.
+Upcoming HP tasks live in `home-lab/preparation.md`. Host-specific unknowns live in the inventory and service register; open technology questions stay with their concepts. Research supplies detailed evidence when a task needs it.
 
-Use `docs/README.md` to find device guides, device research, and shared investigations. Keep raw private evidence in ignored `local/`.
+Use `README.md` to find device guides, device research, and shared investigations. Keep raw private evidence in ignored `local/`.

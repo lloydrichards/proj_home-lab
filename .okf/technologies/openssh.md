@@ -5,7 +5,7 @@ description: "Key-based login and selected port forwarding for remote developmen
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/research/private-access.md"
+    resource: "../../research/private-access.md"
 ---
 
 # OpenSSH

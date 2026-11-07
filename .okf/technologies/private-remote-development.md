@@ -5,15 +5,15 @@ description: "The planned HP workflow and the concepts it depends on."
 status: draft
 sources:
   - id: inventory
-    resource: "../../docs/reference/inventory.md"
+    resource: "../../reference/inventory.md"
   - id: hp-setup
-    resource: "../../docs/devices/home-lab/setup.md"
+    resource: "../../home-lab/setup.md"
   - id: source-1
-    resource: "../../docs/devices/home-lab/preparation.md"
+    resource: "../../home-lab/preparation.md"
   - id: source-2
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
   - id: source-3
-    resource: "../../docs/research/remote-agent-tools.md"
+    resource: "../../research/remote-agent-tools.md"
 ---
 
 # Private remote development

@@ -5,7 +5,7 @@ description: "Persistent terminal sessions across client disconnections."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/research/remote-coding.md"
+    resource: "../../research/remote-coding.md"
 ---
 
 # tmux

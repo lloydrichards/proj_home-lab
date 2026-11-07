@@ -5,9 +5,9 @@ description: "Proposed encrypted off-machine backup and restore tooling."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/research/backups.md"
+    resource: "../../research/backups.md"
   - id: source-2
-    resource: "../../docs/devices/home-lab/preparation.md"
+    resource: "../../home-lab/preparation.md"
 ---
 
 # Restic

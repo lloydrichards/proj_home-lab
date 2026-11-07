@@ -5,9 +5,9 @@ description: "A proposed acceptance rule for backups, access, and later services
 status: draft
 sources:
   - id: architecture-decision
-    resource: "../../docs/devices/home-lab/preparation.md"
+    resource: "../../home-lab/preparation.md"
   - id: source-2
-    resource: "../../docs/research/backups.md"
+    resource: "../../research/backups.md"
 ---
 
 # Test recovery before relying on the HP

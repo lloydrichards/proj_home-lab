@@ -5,9 +5,9 @@ description: "A fresh login proves more than an existing connection surviving."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/research/private-access.md"
+    resource: "../../research/private-access.md"
   - id: source-3
-    resource: "../../docs/reference/services.md"
+    resource: "../../reference/services.md"
 ---
 
 # Keep recovery access during access changes

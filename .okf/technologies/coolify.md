@@ -5,11 +5,11 @@ description: "Deployment management reported on the existing Raspberry Pi."
 status: draft
 sources:
   - id: source-1
-    resource: "../../docs/devices/remote-lab/coolify.md"
+    resource: "../../remote-lab/coolify.md"
   - id: source-2
-    resource: "../../docs/devices/remote-lab/coolify-cloudflare.md"
+    resource: "../../remote-lab/coolify-cloudflare.md"
   - id: source-3
-    resource: "../../docs/reference/services.md"
+    resource: "../../reference/services.md"
 ---
 
 # Coolify

@@ -2,7 +2,7 @@
 
 User decision after this research: use an unencrypted disk for unattended restart. The [HP checklist](../preparation.md) reflects that choice; the encryption options below document the tradeoff.
 
-Research checked on 6 November 2026. These findings concern the planned HP host; its specifications live in the [inventory](../../../reference/inventory.md). No commands in this article have been executed on the HP. Inspect the installed release before applying them.
+Research checked on 6 November 2026. These findings concern the planned HP host; its specifications live in the [inventory](../../reference/inventory.md). No commands in this article have been executed on the HP. Inspect the installed release before applying them.
 
 ## Install from the current ISO
 
