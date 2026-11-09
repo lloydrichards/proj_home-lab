@@ -1,6 +1,6 @@
 # Backup research for the HP
 
-Distilled from the earlier proposed operations guide on 6 November 2026. No backup or restore has run. Destination, retention, scheduling, and failure notification remain undecided.
+Distilled from the earlier proposed operations guide on 6 November 2026. No HP workspace backup or restore has run; its destination, retention, scheduling, and failure notification remain undecided. Incoming [remote-lab backups](../devices/remote-lab/backups.md) were separately installed and restore-checked on 9 November; they do not protect the HP's own workspaces.
 
 ## What needs protecting
 
