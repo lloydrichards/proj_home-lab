@@ -61,3 +61,19 @@ This restored the apps. A subsequent `docker restart cloudflare-tunnel` retained
 Docker is enabled at boot; the tunnel and proxy have restart policy `unless-stopped`. Preserve both `--restart unless-stopped` and `--network coolify` when recreating the tunnel. The historical command above now includes these settings. Network attachment survives restarting an existing container, but replacement must declare the network again. See [Docker network connection semantics](https://docs.docker.com/reference/cli/docker/network/connect/).
 
 The original loss mechanism is unknown. A separate native `cloudflared.service` is also active; establish its purpose before changing or removing it. Keep existing tunnel tokens private and avoid copying full `docker inspect` or service command output into the notebook.
+
+## Pending connector update
+
+On **9 November 2026**, [upstream latest](https://api.github.com/repos/cloudflare/cloudflared/releases/latest) reported [2026.10.7](https://github.com/cloudflare/cloudflared/releases/tag/2026.10.7). The proposed Docker update is **2026.10.3 → 2026.10.7**, not an observed deployment. The historical `latest` command above is not an update instruction for the running container.
+
+The Docker Registry manifest for `cloudflare/cloudflared:2026.10.7` was checked read-only and includes **linux/arm64** for the Pi 5. Its multi-platform digest is `sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba`. Recheck before use:
+
+```sh
+docker manifest inspect cloudflare/cloudflared:2026.10.7
+docker inspect --format '{{.Config.Image}} {{.Image}}' cloudflare-tunnel
+docker inspect --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}} {{end}}' cloudflare-tunnel
+```
+
+For separately approved maintenance, retain the old image ID and privately preserve the existing launch configuration and token for rollback. Recreate only this Docker connector using the explicit target tag or digest, its existing options, `--restart unless-stopped` and `--network coolify`. Do not copy the placeholder token from the historical example or change the separate native connector. Container replacement can briefly interrupt all routed applications.
+
+Check container state, network attachment, the local proxy and every public application route, including login redirects. On failure, restore the saved image and configuration with the same network. Schedule full reboot recovery separately; it remains untested. No container was pulled, replaced or restarted during this documentation review.
