@@ -1,10 +1,14 @@
 # remote-lab
 
-The Raspberry Pi 5 is the user-reported Coolify and Cloudflare Tunnel host. `remote-lab` is its planned hostname, not a verified access address. Current SSH details, installed versions, workloads, and backups await inspection. Live inspection was deferred while Wi-Fi was unavailable.
+The Raspberry Pi 5 runs Coolify and Cloudflare Tunnel. `remote-lab` is its applied system and Tailscale name. Fresh SSH through that name passed.
+
+SSH inspection on 9 November 2026 confirmed hostname `remote-lab`, access as `lloyd@192.168.8.142`, and healthy Coolify 4.4.7. Public routing was restored by repairing the tunnel network connection. See the [recovery procedure](coolify-cloudflare.md#verified-recovery). Tailscale is signed in; private SSH as `lloyd` passed after the additional Tailscale identity check.
+
+SSH password login is enabled. Backup arrangements remain unknown.
 
 ## Start here
 
-Keep existing workloads in place during HP setup. When access is available, use the [service register's inspection guidance](../_reference/services.md#next-inspection) to establish what runs here before changing it. Check name and network dependencies before applying the planned hostname.
+Keep existing workloads in place during HP setup. When access is available, use the [service register's inspection guidance](../_reference/services.md#next-inspection) to establish what runs here before changing it. System and Tailscale names now match this device page.
 
 The shared [inventory](../_reference/inventory.md) owns hardware and naming facts. The [service register](../_reference/services.md) owns service placement and access gaps. Purchases stay in the [BOM](../_reference/bom.md).
 

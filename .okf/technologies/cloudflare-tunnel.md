@@ -16,9 +16,9 @@ sources:
 
 # Cloudflare Tunnel
 
-The user reports a Cloudflare tunnel with the Coolify Pi. The running connector, routing, and authentication configuration have not been inspected.
+Live inspection on 9 November 2026 confirmed a Docker cloudflared connector routing to `http://coolify-proxy:80` on the Pi 5. The connector must share the proxy's `coolify` network. A missing attachment caused public 502 responses despite running apps; reattachment restored routing and survived a container restart. Full host reboot recovery remains untested. Preserve the network declaration when replacing the container. Authentication policy remains unverified. A separate native connector is active, with purpose unresolved.
 
-Historical guides describe two uses: SSH through Cloudflare Access and public application routing to the [Coolify](coolify.md "routes historical application traffic to") proxy. Their existence does not establish that both routes are active now. Tokens remain outside Git.
+Historical guides describe two uses: SSH through Cloudflare Access and public application routing to the [Coolify](coolify.md "routes historical application traffic to") proxy. The Docker app route is confirmed; the native connector has not been mapped to the historical SSH route. Tokens remain outside Git.
 
 A connector route and a hostname do not establish who may use the application. The [private-network learning](../learnings/private-network-is-not-isolation.md "requires separate authentication reasoning from") distinguishes reachability from authentication and process permissions.
 

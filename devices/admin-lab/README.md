@@ -1,10 +1,12 @@
 # admin-lab
 
-The Raspberry Pi 4 is the user-reported Pi-hole host. `admin-lab` is its planned hostname, not a verified access address. SSH details, hardware configuration, OS, service version, upstream DNS, and DHCP ownership remain unknown.
+The Raspberry Pi 4 runs Pi-hole. `admin-lab` is its applied system and Tailscale name.
+
+SSH inspection on 9 November 2026 confirmed hostname `admin-lab`, access as `lloyd@192.168.8.138`, a healthy Pi-hole Docker container, and a successful DNS query. Debian 12 and Pi-hole versions are now recorded in the service register. Pi-hole DHCP is disabled; network DHCP ownership and upstream DNS remain unknown. Tailscale sign-in and fresh private SSH as `lloyd` passed. Current addresses live in the service register.
 
 ## Start here
 
-Establish whether Pi-hole supplies DHCP and which devices depend on it before a restart, rename, or DNS change. The [service register](../_reference/services.md) owns the inspection gaps and dependency guidance. The [inventory](../_reference/inventory.md) owns hardware and planned-name facts; purchases stay in the [BOM](../_reference/bom.md).
+Establish which devices depend on Pi-hole and who supplies network DHCP before a restart, rename, or DNS change. The [service register](../_reference/services.md) owns the inspection gaps and dependency guidance. The [inventory](../_reference/inventory.md) owns hardware and naming facts; purchases stay in the [BOM](../_reference/bom.md).
 
 There is no verified Pi-hole setup or recovery recipe yet. Record the repeatable procedure here after inspecting the device. The historical Pi 5 recipes in [remote-lab](../remote-lab/README.md) do not establish this Pi's configuration.
 
