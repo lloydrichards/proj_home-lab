@@ -12,7 +12,7 @@ sources:
 
 # systemd
 
-The HP research uses systemd for SSH and networking services and proposes a sleep-policy drop-in. It distinguishes power sleep from desktop locking and firmware restart behavior.
+The HP research uses systemd for SSH and networking services and now has a sleep-policy drop-in disabling suspend, hibernation, hybrid sleep and suspend-then-hibernate, confirmed by user-supplied privileged output on 9 November 2026. Overnight behavior remains to test. It distinguishes power sleep from desktop locking and firmware restart behavior.
 
 A reviewed user service can use lingering to run without an interactive login. Lingering does not restart arbitrary shell processes. [Tmux](tmux.md "differs from supervision by") solves client disconnection, not service restart after boot.
 

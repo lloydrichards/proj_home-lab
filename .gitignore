@@ -13,3 +13,6 @@ secrets/
 private/
 local/
 .DS_Store
+
+# Chat image attachments are local evidence, not notebook content
+.codex-attachments/

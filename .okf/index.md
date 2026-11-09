@@ -8,7 +8,7 @@ The assistant's context for the lab: technologies, the reasons for choices, alte
 
 Machine and service facts live in `devices/_reference/`. The HP starts with `devices/home-lab/preparation.md`; repeatable recipes are recorded as we do the setup. Device pages under `devices/` link their guides and decisions. Research lives with its device or in `research/` when shared. This library owns the why, with Git keeping previous versions.
 
-All concepts use `draft` while setup and research remain unsettled. A user-confirmed choice is identified in its decision text. Learning entries are conclusions from research unless an actual observation is stated. No HP setup check has been completed, and live Pi inspection is deferred.
+All concepts use `draft` while setup and research remain unsettled. A user-confirmed choice is identified in its decision text. Learning entries are conclusions from research unless an actual observation is stated. HP installation, TPM unlock and SSH have live checks recorded in the inventory; monitor-free cold startup passed, while overnight idle and power-loss recovery remain open. Live Pi inspection is deferred.
 
 ## Technologies and workflows
 
@@ -35,7 +35,7 @@ Device-specific choices live under `decisions/<device>/`. Choices spanning devic
 - [Keep existing Pi hosting during HP setup](decisions/keep-pi-hosting-separate.md)
 - [Keep remote development private](decisions/home-lab/private-development.md)
 - [Test recovery before relying on the HP](decisions/recovery-before-reliance.md)
-- [Choose unencrypted unattended boot](decisions/home-lab/unattended-boot.md)
+- [Use TPM for unattended boot](decisions/home-lab/unattended-boot.md)
 
 ## Learnings
 

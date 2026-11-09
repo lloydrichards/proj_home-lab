@@ -1,25 +1,27 @@
 ---
 type: Decision
-title: "Choose unencrypted unattended boot"
-description: "A user-confirmed boot preference with physical-access consequences."
+title: "Use TPM for unattended boot"
+description: "Installed TPM disk unlock with password recovery and remaining recovery checks."
 status: draft
 sources:
   - id: maintenance-guide
     resource: "../../../research/backups.md"
   - id: source-1
     resource: "../../../devices/home-lab/preparation.md"
+  - id: installed-inventory
+    resource: "../../../devices/_reference/inventory.md"
+  - id: tpm-research
+    resource: "../../../devices/home-lab/research/tpm-unlock.md"
   - id: source-3
     resource: "../../../devices/home-lab/research/omarchy.md"
 ---
 
-# Choose unencrypted unattended boot
+# Use TPM for unattended boot
 
-The user selected an unencrypted HP installation on 6 November 2026 so restarts do not require a local disk unlock. The preference is confirmed; installation and restart behavior are not verified.
+On 9 November 2026, Lloyd chose TPM automatic unlock for the installed encrypted HP disk, replacing the earlier unencrypted-install preference. Keep the working disk password as recovery. A monitor-free cold startup passed: both `lloyd` and `coder` authenticated over Tailscale without local input. The inventory owns the observed configuration and test results.
 
-The tradeoff is exposure of SSD contents to someone with physical access. The plan compensates with physical protection, scoped credentials, and encrypted off-machine [backups](../../technologies/restic.md "requires alongside"). These measures do not make the SSD encrypted.
+The TPM enrollment binds to PCR 7 while Secure Boot is disabled. This supports unattended startup and keeps an SSD removed from the HP encrypted. It does not authenticate the boot software against whole-machine physical tampering. Stronger boot integrity would require a separately maintained Secure Boot and measured-boot policy; see the TPM research.
 
-Unencrypted storage alone does not establish availability. Firmware AC-loss recovery, Ethernet, network services, sleep policy, and cold boot still need tests. [Omarchy](../../technologies/omarchy.md "must configure") and [systemd](../../technologies/systemd.md "uses for power and services") settings address parts of that behavior.
+Firmware changes can prevent automatic unlock. Keep console access and the disk passphrase available, preserve password slots, and test unattended startup after boot-related updates. Local recovery copies do not replace off-machine [backups](../../technologies/restic.md "requires alongside").
 
-Maintenance requires console and boot-recovery access for the chosen unencrypted setup. An encrypted unlock method becomes a prerequisite only if a later decision enables encryption.
-
-Encrypted unlock alternatives in the research preserve the reasoning behind the choice. They do not supersede this preference.
+[Omarchy](../../technologies/omarchy.md "must configure") and [systemd](../../technologies/systemd.md "uses for power and services") provide the boot and service integration. Overnight idle availability, AC-loss recovery, and off-machine recovery copies remain open in the preparation checklist.
