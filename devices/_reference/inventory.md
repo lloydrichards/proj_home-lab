@@ -11,7 +11,7 @@ HP and both Pis inspected over SSH on 9 November 2026. See the [service register
 | CPU | Intel i5-10500T, 6 cores / 12 threads, VT-x | Diagnostics and sustained-load test pending |
 | RAM | 32 GB purchased, 31 GiB usable | Module layout, speed and memory test pending |
 | SSD | SK hynix PC711 NVMe 1 TB, 953.9 GiB; firmware 41001131 | SMART passed 9 November; see health summary below |
-| Storage | 2 GiB FAT boot partition; LUKS root with Btrfs; about 37 GiB used | Backup restore not tested |
+| Storage | 2 GiB FAT boot partition; LUKS root with Btrfs; before incoming backup setup, 38 GiB used and 915 GiB available, shared with `/home` | HP workspace backup restore not tested; incoming Pi backup checks recorded in the service register |
 | Network | `eno1`, 1 Gbit/s Ethernet; DHCP `192.168.8.223/24`, gateway `192.168.8.1` | DHCP reservation not confirmed; purchased offer excluded Wi-Fi |
 | Rack | DeskPi RackMate T1 recorded | Shelf, fasteners, adapter support and airflow not confirmed |
 | Mac client | macOS 27.2, OpenSSH 10.5p1; Tailscale access works | Exact Mac model and Tailscale version not collected |
@@ -23,7 +23,7 @@ HP and both Pis inspected over SSH on 9 November 2026. See the [service register
 - `lloyd`, UID/GID 1000, home `/home/lloyd`, maintenance account in `wheel`. The username-specific sudo rule in `/etc/sudoers.d/07_home-lab` names `lloyd` and passed privileged policy validation. Root password set by user, never recorded here.
 - `coder`, UID/GID 1001, home `/home/coder`, primary group only. User-provided sudo policy showed no positive command grant. Projects belong under `/home/coder/projects`.
 - Key-only OpenSSH permits `lloyd` and `coder`; password, keyboard-interactive and root SSH login disabled. Fresh key logins passed. Tailscale SSH is disabled; ordinary OpenSSH handles authentication.
-- OpenSSH 10.6p1-2, Tailscale 1.104.2-1, tmux 3.8-1 and Git 2.56.0 installed. `sshd` and `tailscaled` enabled. smartmontools 7.5-2 installed; `restic` remains absent.
+- OpenSSH 10.6p1-2, Tailscale 1.104.2-1, tmux 3.8-1 and Git 2.56.0 installed. `sshd` and `tailscaled` enabled. smartmontools 7.5-2 installed; restic 0.19.1-1 installed for incoming Pi backups.
 - No failed system services. Snapshot temperatures: CPU package about 48 C, NVMe about 45 C; these are idle observations, not a load test.
 - Automatic desktop login selects `lloyd`. Desktop locking and disk unlock are separate. TPM-backed disk unlock passed an untouched reboot; monitor-free cold power-on passed on 9 November 2026; idle access and AC-loss tests remain open.
 
@@ -89,8 +89,8 @@ Read over SSH on 9 November 2026.
 | CPU | 4 Cortex-A76 cores; configured maximum 2.4 GHz | Sustained performance and thermal throttling not tested |
 | RAM | 7.9 GiB usable, consistent with 8 GB model; 199 MiB swap | No memory stress test |
 | SSD | KIOXIA EXCERIA G2 NVMe, 931.5 GiB, consistent with 1 TB capacity | Firmware and SMART health not collected; `smartctl` and `nvme` tools absent |
-| Partitions | 512 MiB FAT boot; 931 GiB ext4 root | Backup and restore untested |
-| Root filesystem | 917 GiB usable, 34 GiB used, 4% used | Usage is a dated snapshot |
+| Partitions | 512 MiB FAT boot; 931 GiB ext4 root | Application data restore checks passed; full machine recovery untested |
+| Root filesystem | 917 GiB usable; before backup setup, 36 GiB used and 835 GiB available | Usage is a dated snapshot; source backup generations add usage |
 | OS | Debian 12 Bookworm, kernel `6.12.109+rpt-rpi-2712` | General package upgrades not performed in this pass |
 | Network | Ethernet `eth0` at 1 Gbit/s; `192.168.8.142/24`; Wi-Fi `wlan0` also active at `192.168.1.143/24` | Reservations, route preference and dependencies of both networks not checked |
 
