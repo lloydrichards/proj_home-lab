@@ -1,6 +1,8 @@
 # Inventory and verification record
 
-HP inspected over SSH on 9 November 2026. Pi details remain user-reported or historical. See the [service register](services.md) and [BOM](bom.md).
+HP and both Pis inspected over SSH on 9 November 2026. See the [service register](services.md) and [BOM](bom.md).
+
+## HP hardware
 
 | Item | Observed or recorded value | Remaining uncertainty |
 |---|---|---|
@@ -13,10 +15,6 @@ HP inspected over SSH on 9 November 2026. Pi details remain user-reported or his
 | Network | `eno1`, 1 Gbit/s Ethernet; DHCP `192.168.8.223/24`, gateway `192.168.8.1` | DHCP reservation not confirmed; purchased offer excluded Wi-Fi |
 | Rack | DeskPi RackMate T1 recorded | Shelf, fasteners, adapter support and airflow not confirmed |
 | Mac client | macOS 27.2, OpenSSH 10.5p1; Tailscale access works | Exact Mac model and Tailscale version not collected |
-| Coolify host | Raspberry Pi 5, user identified 7 November 2026; RAM unresolved | Model, RAM, OS, storage, and running configuration |
-| Historical Pi storage | [1 TB NVMe M.2 2280 SSD](https://www.seeedstudio.com/NVMe-M-2-2280-SSD-1TB-p-5767.html) | Current use, model, capacity, and health |
-| Historical Pi enclosure | [Argon ONE V3 M.2 NVME case](https://argon40.com/products/argon-one-v3-m-2-nvme-case) | Current use and cooling configuration |
-| DNS host | Raspberry Pi 4 with Pi-hole, user reported | RAM, OS, storage, DNS upstream, and DHCP role |
 
 ## HP operating state
 
@@ -37,17 +35,17 @@ Configuration uses `/etc/mkinitcpio.conf.d/zzzz-local-tpm.conf`, `/etc/default/l
 
 Limine's image hash mismatch was repaired by rebuilding through `limine-mkinitcpio` and checking BLAKE2b without modifying the image. Old temporary `check-tpm-boot.sh`, `enable-tpm-unlock.sh` and `fix-tpm-boot.sh` scripts must not be reused: their `objcopy --dump-section` invocation could rewrite the input image. See the [setup recovery notes](../home-lab/setup.md#installed-configuration-and-recovery).
 
-## Planned device names
+## Device names
 
-The HP's `home-lab` name is applied and observed. Pi names remain proposals from 7 November 2026, not verified hostnames.
+All three names are applied. The Pi system names were changed at Lloyd's request on 9 November 2026. Both Pi Tailscale DNS names match their system names; fresh SSH through each new name passed.
 
 | Device | Name | Purpose |
 |---|---|---|
 | HP | `home-lab` | Development and coding agents |
-| Pi 5 | `remote-lab`, proposed | Existing Coolify hosting |
-| Pi 4 | `admin-lab`, proposed | Pi-hole and network administration |
+| Pi 5 | `remote-lab` | Existing Coolify hosting |
+| Pi 4 | `admin-lab` | Pi-hole and network administration |
 
-Leave Pi names and services unchanged until their dependencies and current access have been inspected. A Mac SSH alias is separate from the device's hostname.
+Pi services and IP addresses were retained during the rename. A Mac SSH alias is separate from the device's hostname.
 
 ## Headless audit results
 
@@ -62,3 +60,38 @@ NVMe SMART returned exit status 0 and passed: critical warning 0, spare 100%, es
 RAM module layout remains unknown because `dmidecode` is not installed. Usable memory is already observed through Linux. Module identification is useful inventory follow-up, not a blocker for disconnecting a display.
 
 Monitor-free cold startup passed on 9 November 2026: Lloyd reported normal shutdown, monitor disconnection and power-on with no local input. After two minutes, fresh assistant key connections over Tailscale authenticated as both `lloyd` and `coder`; hostname was `home-lab`, no system services failed, and disk unlock completed in about 2.56 seconds. Overnight idle and firmware AC-loss recovery remain untested.
+
+## Pi operating state
+
+LAN key logins passed on 9 November 2026 as `lloyd`. Pi 4 hostname is `admin-lab`; Pi 5 hostname is `remote-lab`. Both had zero failed system units, though Pi 4 cloudflared was activating. Pi names are now applied. Current services, SSH policy and Tailscale gaps live in the [service register](services.md#access-cleanup).
+
+## Pi 4 hardware
+
+Read over SSH on 9 November 2026. Capacities below distinguish the whole device from the mounted filesystem.
+
+| Item | Observed value | Remaining uncertainty |
+|---|---|---|
+| Board | Raspberry Pi 4 Model B Rev 1.1, ARM64 | Enclosure, cooling and power supply not physically checked |
+| CPU | 4 Cortex-A72 cores; configured maximum 1.5 GHz | Sustained performance and thermal throttling not tested |
+| RAM | 3.7 GiB usable, consistent with 4 GB model; 199 MiB swap | No memory stress test |
+| Storage | 59.5 GiB microSD, device name `SN64G`; 512 MiB FAT boot partition; 59 GiB ext4 root partition | Card health and exact retail model unknown |
+| Root filesystem | 58 GiB usable, 17 GiB used, 31% used | Usage is a dated snapshot; backup and restore untested |
+| OS | Debian 12 Bookworm, kernel `6.12.109+rpt-rpi-v8` | General package upgrades not performed in this pass |
+| Network | Ethernet `eth0` at 1 Gbit/s; `192.168.8.138/24`; Wi-Fi `wlan0` also active at `192.168.1.100/24` | Reservations, route preference and dependencies of both networks not checked |
+
+## Pi 5 hardware
+
+Read over SSH on 9 November 2026.
+
+| Item | Observed value | Remaining uncertainty |
+|---|---|---|
+| Board | Raspberry Pi 5 Model B Rev 1.0, ARM64 | Enclosure, cooling and power supply not physically checked |
+| CPU | 4 Cortex-A76 cores; configured maximum 2.4 GHz | Sustained performance and thermal throttling not tested |
+| RAM | 7.9 GiB usable, consistent with 8 GB model; 199 MiB swap | No memory stress test |
+| SSD | KIOXIA EXCERIA G2 NVMe, 931.5 GiB, consistent with 1 TB capacity | Firmware and SMART health not collected; `smartctl` and `nvme` tools absent |
+| Partitions | 512 MiB FAT boot; 931 GiB ext4 root | Backup and restore untested |
+| Root filesystem | 917 GiB usable, 34 GiB used, 4% used | Usage is a dated snapshot |
+| OS | Debian 12 Bookworm, kernel `6.12.109+rpt-rpi-2712` | General package upgrades not performed in this pass |
+| Network | Ethernet `eth0` at 1 Gbit/s; `192.168.8.142/24`; Wi-Fi `wlan0` also active at `192.168.1.143/24` | Reservations, route preference and dependencies of both networks not checked |
+
+Earlier notes name a [Seeed 1 TB SSD](https://www.seeedstudio.com/NVMe-M-2-2280-SSD-1TB-p-5767.html) and an [Argon ONE V3 M.2 NVMe case](https://argon40.com/products/argon-one-v3-m-2-nvme-case). The live SSD identifies as KIOXIA EXCERIA G2. Neither the old purchase identity nor the enclosure can be confirmed from these SSH checks.

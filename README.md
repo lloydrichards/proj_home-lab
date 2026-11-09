@@ -7,10 +7,10 @@ An assistant-maintained notebook for setting things up, troubleshooting, and rem
 | Device | Machine and purpose | Access |
 |---|---|---|
 | [home-lab](devices/home-lab/README.md) | HP EliteDesk with Omarchy installed for remote development and AI coding | OpenSSH over Tailscale; `lloyd` for maintenance, `coder` for projects. See [access](devices/_reference/services.md). |
-| [remote-lab](devices/remote-lab/README.md) | Pi 5 with Coolify and Cloudflare Tunnel, user reported | SSH details need checking when Wi-Fi returns |
-| [admin-lab](devices/admin-lab/README.md) | Pi 4 with Pi-hole, user reported | SSH details not yet recorded |
+| [remote-lab](devices/remote-lab/README.md) | Pi 5 with Coolify and Cloudflare Tunnel | SSH `lloyd@remote-lab` over Tailscale; LAN `192.168.8.142`; [Coolify](http://192.168.8.142:8000) |
+| [admin-lab](devices/admin-lab/README.md) | Pi 4 with Pi-hole | SSH `lloyd@admin-lab` over Tailscale; LAN `192.168.8.138`; [Pi-hole](http://192.168.8.138/admin/) |
 
-The HP reports hostname `home-lab`. Pi names remain planned, not verified.
+System names are `home-lab` for HP, `remote-lab` for Pi 5, and `admin-lab` for Pi 4. All three Tailscale names match, with fresh SSH connections verified.
 
 Use devvm locally on the MacBook for selected projects that need isolation. Use the HP for ordinary remote coding and work that should continue while the Mac sleeps. HP project VMs are deferred. The HP is installed; project and backup setup remain open.
 
@@ -26,4 +26,4 @@ The HP passed startup without a monitor. Finish the [remaining readiness checks]
 
 Each device page links its guides, research, and OKF decisions. Add future devices under `devices/` with a short README; keep lab-wide records in `devices/_reference/`.
 
-The HP was inspected over SSH on 9 November 2026; Pi details remain reported or historical. The assistant updates this notebook as we work. Git keeps the history.
+The HP and both Pis were inspected over SSH on 9 November 2026. The assistant updates this notebook as we work. Git keeps the history.

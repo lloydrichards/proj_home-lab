@@ -8,7 +8,7 @@
 1. Use the Docker image to add the new tunnel, be sure to name it:
 
    ```bash
-   docker run -d --name cloudflare-tunnel cloudflare/cloudflared:latest tunnel --no-autoupdate run --token <TUNNEL_TOKEN>
+   docker run -d --name cloudflare-tunnel --restart unless-stopped --network coolify cloudflare/cloudflared:latest tunnel --no-autoupdate run --token <TUNNEL_TOKEN>
    ```
 
 1. Connect the tunnel to the coolify network:
@@ -39,3 +39,25 @@
 1. Go to your localhost Server and change the wildcard domain to
    `http://<domain>`.
 1. Test by going to `http://coolify.<domain>`.
+
+## Verified recovery
+
+On 9 November 2026, the Pi 5 at `192.168.8.142`, hostname `homelab`, ran Coolify 4.4.7 and `cloudflare/cloudflared:2026.10.3`. The tunnel container ran on `bridge` only. Logs reported `lookup coolify-proxy on 192.168.8.1:53: no such host`. Local app routes worked, but public Yamtrack returned 502.
+
+Check attachment without printing container environment variables or token-bearing commands:
+
+```bash
+docker inspect --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}} {{end}}' cloudflare-tunnel
+```
+
+If `coolify` is missing and the proxy still belongs to that network, repair it:
+
+```bash
+docker network connect coolify cloudflare-tunnel
+```
+
+This restored the apps. A subsequent `docker restart cloudflare-tunnel` retained `bridge coolify`; six public app roots returned 200 or login redirects after reconnection. Full host reboot recovery remains untested.
+
+Docker is enabled at boot; the tunnel and proxy have restart policy `unless-stopped`. Preserve both `--restart unless-stopped` and `--network coolify` when recreating the tunnel. The historical command above now includes these settings. Network attachment survives restarting an existing container, but replacement must declare the network again. See [Docker network connection semantics](https://docs.docker.com/reference/cli/docker/network/connect/).
+
+The original loss mechanism is unknown. A separate native `cloudflared.service` is also active; establish its purpose before changing or removing it. Keep existing tunnel tokens private and avoid copying full `docker inspect` or service command output into the notebook.

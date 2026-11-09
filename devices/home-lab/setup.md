@@ -29,7 +29,7 @@ systemctl --failed
 
 Confirm the delivered hardware against the [inventory](../_reference/inventory.md). Record hostname, installed Omarchy version from its About screen or installed version command, BIOS version, disk layout, and Ethernet address. Keep raw output and serial numbers in ignored `local/`, not Git.
 
-Use `home-lab` for the HP, following the [planned device names](../_reference/inventory.md#planned-device-names). Keep lowercase letters and hyphens, not underscores such as `home_lab`. This follows [systemd's hostname guidance](https://www.freedesktop.org/software/systemd/man/258/hostname.html) and gives us a name suitable for DNS.
+Use `home-lab` for the HP, following the [device names](../_reference/inventory.md#device-names). Keep lowercase letters and hyphens, not underscores such as `home_lab`. This follows [systemd's hostname guidance](https://www.freedesktop.org/software/systemd/man/258/hostname.html) and gives us a name suitable for DNS.
 
 Set the name before enrolling in Tailscale:
 
