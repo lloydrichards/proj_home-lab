@@ -18,6 +18,19 @@ sudo tailscale set --ssh=false
 
 As of this check, Tailscale's October 28 security update fixes Tailscale SSH privilege-boundary issues and Serve/Funnel issues in **1.104.4**. Use the current stable package, at least that version. This advisory does not establish that ordinary OpenSSH over Tailscale has the same vulnerabilities. [Vendor security update](https://tailscale.com/blog/tailscale-ssh-findings-fixes)
 
+### Pending Tailscale maintenance
+
+On **9 November 2026**, the [stable package registry](https://pkgs.tailscale.com/stable/?mode=json) was rechecked and reported **1.104.5**. This is a maintenance target, not a new host observation. The inventory records HP **1.104.2-1**; Pi 4 already records **1.104.5**. Pi 5 uses Tailscale SSH but its installed version is unknown, so check it first and prioritize remediation if below **1.104.4**. HP Tailscale SSH is disabled; the advisory does not prove that HP OpenSSH is vulnerable.
+
+For a separately authorized maintenance window:
+
+1. Check `tailscale version` and `tailscale status` on each host. Keep an independent LAN SSH session and console recovery available.
+2. On HP, use `omarchy update` on the stable channel, not a direct package replacement or partial Arch upgrade. Inspect the resulting version. If its curated channel does not yet provide at least **1.104.4**, stop and review the supported security-update path rather than bypassing Omarchy's updater.
+3. On Debian Pis, inspect `apt-cache policy tailscale` and use the configured official stable repository during approved package maintenance. Do not change SSH mode, DNS acceptance or enrollment as part of a version update.
+4. Recheck version, connectivity and a fresh private SSH login from a second terminal before closing recovery access. Record actual resulting versions only after those checks.
+
+This notebook review updated no hosts. The HP action remains in the [readiness checklist](../devices/home-lab/preparation.md).
+
 ## Lockout-safe setup order
 
 1. Keep a keyboard/display available on the HP. Keep the current working session open throughout changes. Do not run `tailscale down`, `logout`, `up --reset`, force reauthentication, firewall resets or a mode switch through the only remote connection.

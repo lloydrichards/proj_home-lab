@@ -33,6 +33,7 @@ This is the single list of remaining HP work. Current facts live in the [invento
 
 ## Before relying on important work
 
+- [ ] Review Tailscale security maintenance: recorded HP **1.104.2-1** is below the **1.104.4** advisory fix; **1.104.5** is the stable target checked 9 November 2026. Follow the [lockout-safe maintenance guidance](../../research/private-access.md#pending-tailscale-maintenance) through Omarchy, then record the actual version. No update is recorded here.
 - [x] Configure incoming remote-lab backups through a dedicated account; first encrypted backup, file/SQLite checks and isolated PostgreSQL restores passed on 9 November. See [operations](../remote-lab/backups.md).
 - [ ] Save the incoming backup's restic password and the Pi's Coolify `APP_KEY` in the password manager outside both hosts; confirm retrieval without either host.
 - [ ] Add an independent off-site or disconnected copy of the incoming Pi backup and choose a notification destination outside the HP; current alerts are local journal/terminal only.

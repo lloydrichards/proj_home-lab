@@ -18,6 +18,8 @@ Tailscale supplies connectivity and tailnet access policy. [OpenSSH](openssh.md 
 
 The access research warns that a narrow new grant does not cancel an existing broad allow. Review effective access across existing ACLs and grants, and test denial from an unauthorized device. Device expiry and recovery also need an explicit plan.
 
+The [pending maintenance guidance](../../research/private-access.md#pending-tailscale-maintenance) distinguishes the stable **1.104.5** target checked on 9 November 2026 from installed versions. Prioritize checking Pi 5 because it enables Tailscale SSH; HP uses ordinary OpenSSH. Apply HP updates through Omarchy with independent recovery access. This research does not record a deployed update.
+
 Tailscale Serve is a researched option for private HTTPS. Funnel publishes publicly and is excluded from the [private development decision](../decisions/home-lab/private-development.md "implements"). Neither private transport nor a policy rule replaces [application authentication](../learnings/private-network-is-not-isolation.md "does not replace").
 
 On 9 November 2026, LAN inspection found Pi 5 Tailscale logged out and Pi 4 without a host installation. Pi 4 installation and daemon enablement completed; both Pis subsequently signed in. Pi 4 passed fresh private SSH; Pi 5 also passed after Lloyd completed the additional Tailscale SSH identity check. Pi 4 settings disable DNS acceptance to avoid changing its resolver. The Mac client was stopped; reconnecting it restored fresh HP logins for both accounts. A running server daemon alone does not prove client connectivity or successful enrollment. The service register cited above owns current access facts.

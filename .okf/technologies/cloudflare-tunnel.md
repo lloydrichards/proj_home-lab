@@ -20,6 +20,8 @@ Live inspection on 9 November 2026 confirmed a Docker cloudflared connector rout
 
 Historical guides describe two uses: SSH through Cloudflare Access and public application routing to the [Coolify](coolify.md "routes historical application traffic to") proxy. The Docker app route is confirmed; the native connector has not been mapped to the historical SSH route. Tokens remain outside Git.
 
+The [pending connector update](../../devices/remote-lab/coolify-cloudflare.md#pending-connector-update) targets Docker **2026.10.7** from recorded **2026.10.3**, based on upstream and ARM64 registry checks on 9 November 2026. Replacement needs its own authorized maintenance window, saved rollback configuration and route checks. No deployment was performed by the notebook review.
+
 A connector route and a hostname do not establish who may use the application. The [private-network learning](../learnings/private-network-is-not-isolation.md "requires separate authentication reasoning from") distinguishes reachability from authentication and process permissions.
 
 The [HP private-development decision](../decisions/home-lab/private-development.md "is separate from") instead proposes Tailscale and OpenSSH. Do not copy the historical public routing recipe into HP agent administration.
