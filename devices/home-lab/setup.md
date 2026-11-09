@@ -2,9 +2,9 @@
 
 Use this guide at the HP console after Omarchy is installed. It takes the machine from its first desktop login to private remote coding from the MacBook. Keep a monitor, keyboard, and bootable USB available until the reboot and recovery checks pass.
 
-Prepared on 7 November 2026 from upstream documentation and [setup research](research/setup-sources.md). These are proposed instructions, not steps already run on the HP. Recheck the installed release before making changes. Track progress only in the [HP preparation checklist](preparation.md).
+Prepared on 7 November 2026 from upstream documentation and [setup research](research/setup-sources.md). This guide began as proposed instructions. Current completed checks and remaining work are in the preparation checklist; do not rerun account creation or initial enrollment on the installed host. Recheck the installed release before making changes. Track progress only in the [HP preparation checklist](preparation.md).
 
-The starting arrangement is Ethernet, an unencrypted boot disk as already chosen, Tailscale for private connectivity, ordinary OpenSSH for login, and a separate unprivileged `coder` account. Existing Pi hosting stays where it is. The daily Mac client remains open; begin with SSH and tmux.
+The installed arrangement uses Ethernet, an encrypted disk with TPM automatic unlock and password fallback, Tailscale for private connectivity, ordinary OpenSSH for login, and a separate unprivileged `coder` account. Existing Pi hosting stays where it is. The daily Mac client remains open; begin with SSH and tmux.
 
 Complete sections 1 through 8, 10, and 11 for the first setup. Section 9 applies only when a project needs containers. For later reference, jump to [updates and packages](#2-update-omarchy-and-install-missing-tools), [accounts](#3-separate-maintenance-from-coding), [private access](#5-establish-private-connectivity), [SSH hardening](#6-harden-ssh-without-losing-access), [power and services](#7-remove-unused-listeners-and-prevent-sleep), [coding](#8-start-one-trusted-coding-project), [backups](#10-make-and-restore-the-first-off-machine-backup), or [acceptance checks](#11-prove-access-and-recovery-before-putting-it-in-the-rack).
 
@@ -39,7 +39,7 @@ hostnamectl --static
 sudo timedatectl set-timezone Europe/Zurich
 ```
 
-Expect `home-lab` from `hostnamectl --static`. If `/etc/hosts` contains the old hostname, update that entry while preserving the localhost entries. Do not add the Tailscale address there; check private name resolution in step 5. The Pi names are future proposals, not changes to make during HP setup.
+Expect `home-lab` from `hostnamectl --static`. If `/etc/hosts` contains the old hostname, update that entry while preserving the localhost entries. Do not add the Tailscale address there; check private name resolution in step 5. Pi hostname changes are separate from HP setup.
 
 Check that the clock reports synchronization. Inspect `systemctl status systemd-timesyncd` if it does not. Use one time synchronization service rather than enabling a second one blindly. Confirm normal DNS resolution with `getent hosts archlinux.org`. Reserve the HP's Ethernet address in the router's DHCP settings if convenient; retain automatic network configuration on the HP. Record its LAN address for denial tests later.
 
@@ -99,7 +99,7 @@ Run `chmod 700 "$HOME"` while logged in as the maintenance account if its home i
 
 ## 4. Prepare laptop SSH keys before restricting login
 
-On the Mac, inspect existing public keys with `ls ~/.ssh/*.pub`. Use an existing suitable key or create a dedicated one:
+On the Mac, inspect existing public keys with `ls ~/.ssh/*.pub`. The installed HP uses `~/.ssh/id_ed25519.pub` on the Mac. Reuse it for the existing setup. For a new client, use an existing suitable key or create a dedicated one:
 
 ```sh
 ssh-keygen -t ed25519 -f ~/.ssh/hp_homelab -C hp-homelab
@@ -153,7 +153,7 @@ sudo ufw allow in on tailscale0 to any port 22 proto tcp
 
 Tailscale manages additional firewall rules, so its policy also controls access. This UFW rule alone is not the access boundary. Do not reset the firewall or copy an Ubuntu rule set over Omarchy's existing Docker integration. See [Tailscale firewall guidance](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw).
 
-Keep SSH stopped until the key-only configuration in step 6 passes its syntax check. If it is already running, stop it with `sudo systemctl stop sshd.service` at the local console while you configure it. This ends any existing SSH sessions.
+For a new installation, validate key-only configuration before opening remote access. On the installed HP, SSH is already configured and running. Keep a working session open while validating changes; do not stop the only remote access path.
 
 ## 6. Harden SSH without losing access
 
@@ -196,10 +196,10 @@ sudo systemctl restart sshd.service
 sudo ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub
 ```
 
-The restart happens at the local console, with recovery available. From a Mac terminal, replace `HP_TAILSCALE_IP` with the actual Tailscale address:
+The restart happens at the local console, with recovery available. From a Mac terminal, replace `HP_TAILSCALE_IP` with the actual Tailscale address. This example uses the installed client key. For a new client, substitute the key you installed in step 4:
 
 ```sh
-ssh -i ~/.ssh/hp_homelab -o IdentitiesOnly=yes -o PreferredAuthentications=publickey coder@HP_TAILSCALE_IP
+ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -o PreferredAuthentications=publickey coder@HP_TAILSCALE_IP
 ```
 
 Compare the first-connect fingerprint with the console before accepting it. Repeat for the maintenance account. Keep these working sessions open while removing broader firewall access. Test rejection from a fresh Mac terminal. The first command must fail because passwords are disabled. The second must fail with a key that is not listed in `authorized_keys`; replace `UNAUTHORIZED_KEY` with that private key's actual path. `-F /dev/null` skips client shortcuts and connection sharing, and `IdentityAgent=none` prevents an agent from supplying an authorized key.
@@ -219,7 +219,7 @@ On the Mac, add an alias to `~/.ssh/config`:
 Host home-lab
     HostName HP_TAILSCALE_IP
     User coder
-    IdentityFile ~/.ssh/hp_homelab
+    IdentityFile ~/.ssh/id_ed25519
     IdentitiesOnly yes
     ForwardAgent no
     ServerAliveInterval 30
@@ -249,7 +249,7 @@ Create the drop-in directory, then edit the sleep policy:
 
 ```sh
 sudo install -d -m 755 /etc/systemd/sleep.conf.d
-sudoedit /etc/systemd/sleep.conf.d/90-home-lab.conf
+sudoedit /etc/systemd/sleep.conf.d/90-home-lab-no-sleep.conf
 ```
 
 Save this content:
@@ -341,7 +341,7 @@ Once this works, configure a daily backup timer for the chosen backend. It must 
 Run the matching checks in the [preparation checklist](preparation.md) and record measured facts in the inventory and service register.
 
 1. Open fresh SSH sessions to both accounts. Confirm password login, root login, and a key absent from `authorized_keys` fail. Confirm `coder` cannot use sudo or read maintenance credentials.
-2. From another LAN device, try the HP's LAN address on port 22 and each application port. These connections must fail. Test IPv6 too if the HP has it. Use `nc -vz -w 3 ADDRESS PORT` or a browser as appropriate.
+2. From another LAN device, test the HP's LAN address on port 22 and each application port. The installed firewall permits SSH from `192.168.8.0/24` as a recovery route. If you later remove that allowance, repeat the test and require SSH denial. Application ports must remain closed unless explicitly approved. Test IPv6 too if the HP has it. Use `nc -vz -w 3 ADDRESS PORT` or a browser as appropriate.
 3. Test an unauthorized tailnet identity or device where available. It must fail according to policy. A test from another device with the same authorized identity does not prove identity denial.
 4. Move the Mac onto a phone hotspot. Confirm Tailscale and a fresh SSH login work without router forwarding. Confirm the tmux session survives a laptop disconnect.
 5. Reboot the HP with the console attached. Verify it boots without a disk prompt, Tailscale and SSH return, and a new login works before anyone logs into the desktop. Start a new tmux session as needed.
@@ -362,3 +362,31 @@ Check free space, failed units, SSD health, and backup success during maintenanc
 If SSH changes lock you out, use the console. Restore the saved SSH configuration, run `sshd -t`, reload SSH, and inspect UFW plus Tailscale policy separately. If only the application fails, inspect its listener and logs before changing the firewall.
 
 If an update prevents boot, use the Limine snapshot recovery path from the [current Omarchy snapshot manual](https://omarchy.org/manual/system-snapshots/). Recheck the exact recovery command before use. Root restoration leaves `/home` unchanged, so user configuration may still reflect the newer release. Recover projects and agent data from the off-machine backup when needed. The boot USB and local console remain the fallback for broken networking or an unusable boot menu.
+
+## Installed configuration and recovery
+
+Current accounts are `lloyd` for maintenance and `coder` for projects. The hostname remains `home-lab`. SSH uses the Mac's existing Ed25519 key. Tailscale address and LAN fallback are maintained in the service register.
+
+Sudo is granted by the username-specific `/etc/sudoers.d/07_home-lab`, whose rule now names `lloyd`. Group membership alone did not preserve sudo after the rename. Validate account-policy changes with `visudo -c` and `sudo -l -U ACCOUNT`; preserve Omarchy's separate restrictions.
+
+TPM setup retains password slot 0 and adds TPM slot 1, PCR 7. Keep the disk passphrase outside the machine. Firmware or Secure Boot changes can require that passphrase. Do not clear the TPM or wipe password slots as routine troubleshooting.
+
+The late mkinitcpio drop-in `/etc/mkinitcpio.conf.d/zzzz-local-tpm.conf` selects systemd and sd-encrypt. Limine takes its boot command line from `/etc/default/limine`, overriding `/etc/kernel/cmdline`. Both currently specify the root UUID with `tpm2-device=auto,token-timeout=10s`. Preserve this integration during updates and test unattended startup after boot-related changes.
+
+Rebuild with `sudo limine-mkinitcpio`. Verify the primary `/boot/limine.conf` entry's BLAKE2b digest against `/boot/EFI/Linux/omarchy_linux-omarchy.efi` without modifying the image. `objcopy --dump-section` with no separate output file can rewrite the input and invalidate the recorded digest. Do not reuse the temporary TPM setup/check scripts left in the maintenance home. Extract sections only from a scratch copy or explicitly direct transformed output to another scratch file.
+
+If TPM unlock fails, use the retained disk passphrase locally. Root-only original boot/configuration backups and rollback script are at `/root/tpm-unlock-backup.4I3jrh`; check its contents before use, since it restores the original password-based boot configuration. The local header backups are recovery copies, not off-machine backups. If the system cannot boot far enough for local login, keep the installer available for mounted-system recovery.
+
+For headless readiness, verify effective system sleep policy separately from desktop locking. Keep the normal console password and key-only SSH. Do not treat tmux sessions as services that restart after reboot.
+
+The installed sleep policy at `/etc/systemd/sleep.conf.d/90-home-lab-no-sleep.conf` is:
+
+```ini
+[Sleep]
+AllowSuspend=no
+AllowHibernation=no
+AllowHybridSleep=no
+AllowSuspendThenHibernate=no
+```
+
+Inspect it with `systemd-analyze cat-config systemd/sleep.conf`. Removing this local drop-in restores the previous policy. Desktop locking can remain enabled while system sleep is disabled.
