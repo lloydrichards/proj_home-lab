@@ -12,7 +12,7 @@ sources:
 
 # Keep existing Pi hosting during HP setup
 
-Keep existing Coolify workloads on the Raspberry Pi while establishing private development on the HP. This avoids disrupting running applications while the new machine and its recovery paths are untested. Live inspection confirmed running Pi hosting on 9 November 2026; backup arrangements remain unverified.
+Keep existing Coolify workloads on the Raspberry Pi while establishing private development on the HP. This avoids moving running applications while the new machine and its recovery paths are untested. Live inspection confirmed running Pi hosting on 9 November 2026. The [Coolify concept](../technologies/coolify.md "now has tested backup support described by") records incoming HP backups and partial restore checks installed later that day; these do not select a hosting migration or prove end-to-end cutover recovery.
 
 A migration is conditional on capacity or reliability needs and a separate backup, restore, and network test plan. The HP's arrival is not itself a migration decision.
 

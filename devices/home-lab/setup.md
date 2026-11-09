@@ -274,6 +274,62 @@ Install only that project's required runtimes and package manager. Omarchy uses 
 
 Install one agent, Pi or OpenCode, from its current official instructions linked in [remote coding research](../../research/remote-coding.md) and [OpenCode research](../../research/opencode-v2.md). Confirm the exact executable and version. Use a scoped provider credential, store it privately, and verify the account's file permissions. Keep approvals on for actions that need review. A private connection does not sandbox shell commands.
 
+### OpenCode on the installed HP
+
+On 9 November 2026, OpenCode 2.2.6 started successfully as `coder` in tmux session `opencode`, in `~/projects`. Its executable is `/home/coder/.opencode/bin/opencode`; the official installer added that directory to `~/.bashrc`. A fresh interactive shell resolved the command. The background service listened only on `127.0.0.1:49374`. `opencode auth list` reported no authenticated integrations. No model request or browser pairing has been tested.
+
+Reconnect from the Mac with:
+
+```sh
+ssh -t coder@192.168.8.223 'tmux attach -t opencode'
+```
+
+The LAN address is DHCP. During this setup, `home-lab` did not resolve from the execution environment and its recorded Tailscale IP timed out. LAN SSH worked. This does not establish a host-side Tailscale failure. Prefer `coder@home-lab` once private access works from the client.
+
+Inside OpenCode, use `/connect` to sign in to the chosen provider. Keep credentials out of this notebook. Detach with `Ctrl+b`, then `d`. After a reboot, recreate the terminal with `tmux new -s opencode -c ~/projects` and run `opencode` inside the chosen project.
+
+There was no existing OpenCode executable or pacman package. `mise use -g opencode` failed because it could not resolve `node@latest` while offline. The official standalone installer succeeded without Node:
+
+```sh
+curl -fsSL https://opencode.ai/v2/install -o /tmp/opencode-install.sh
+# Inspect the downloaded script before running it.
+bash /tmp/opencode-install.sh
+```
+
+Use `opencode upgrade` for updates and recheck `opencode --version`. To remove this installation, inspect `opencode uninstall --help` first; the installed help says uninstall preserves session data, configuration and state. Installation options are in the [official documentation](https://opencode.ai/docs/).
+
+### Codeburn usage across Mac and HP
+
+On 9 November 2026, `coder` installed Codeburn 0.9.28 via `npm install -g codeburn@0.9.28`. `codeburn doctor --provider codex` parsed 3 sessions; `--provider opencode` parsed 2. The Mac paired to the HP with `codeburn devices add 127.0.0.1:17777 --pin <one-time PIN>` over an SSH tunnel (`ssh -f -N -o ExitOnForwardFailure=yes -L 127.0.0.1:17777:127.0.0.1:7777 coder@192.168.8.223`). `codeburn devices --format json` returned two reachable devices and combined totals. Codeburn serves usage from the HP on TCP 7777; the Mac tunnel is the tested access path. The share listener binds all interfaces, so retain UFW default-deny and remove any direct 7777 allowance once the tunnel is working. Never record pairing PINs or peer tokens here.
+
+The temporary share process was replaced by `~/.config/systemd/user/codeburn-share.service`, enabled as a `coder` user service with `Linger=yes`. It runs Codeburn without `--pair` and restarts on failure. The Mac tunnel runs under `~/Library/LaunchAgents/local.codeburn.home-lab-tunnel.plist` with `RunAtLoad`, `KeepAlive`, and SSH keepalives; the Mac-side peer remains paired to `127.0.0.1:17777`. The temporary LAN UFW exception was removed by Lloyd. Both services were restarted independently and `codeburn devices --format json` still showed two reachable devices. No full host reboot or Mac logout was tested. The Mac tunnel currently uses the HP LAN address `192.168.8.223` (DHCP); if it changes, update the LaunchAgent or use a stable SSH destination. Mac sleep still interrupts live access. No token data was copied into the notebook. These are estimated API-list-rate usage figures, not necessarily subscription charges.
+
+### Rex over SSH
+
+On 9 November 2026, Lloyd requested Rex instead of tmux. Installed the official Rex snapshot `0.0.1794237812-g75d0b3` for `coder` at `~/.local/bin/rex` using the official installer's `--user` option. Its checksum check passed. Started a personal server and session `home-lab-opencode` running OpenCode in `/home/coder/projects`. Capturing the terminal through the Mac's SSH tunnel confirmed startup. Rex Beta 0.1.0 build 1853 is installed on the Mac; its bundled CLI registered host `home-lab`. GUI selection remains untested.
+
+The server listens on Unix sockets, with no Rex TCP listener configured. The personal socket is `/run/user/1001/rex/server.sock`. An SSH forward currently exposes it on the Mac at `/tmp/rex-home-lab.sock`. In Rex for Mac, choose **Add Remote Host…** and enter `/tmp/rex-home-lab.sock` if the registered host does not appear, then open `home-lab-opencode`.
+
+Recreate the tunnel from the Mac when needed:
+
+```sh
+ssh -N -o ExitOnForwardFailure=yes -o StreamLocalBindUnlink=yes \
+  -L /tmp/rex-home-lab.sock:/run/user/1001/rex/server.sock coder@192.168.8.223
+```
+
+Leave that SSH connection running. Prefer the Tailscale hostname once reachable. The current tunnel uses LAN access. Rex terminals live on the HP, independently of the Mac client; reconnecting the tunnel can reconnect to them. Reboot recovery has not been configured or tested. The earlier tmux session remains available as a fallback.
+
+`coder` currently has `Linger=no`. The attempt to enable it through the maintenance account required an interactive sudo password. Run on the HP as `lloyd`:
+
+```sh
+sudo loginctl enable-linger coder
+loginctl show-user coder -p Linger
+```
+
+This preserves the user runtime directory after logout; it does not itself start Rex after reboot. After reboot, log in as `coder`, run `~/.local/bin/rex server start`, inspect `~/.local/bin/rex server status`, and recreate the tunnel. See [Rex SSH forwarding](https://www.superlogical.com/rex/docs/linux/remote-access#ssh-forwarding). Provider sign-in is still required in OpenCode.
+
+### Project and session checks
+
 Start a persistent terminal:
 
 ```sh
@@ -390,3 +446,25 @@ AllowSuspendThenHibernate=no
 ```
 
 Inspect it with `systemd-analyze cat-config systemd/sleep.conf`. Removing this local drop-in restores the previous policy. Desktop locking can remain enabled while system sleep is disabled.
+
+
+## T3 Code remote environment
+
+On 9 November 2026, T3 Code 0.1.7 was installed as `coder` using the [official installer](https://github.com/pingdotgg/t3code/blob/main/docs/user/install.md). Fresh LAN SSH checks confirmed `t3code.service` active and enabled, `Linger=yes`, and the listener at `127.0.0.1:3773`. Logout persistence passed through a new SSH session; reboot recovery and a provider request have not been tested.
+
+The installation commands, run as `coder`, were:
+
+```sh
+curl -fsSL https://t3.codes/install.sh | sh
+mkdir -p ~/.t3
+printf 'T3CODE_HOST=127.0.0.1\n' > ~/.t3/service.env
+chmod 600 ~/.t3/service.env
+~/.local/bin/t3 service install
+~/.local/bin/t3 service status
+```
+
+The installer enabled user lingering without a separate maintenance command. Do not run T3 as root. The [background service documentation](https://github.com/pingdotgg/t3code/blob/main/docs/user/background-service.md) explains its lifecycle. Restarting interrupts active work.
+
+On the Mac, add an SSH environment in T3 Settings → Environments, using `coder@100.73.122.94`, or LAN fallback `coder@192.168.8.223`. Select the existing HP environment, then configure an authenticated provider there and add an HP project folder. Mac pairing and a real agent request remain pending. See [remote access](https://github.com/pingdotgg/t3code/blob/main/docs/user/remote-access.md).
+
+The assistant reached the LAN address during installation. Its attempt to reach the Tailscale address timed out; this does not establish failure from the Mac. No T3 Connect, public listener, or Tailscale Serve route was configured.

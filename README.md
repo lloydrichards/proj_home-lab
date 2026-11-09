@@ -12,7 +12,13 @@ An assistant-maintained notebook for setting things up, troubleshooting, and rem
 
 System names are `home-lab` for HP, `remote-lab` for Pi 5, and `admin-lab` for Pi 4. All three Tailscale names match, with fresh SSH connections verified.
 
-Use devvm locally on the MacBook for selected projects that need isolation. Use the HP for ordinary remote coding and work that should continue while the Mac sleeps. HP project VMs are deferred. The HP is installed; project and backup setup remain open.
+Use devvm locally on the MacBook for selected projects that need isolation. Use the HP for ordinary remote coding and work that should continue while the Mac sleeps. HP project VMs are deferred. The HP receives [nightly Pi backups](devices/remote-lab/backups.md); its own project and workspace backup setup remain open.
+
+## Working on this notebook
+
+The working copy on `home-lab` is `/home/coder/projects/proj_home-lab`, owned by `coder`. It was copied from the Mac on 9 November 2026 with Git history and uncommitted changes preserved. Codex is authenticated with ChatGPT under `coder`; Lloyd confirmed the Mac app connected. Select that host and folder for new Codex chats. The Mac checkout remains as a fallback; avoid editing both copies independently. GitHub push access from the HP has not been tested. Codeburn usage from Mac and HP was paired over an [SSH tunnel](devices/home-lab/setup.md#codeburn-usage-across-mac-and-hp); the HP user service and Mac LaunchAgent restart automatically, but full reboot recovery is untested.
+
+On 9 November 2026, six more Mac checkouts were copied to `/home/coder/projects`: `effect-virtual-fs`, `proj_effect-boxes`, `proj_effect-mcp-conformance`, `proj_okf-graph`, `proj_portfolio-website`, and `shadcn-storybook-registry`. Their Git HEAD and working-tree changes matched after transfer. Ignored files (including local secrets, dependencies, and build output) were excluded; linked Mac worktrees were not copied. `open_effect` was freshly cloned from Lloyd’s GitHub fork instead of transferring its 211 GiB of unreachable Git objects, so its HP HEAD may differ from the Mac’s local-only workspace commit. The Mac copies remain untouched; install dependencies and supply needed secrets separately before running these projects.
 
 ## Next
 

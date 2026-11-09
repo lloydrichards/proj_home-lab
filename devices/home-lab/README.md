@@ -4,11 +4,17 @@ The HP runs Omarchy with TPM automatic disk unlock and key-only SSH. The mainten
 
 Monitor-free cold startup passed on 9 November 2026, with both accounts reachable over Tailscale. Overnight idle availability and AC-loss recovery remain open in the [readiness checklist](preparation.md#before-routine-use-without-a-monitor).
 
+The HP now receives [nightly remote-lab backups](../remote-lab/backups.md) through a dedicated account. This protects the Pi's data; backup of the HP's own workspaces remains open in the preparation checklist.
+
 ## Start here
 
 Follow the [preparation checklist](preparation.md), then the [post-install setup guide](setup.md) for repeatable commands and recovery. The checklist is the single list of upcoming HP work. Start with SSH and tmux from the MacBook; the daily client is still undecided.
 
+[OpenCode 2.2.6](setup.md#opencode-on-the-installed-hp) is installed for `coder` and running in a [Rex session over SSH](setup.md#rex-over-ssh). Mac GUI access and logout persistence still need checks. Provider sign-in remains open. See the [OpenCode concept](../../.okf/technologies/opencode.md) for service behavior and access boundaries.
+
 Hardware and name details live in the shared [inventory](../_reference/inventory.md). Service placement and access gaps live in the [service register](../_reference/services.md). Mounting and purchase details live in the [BOM](../_reference/bom.md).
+
+[T3 Code 0.1.7](setup.md#t3-code-remote-environment) is installed as a background service for `coder`, listening only on loopback. Mac connection and provider setup remain pending.
 
 ## Choices and evidence
 

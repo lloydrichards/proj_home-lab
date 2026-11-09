@@ -2,9 +2,9 @@
 
 The Raspberry Pi 5 runs Coolify and Cloudflare Tunnel. `remote-lab` is its applied system and Tailscale name. Fresh SSH through that name passed.
 
-SSH inspection on 9 November 2026 confirmed hostname `remote-lab`, access as `lloyd@192.168.8.142`, and healthy Coolify 4.4.7. Public routing was restored by repairing the tunnel network connection. See the [recovery procedure](coolify-cloudflare.md#verified-recovery). Tailscale is signed in; private SSH as `lloyd` passed after the additional Tailscale identity check.
+SSH inspection on 9 November 2026 confirmed hostname `remote-lab`, access as `lloyd@192.168.8.142`, and later Coolify 4.7.2 during backup setup. Public routing was restored by repairing the tunnel network connection. See the [recovery procedure](coolify-cloudflare.md#verified-recovery). Tailscale is signed in; `tailscale ssh lloyd@remote-lab` also works from `coder` on home-lab.
 
-SSH password login is enabled. Backup arrangements remain unknown.
+SSH password login is enabled on the existing administration endpoint. [Nightly backups to home-lab](backups.md) are installed, with a separate restricted backup account, encrypted history and successful database/file restore checks. The service register owns the endpoint and remaining gaps.
 
 ## Start here
 
