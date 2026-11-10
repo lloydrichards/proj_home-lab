@@ -6,6 +6,8 @@ status: draft
 sources:
   - id: source-1
     resource: "../../research/remote-coding.md"
+  - id: hp-runtime-check
+    resource: "../../research/shared-agent-skills.md"
   - id: source-3
     resource: "../../devices/home-lab/preparation.md"
 ---
@@ -18,4 +20,4 @@ The research records its package and release identity as checked on 6 November 2
 
 The baseline runs Pi as the unprivileged coding account inside [tmux](tmux.md "runs inside"). Extensions and repository tools execute with that account's permissions. Agent prompts do not provide an operating-system sandbox, so [agent isolation](agent-isolation.md "requires") remains a separate concern.
 
-Pi is an alternative to [OpenCode](opencode.md "is an alternative to"), not a dependency of it. The HP has not yet been tested with either tool.
+Pi is an alternative to [OpenCode](opencode.md "is an alternative to"), not a dependency of it. On 10 November 2026, the HP had a Pi mise shim but no active installed Pi runtime. Pi was left unchanged. OpenCode terminal startup and shared-skill discovery passed separately; those checks do not verify Pi.

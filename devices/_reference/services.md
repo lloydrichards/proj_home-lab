@@ -1,6 +1,6 @@
 # Service register
 
-HP updated from SSH inspection and user reports on 9 November 2026. Both Pis inspected over SSH on 9 November 2026.
+HP observations are dated in each record. Shared skills were checked locally on 10 November 2026. Both Pis inspected over SSH on 9 November 2026.
 
 | Service | Host | Access and dependencies | Evidence and gaps |
 |---|---|---|---|
@@ -9,6 +9,7 @@ HP updated from SSH inspection and user reports on 9 November 2026. Both Pis ins
 | Pi-hole | Pi 4 `admin-lab`, `192.168.8.138` | Dashboard `/admin/`; SSH as `lloyd` | Docker container healthy; DNS query to this host succeeded. Core v6.5, Web v6.6.1, FTL v6.8; Pi-hole DHCP disabled. Upstream DNS, network DHCP ownership, client configuration and backup unknown. |
 | Pi 4 database and administration | Pi 4 `admin-lab` | PostgreSQL TCP 5432 and Portainer TCP 9000 listen on all IPv4 and IPv6 interfaces | Containers running; consumers, authentication and backups need review before restricting access. Native cloudflared observed activating; purpose unresolved. |
 | Remote coding | HP `home-lab` | OpenSSH over Tailscale `100.73.122.94`, accounts `lloyd` and `coder`; LAN fallback `192.168.8.223` is DHCP | Tailscale connected; fresh key logins passed for both accounts. Key-only SSH; Tailscale SSH disabled. Monitor-free cold-start logins passed for both accounts on 9 November; overnight idle check pending. |
+| Shared agent skills | HP `coder` | Source `/home/coder/projects/skills`; generated `~/.agents/skills`; ownership `~/.local/state/lab-skills/state.json`. Profiles `default`, `effect`, `releases`, `mutation-audits`; target `agents`. | On 10 November 2026, local checks found clean source `main` at `927391b` and all 11 skills current. Fresh Codex 0.167.0 and OpenCode 2.2.6 discovery passed. Lloyd reports matching Mac/HP content hashes and unchanged ownership state after repeat application. Migration backups retained. [Synchronization and recovery](../../research/shared-agent-skills.md). |
 
 Applied hostnames are recorded in the [inventory](inventory.md#device-names).
 

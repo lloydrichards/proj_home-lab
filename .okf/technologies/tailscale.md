@@ -18,7 +18,7 @@ Tailscale supplies connectivity and tailnet access policy. [OpenSSH](openssh.md 
 
 The access research warns that a narrow new grant does not cancel an existing broad allow. Review effective access across existing ACLs and grants, and test denial from an unauthorized device. Device expiry and recovery also need an explicit plan.
 
-The [pending maintenance guidance](../../research/private-access.md#pending-tailscale-maintenance) distinguishes the stable **1.104.5** target checked on 9 November 2026 from installed versions. Prioritize checking Pi 5 because it enables Tailscale SSH; HP uses ordinary OpenSSH. Apply HP updates through Omarchy with independent recovery access. This research does not record a deployed update.
+The pending maintenance guidance in source-1 distinguishes the stable **1.104.5** target checked on 9 November 2026 from installed versions. Prioritize checking Pi 5 because it enables Tailscale SSH; HP uses ordinary OpenSSH. Apply HP updates through Omarchy with independent recovery access. This research does not record a deployed update.
 
 Tailscale Serve is a researched option for private HTTPS. Funnel publishes publicly and is excluded from the [private development decision](../decisions/home-lab/private-development.md "implements"). Neither private transport nor a policy rule replaces [application authentication](../learnings/private-network-is-not-isolation.md "does not replace").
 

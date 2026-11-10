@@ -8,6 +8,8 @@ sources:
     resource: "../../research/opencode-v2.md"
   - id: source-2
     resource: "../../research/remote-coding.md"
+  - id: shared-discovery
+    resource: "../../research/shared-agent-skills.md"
   - id: source-3
     resource: "../../devices/home-lab/setup.md"
 ---
@@ -23,3 +25,5 @@ The v1 section remains historical comparison material. Its package, attach comma
 Pairing and private transport restrict access to the service. Tool execution still has the coding account's file access. Apply [agent isolation](agent-isolation.md "requires") and use [tmux](tmux.md "uses for terminal continuity") for the initial terminal workflow.
 
 On 9 November 2026, Lloyd requested Rex over SSH instead of tmux. A personal Rex server under `coder` now runs OpenCode in a native terminal; Mac CLI capture through an SSH socket forward verified startup. GUI access, logout persistence and reboot recovery remain untested. The setup guide cited in `source-3` owns connection and recovery commands.
+
+Fresh HP catalog discovery on 10 November 2026 found the selected skills in the single shared user root. [Shared-skill source ownership](../decisions/shared-agent-skills.md "discovers instructions from") remains separate from OpenCode configuration and provider authentication. Catalog discovery does not verify execution of every optional workflow.

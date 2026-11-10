@@ -7,7 +7,8 @@ These shared notes cover topics spanning devices or the Mac client. They hold da
 - [OpenCode v2](opencode-v2.md)
 - [MacBook and HP remote agent tools](remote-agent-tools.md), including devvm, T3 Code, Rex, and Herdr
 - [Backups and recovery](backups.md)
+- [Shared agent skills across Mac and HP](shared-agent-skills.md), including synchronization, recovery, and verification limits
 
 HP-specific evidence lives with [home-lab](../devices/home-lab/README.md): [Omarchy](../devices/home-lab/research/omarchy.md) and [post-install sources](../devices/home-lab/research/setup-sources.md).
 
-The [OKF notebook](../.okf/index.md) connects the findings to the lab and records why we prefer an approach. The [HP checklist](../devices/home-lab/preparation.md) is the starting point for the arriving machine. Recheck version-sensitive findings when using them. Create another research file only when detailed evidence would help a real setup or troubleshooting question.
+The [OKF notebook](../.okf/index.md) connects the findings to the lab and records why we prefer an approach. The [HP checklist](../devices/home-lab/preparation.md) owns the remaining setup and recovery work. Recheck version-sensitive findings when using them. Create another research file only when detailed evidence would help a real setup or troubleshooting question.
