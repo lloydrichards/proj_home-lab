@@ -47,6 +47,12 @@ On 9 November 2026, system hostnames changed from `raspberrypi` to `admin-lab` a
 
 ## Private SSH access
 
+Use the [SSH setup guide](ssh-access.md) for account-local shortcuts, public-key installation, host verification, and troubleshooting. Lloyd reported the Mac IP-based shortcut setup worked after short-name DNS failures; all-direction login testing remains incomplete.
+
+On 10 November 2026, Lloyd installed the existing `coder@home-lab` Ed25519 public key in `lloyd`'s `authorized_keys` on both Pis from the Mac. Assistant checks from `coder` then passed batch-mode SSH to Pi 4 over Tailscale and Pi 5 over LAN `192.168.8.142`, with host keys matched to fingerprints returned through the Mac sessions. Pi 4 fingerprint is `SHA256:tS2z8+A4MDRegsC0MQ3Atwd34THAH5in5psMGlq8vQk`; Pi 5 is `SHA256:QeSC9CxruLD01yEzAEAFQTUtjkuPJhcSdU3HkrreTWI`. Pi 5 OpenSSH is active; its Tailscale SSH mode remains enabled. Switching that mode awaits explicit approval. No reverse-direction key logins have been tested.
+
+The `coder` account on home-lab now has SSH shortcuts `home-lab`, `home-lab-code`, `remote-lab`, and `admin-lab`, explicitly targeting the registered Tailscale IPs. All select `lloyd` except `home-lab-code`, which selects `coder`. These are account-local SSH settings, not system DNS changes. Pi names resolve through MagicDNS from home-lab outside the execution sandbox. The Mac failed to resolve both Pi short names on 10 November; IP connections worked. Pi 4 still disables Tailscale DNS acceptance to preserve its resolver configuration.
+
 For assistant maintenance from `coder` on home-lab, `tailscale ssh lloyd@remote-lab` passed on 9 November 2026. Tailscale handles host verification; this avoids the coding account needing Lloyd's SSH private key. The backup job uses its own pinned OpenSSH endpoint and key, described above.
 
 Fresh connections from the Mac passed on 9 November 2026. Both Pis have `tailscaled` enabled and active. These checks used Tailscale while the Mac was on the LAN; off-LAN access and policy-denial checks remain open.
