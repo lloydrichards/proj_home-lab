@@ -31,6 +31,10 @@ This is the single list of remaining HP work. Current facts live in the [invento
 - [ ] Connect the Mac T3 app through SSH, authenticate a provider on the HP, and test one trusted project and disconnect/reconnect.
 - [ ] Verify T3 service startup after a planned reboot. See the [recipe](setup.md#t3-code-remote-environment).
 
+## Shared agent skills
+
+- [x] Verify installation, conflict protection, Codex/OpenCode discovery, and a cross-machine source update. See [verified behavior and limits](../../research/shared-agent-skills.md#verified-behavior-and-limits). Migration backups remain retained.
+
 ## Before relying on important work
 
 - [ ] Review Tailscale security maintenance: recorded HP **1.104.2-1** is below the **1.104.4** advisory fix; **1.104.5** is the stable target checked 9 November 2026. Follow the [lockout-safe maintenance guidance](../../research/private-access.md#pending-tailscale-maintenance) through Omarchy, then record the actual version. No update is recorded here.

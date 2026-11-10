@@ -16,8 +16,11 @@ Hardware and name details live in the shared [inventory](../_reference/inventory
 
 [T3 Code 0.1.7](setup.md#t3-code-remote-environment) is installed as a background service for `coder`, listening only on loopback. Mac connection and provider setup remain pending.
 
+Shared skills are installed for Codex and OpenCode. Edit the source checkout and follow the [synchronization and recovery guide](../../research/shared-agent-skills.md); the service register owns the current selection and verification results.
+
 ## Choices and evidence
 
+- [Shared agent skills](../../.okf/decisions/shared-agent-skills.md) explains source ownership, pinned upstream content, and conflict protection.
 - [Private remote development](../../.okf/decisions/home-lab/private-development.md) records the access and coding approach.
 - [TPM unattended boot](../../.okf/decisions/home-lab/unattended-boot.md) records the installed unlock approach and recovery tradeoff.
 - [Recovery before reliance](../../.okf/decisions/recovery-before-reliance.md) sets the initial recovery checks.

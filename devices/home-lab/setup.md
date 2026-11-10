@@ -409,6 +409,16 @@ If a check fails, keep the console available and fix it before depending on unat
 
 A backup destination, scheduled backup job, retention policy, failure notification route, and daily Mac client still need choosing. The restore test and scheduled backups are required before the HP holds the only copy of important work. Client selection and container setup can wait; the baseline works with SSH and tmux.
 
+## Project checkouts and source handoffs
+
+Use `/home/coder/projects` for HP repositories. Work on a task in one active checkout at a time. Integrate committed source through Git; preserve uncommitted changes and agent conversations separately. A Git push does not transfer ignored secrets, dependencies, build output, or session state.
+
+On 9 November 2026, the notebook and six Mac checkouts moved to the HP with Git history and working-tree changes preserved: `effect-virtual-fs`, `proj_effect-boxes`, `proj_effect-mcp-conformance`, `proj_okf-graph`, `proj_portfolio-website`, and `shadcn-storybook-registry`. Ignored files and linked Mac worktrees were excluded from the project transfers. Install dependencies and supply needed secrets separately. The Mac copies remain fallbacks; avoid independent edits to both copies.
+
+`open_effect` was freshly cloned from Lloyd's GitHub fork. The Mac repository had a large unreachable-object store and a local-only workspace commit, so do not assume the HP clone contains every Mac change. Check the relevant source before retiring the Mac copy.
+
+The shared-skills source has a separate [synchronization and recovery procedure](../../research/shared-agent-skills.md). Keep edits in its source checkout, not generated installations.
+
 ## Maintain it and recover from mistakes
 
 Review updates weekly, plus urgent vendor security notices when issued. Before an update, finish important jobs, confirm a recent backup, and ensure local recovery access. Run `omarchy update`, review configuration changes and `.pacnew` files, then repeat fresh-login and reboot checks when the update affects them. Avoid long gaps between rolling-release upgrades.

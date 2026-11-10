@@ -1,11 +1,13 @@
 ---
 type: Concept
 title: "Private remote development"
-description: "The planned HP workflow and the concepts it depends on."
+description: "The installed private HP workflow, selected boundaries, and remaining client and recovery checks."
 status: draft
 sources:
   - id: inventory
     resource: "../../devices/_reference/inventory.md"
+  - id: service-register
+    resource: "../../devices/_reference/services.md"
   - id: hp-setup
     resource: "../../devices/home-lab/setup.md"
   - id: source-1
@@ -18,29 +20,16 @@ sources:
 
 # Private remote development
 
-The arriving HP is intended as the main remote development and AI coding host. Its setup is still proposed; start with the preparation checklist.
+The HP is the installed remote development and AI coding host. The inventory and service register own machine configuration and access details; the preparation checklist owns remaining readiness work. A working recipe is not evidence that every recovery check has passed.
 
-On 6 November 2026, Lloyd confirmed the client is a MacBook and requested several ways to move coding work onto the HP. The desired split keeps the interface on the Mac and the repository, agent tools, builds, and tests on the HP. Model inference can remain with a hosted provider. No particular client was selected.
+The [private-development decision](../decisions/home-lab/private-development.md "is governed by") combines [Tailscale](tailscale.md "connects through") and ordinary [OpenSSH](openssh.md "authenticates through") with separate maintenance and coding accounts. [Omarchy](omarchy.md "runs on") is installed. The Mac supplies the interface while repositories, agents, builds, and tests run on the HP. Hosted providers can supply model inference independently of that split.
 
-The [private-development decision](../decisions/home-lab/private-development.md "is governed by") combines [Tailscale](tailscale.md "connects through") and [OpenSSH](openssh.md "authenticates through") with separate maintenance and coding accounts. [Omarchy](omarchy.md "runs on") supplies the planned operating system.
+[OpenCode](opencode.md "runs through") has verified terminal startup and shared-skill discovery on the HP. [Pi coding agent](pi-coding-agent.md "remains an alternative through") is a separate option with no active HP runtime established. [Tmux](tmux.md "uses for continuity") preserves running terminal sessions after disconnection; it does not restore processes after reboot or replace [backups](restic.md "needs for data recovery").
 
-[Pi coding agent](pi-coding-agent.md "can run") and [OpenCode](opencode.md "can run") are independent terminal options. [Tmux](tmux.md "uses for continuity") preserves their running terminal sessions after laptop disconnection. It does not replace [backups](restic.md "needs for data recovery") or reboot recovery.
+T3 Code is installed as a loopback-only background service, but its Mac connection and provider request remain unverified. Rex terminal startup and SSH socket access passed; GUI access and reboot recovery remain open. Herdr and the remote-desktop options remain researched alternatives. A daily client has not been chosen. A disconnected client, a closed terminal pane, and a restarted server require different recovery checks.
 
-[Agent isolation](agent-isolation.md "requires") limits tool authority independently of network access. [Capacity measurements](../learnings/measure-agent-capacity.md "must validate") determine how many heavy jobs the machine can sustain.
+On 7 November 2026, Lloyd chose devvm locally on the MacBook for selected projects and ordinary coding under the HP's unprivileged account. HP project VMs remain deferred until a project needs stronger isolation. [Agent isolation](agent-isolation.md "requires") limits tool authority independently of network access. [Capacity measurements](../learnings/measure-agent-capacity.md "must validate") determine how many heavy jobs the machine can sustain.
 
-The client comparison cited in source-3 researches complementary choices. T3 Code offers a graphical remote-agent interface, Rex a Mac/Linux terminal setup in beta, and Herdr persistent agent terminals with app and TUI variants. A remote editor can handle manual changes in the same HP checkout. These are researched capabilities, not HP-tested integrations.
+Keep a task in one active checkout and use Git for committed source handoffs. Preserve uncommitted work, ignored files, and agent sessions separately. [Shared skills](../decisions/shared-agent-skills.md "shares instructions through") follow the same explicit source integration, followed by installation on each machine.
 
-The deeper comparison on 7 November 2026 separates agent conversation management from terminal management. T3 provides conversation approvals and code review across supported providers. Rex and Herdr retain the agent's terminal interface. Herdr's native app also supplies file and change panels, while its TUI manages worktrees. For unattended work, the HP server must run independently of the Mac client. A disconnected client, a closed terminal pane, and a restarted server are different events. No client choice or deployment was confirmed.
-
-On 7 November 2026, Lloyd chose devvm locally on the MacBook for selected projects and ordinary remote coding on the HP. The decision above owns the rationale. Local VMs use Mac resources and are suitable when work can pause with the laptop. The HP baseline runs coding tools directly under its unprivileged coding account, with separate worktrees for concurrent tasks. No daily client has been chosen.
-
-HP-side devvm and guest-side T3 servers remain researched alternatives, not preparation requirements. Revisit them only when a project needs stronger isolation on the HP. The source-3 research retains the connection design and sizing estimates for that case. Keep each task on one machine and use Git for handoffs, preserving uncommitted work and session state separately.
-
-The plan [retains existing Pi hosting](../decisions/keep-pi-hosting-separate.md "leaves public hosting separate through") during rollout.
-
-The researched post-install guide cited in source `hp-setup` configures key-only SSH at the console before first access, proves private connectivity before removing broader rules, and requires off-machine restoration and boot tests before reliance. It does not establish a configured host.
-
-The 7 November 2026 naming proposal uses `home-lab` for the HP, `remote-lab` for the Pi 5, and `admin-lab` for the Pi 4. Hyphens preserve Lloyd's suggested names in a DNS-compatible form. The inventory owns the mapping and its unverified status. Existing Pi names and endpoints need dependency checks before renaming; the HP guide does not change them. OS names, Tailscale names, and Mac SSH aliases are separate records, so setup checks the resolved destination rather than assuming that matching labels prove connectivity or authorization.
-
-
-On 9 November 2026, Lloyd requested T3 as an HP remote environment. LAN SSH checks confirmed T3 Code 0.1.7 installed as `coder`, with its systemd user service active and enabled, lingering enabled, and only `127.0.0.1:3773` listening. The setup guide cited above owns commands and connection details. SSH forwarding preserves the private-access choice while the service runs independently of the Mac. Mac connection, provider authentication, a real agent request, and reboot recovery remain unverified; this is an installed service, not yet a proven end-to-end workflow.
+The device names are applied and fresh SSH through the lab names passed. OS hostnames, Tailscale names, and Mac aliases remain separate records; matching labels alone do not prove connectivity or authorization. Existing [Pi hosting stays separate](../decisions/keep-pi-hosting-separate.md "leaves public hosting separate through") while HP recovery and workspace protection are completed.
