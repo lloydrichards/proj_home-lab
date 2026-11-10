@@ -18,6 +18,10 @@ Hardware and name details live in the shared [inventory](../_reference/inventory
 
 Shared skills are installed for Codex and OpenCode. Edit the source checkout and follow the [synchronization and recovery guide](../../research/shared-agent-skills.md); the service register owns the current selection and verification results.
 
+## Private reports and previews
+
+Use the [publishing guide](publishing.md) for central HTML reports and persistent worktree previews. Shell scripts live in `tools/publishing/`; report content and allocation records stay outside Git. The service register records the current installation and verification limits.
+
 ## Choices and evidence
 
 - [Shared agent skills](../../.okf/decisions/shared-agent-skills.md) explains source ownership, pinned upstream content, and conflict protection.
