@@ -1,5 +1,6 @@
 import contextlib
 import importlib.util
+from http.client import HTTPConnection
 import json
 import os
 from pathlib import Path
@@ -11,6 +12,7 @@ import threading
 import unittest
 import urllib.error
 import urllib.request
+from urllib.parse import urlsplit
 
 HERE = Path(__file__).resolve().parents[1]
 
@@ -87,13 +89,21 @@ class Publishing(unittest.TestCase):
             for method in ['GET', 'HEAD']:
                 for suffix in ['/details/', '/details?view=full']:
                     with self.subTest(method=method, suffix=suffix):
-                        request = urllib.request.Request(release + suffix, method=method)
-                        with urllib.request.urlopen(request) as response:
-                            self.assertEqual(response.status, 200)
-                            self.assertIn('/reports/_releases/', response.url)
-                            self.assertIn('/details/', response.url)
+                        url = urlsplit(release + suffix)
+                        target = url.path + ('?' + url.query if url.query else '')
+                        with contextlib.closing(HTTPConnection(url.netloc)) as connection:
+                            connection.request(method, target)
+                            response = connection.getresponse()
                             if '?' in suffix:
-                                self.assertTrue(response.url.endswith('/details/?view=full'))
+                                self.assertEqual(response.status, 301)
+                                location = response.getheader('Location')
+                                self.assertEqual(location, url.path + '/?view=full')
+                                self.assertEqual(response.read(), b'')
+                                # Send HEAD explicitly after the redirect. Older urllib
+                                # versions follow it with GET, which changes the assertion.
+                                connection.request(method, location)
+                                response = connection.getresponse()
+                            self.assertEqual(response.status, 200)
                             self.assertEqual(response.read(), b'' if method == 'HEAD' else (details / 'index.html').read_bytes())
                 for suffix in ['/empty/', '/empty', '/%2e%2e/%2e%2e/%2e%2e/state/reports.json']:
                     with self.subTest(method=method, denied=suffix):
