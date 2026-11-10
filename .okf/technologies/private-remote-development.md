@@ -8,6 +8,8 @@ sources:
     resource: "../../devices/_reference/inventory.md"
   - id: service-register
     resource: "../../devices/_reference/services.md"
+  - id: publishing
+    resource: "../../devices/home-lab/publishing.md"
   - id: hp-setup
     resource: "../../devices/home-lab/setup.md"
   - id: source-1
@@ -33,3 +35,11 @@ On 7 November 2026, Lloyd chose devvm locally on the MacBook for selected projec
 Keep a task in one active checkout and use Git for committed source handoffs. Preserve uncommitted work, ignored files, and agent sessions separately. [Shared skills](../decisions/shared-agent-skills.md "shares instructions through") follow the same explicit source integration, followed by installation on each machine.
 
 The device names are applied and fresh SSH through the lab names passed. OS hostnames, Tailscale names, and Mac aliases remain separate records; matching labels alone do not prove connectivity or authorization. Existing [Pi hosting stays separate](../decisions/keep-pi-hosting-separate.md "leaves public hosting separate through") while HP recovery and workspace protection are completed.
+
+## Delivering work to the Mac
+
+On 10 November 2026, Lloyd chose automatic private delivery of reviewable development work. The [publishing guide](../../devices/home-lab/publishing.md "implements") owns the shell-script workflow. Reports live centrally outside project Git history, retain stable canonical links through revisions, and remain until explicitly deleted. A read-only index supports search and project filters.
+
+Each worktree and browser-facing service has its own persistent preview allocation. Keep previews until explicitly stopped or until both the task is finished and its code is merged. Cleanup protects uncommitted and unpushed work, retains retired URLs, and never deletes reports. Enabled user services support disconnect and boot startup; actual reboot recovery still needs a live test. The service register records the installed private report route and successful host-side browser checks, while Mac access and full reboot recovery remain unverified.
+
+Reservation integrity is part of stable-link delivery. Invalid or conflicting allocation metadata blocks allocation and reuse; deleting uncertain records can silently reassign an old URL. Preview activation clears stale readiness, and failed private-route checks retain a pending allocation rather than advertising a ready preview. The publishing guide owns the status and repair procedure.
