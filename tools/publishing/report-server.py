@@ -59,7 +59,27 @@ function filter(){let count=0;for(const row of document.querySelectorAll('li')){
             self.send_error(404)
             return
         target = (self.root / 'public' / path.lstrip('/')).resolve()
-        if not target.is_relative_to((self.root / 'public/_releases').resolve()) or not target.is_file():
+        releases = (self.root / 'public/_releases').resolve()
+        if not target.is_relative_to(releases):
+            self.send_error(404)
+            return
+        if target.is_dir():
+            index = next((candidate.resolve() for name in ('index.html', 'index.htm')
+                          if (candidate := target / name).is_file()), None)
+            if index is None or not index.is_relative_to(releases):
+                self.send_error(404)
+                return
+            if not path.endswith('/'):
+                query = urlsplit(self.path).query
+                location = '/reports' + quote(path, safe="/") + '/'
+                if query:
+                    location += '?' + query
+                self.send_response(301)
+                self.send_header('Location', location)
+                self.send_header('Content-Length', '0')
+                self.end_headers()
+                return
+        elif not target.is_file():
             self.send_error(404)
             return
         self.path = quote(path, safe="/")
