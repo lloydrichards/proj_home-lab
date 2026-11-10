@@ -84,7 +84,7 @@ During this setup, Lloyd used the Mac's existing access to install home-lab's `c
 
 ## Verify the destination and test login
 
-Read the destination's fingerprint through an existing trusted session or local console:
+For ordinary OpenSSH, read the destination's fingerprint through an existing trusted session or local console:
 
 ```bash
 hostname
@@ -93,10 +93,13 @@ ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
 
 Compare it with the fingerprint shown by the first new connection before accepting. If the key changes unexpectedly, investigate rather than deleting the saved key to bypass the warning. A host-key failure happens before user-key authentication.
 
-After saving the verified host key, test a fresh login:
+This file identifies ordinary OpenSSH. Tailscale SSH uses a separate host key; see the mode-change procedure below before replacing a saved key.
+
+After saving the verified host key, test a fresh login. `ControlPath=none` disables connection sharing so an existing authenticated connection cannot bypass the check:
 
 ```bash
-ssh -o BatchMode=yes \
+ssh -o ControlPath=none \
+    -o BatchMode=yes \
     -o PreferredAuthentications=publickey \
     -o StrictHostKeyChecking=yes \
     -o ConnectTimeout=5 \
@@ -108,7 +111,8 @@ Expect the destination hostname and `lloyd`. Repeat for each intended source acc
 `remote-lab` still uses Tailscale SSH on its Tailscale address. A successful connection there proves Tailscale identity access, not acceptance of the installed OpenSSH public key. From the home LAN, test its ordinary OpenSSH endpoint separately:
 
 ```bash
-ssh -o BatchMode=yes \
+ssh -o ControlPath=none \
+    -o BatchMode=yes \
     -o PreferredAuthentications=publickey \
     -o StrictHostKeyChecking=yes \
     -o ConnectTimeout=5 \
@@ -121,7 +125,15 @@ Check the current LAN fallback in the service register before using this example
 
 OpenSSH over Tailscale uses the private network for transport and `authorized_keys` for login. Tailscale SSH uses tailnet identity and SSH policy, and can require a browser identity check. It intercepts Tailscale connections to port 22 while ordinary OpenSSH remains available through other interfaces.
 
-Changing remote-lab to ordinary OpenSSH over Tailscale remains proposed. Before switching, obtain explicit approval, keep a tested LAN OpenSSH session open, validate the server configuration with `sudo sshd -t`, and verify the required keys are installed. Disabling Tailscale SSH requires `sudo tailscale set --ssh=false`. Immediately test a fresh key login through the Tailscale IP. If it fails, use the open LAN session to restore `sudo tailscale set --ssh=true`. These commands have not been run during this setup.
+Changing remote-lab to ordinary OpenSSH over Tailscale remains proposed. These steps have not been run during this setup.
+
+1. Obtain explicit approval. Keep a tested LAN OpenSSH session open, validate the server configuration with `sudo sshd -t`, and verify the required user keys are installed.
+2. Through that trusted LAN session, record the ordinary OpenSSH public host key from `/etc/ssh/ssh_host_ed25519_key.pub` and its fingerprint. Preserve each client's existing Tailscale SSH trust entry for rollback.
+3. Disable Tailscale SSH with `sudo tailscale set --ssh=false` through the LAN session. The same Tailscale IP now presents the ordinary OpenSSH host key. A saved Tailscale SSH key can cause an expected host-key mismatch.
+4. On each originating account, update trust only for the exact Tailscale endpoint used by the shortcut. Check `ssh -G remote-lab` for `hostname`, `port`, `hostkeyalias`, and known-hosts file settings. Back up the affected known-hosts file, replace only that endpoint's old entry with the public key obtained through the trusted LAN session, and compare its fingerprint. Keep unrelated entries. Do not trust a replacement solely because a new connection or `ssh-keyscan` presents it.
+5. Repeat the strict public-key login command above with `remote-lab` as the destination and retain `-o ControlPath=none`. Expect the destination hostname and `lloyd`. Keep the LAN session open until each required source account passes.
+
+If the check fails, use the open LAN session to restore `sudo tailscale set --ssh=true`. The Tailscale endpoint then presents its Tailscale SSH host key again. Restore the preserved trust entry for that endpoint, or verify it through Tailscale's authenticated host-key distribution before accepting it. Test a new Tailscale SSH login with `ssh -o ControlPath=none remote-lab`; its identity check does not prove OpenSSH public-key acceptance. Keep the LAN recovery session until this check passes.
 
 ## Diagnose a failed connection
 

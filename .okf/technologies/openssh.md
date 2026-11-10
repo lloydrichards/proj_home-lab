@@ -20,6 +20,6 @@ The HP research proposes ordinary OpenSSH over [Tailscale](tailscale.md "runs ov
 
 For browser previews, SSH forwards a loopback listener on the laptop to a loopback service on the HP. Inspect the actual listener and keep application authentication; another local process may still reach that service.
 
-The access research recommends validating syntax and effective settings before reload and checking a fresh second login while recovery access remains open. This is the basis of the [access-change learning](../learnings/access-changes-need-recovery.md "requires").
+The access research recommends validating syntax and effective settings before reload and checking a fresh second login while recovery access remains open. Disable connection sharing for that check so it cannot reuse an authenticated session. Switching a Tailscale endpoint between Tailscale SSH and ordinary OpenSSH changes its host identity; verify the replacement through trusted access and update only the affected client trust entry. Rollback must restore trust for the returning identity. The shared SSH guide records the procedure and upstream sources. This is the basis of the [access-change learning](../learnings/access-changes-need-recovery.md "requires").
 
 Do not forward the laptop's SSH agent into the coding account. Use narrowly scoped server credentials as part of [agent isolation](agent-isolation.md "protects credentials within").
