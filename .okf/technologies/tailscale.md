@@ -8,6 +8,8 @@ sources:
     resource: "../../devices/_reference/services.md"
   - id: source-1
     resource: "../../research/private-access.md"
+  - id: ssh-guide
+    resource: "../../devices/_reference/ssh-access.md"
 ---
 
 # Tailscale
@@ -25,3 +27,5 @@ Tailscale Serve is a researched option for private HTTPS. Funnel publishes publi
 On 9 November 2026, LAN inspection found Pi 5 Tailscale logged out and Pi 4 without a host installation. Pi 4 installation and daemon enablement completed; both Pis subsequently signed in. Pi 4 passed fresh private SSH; Pi 5 also passed after Lloyd completed the additional Tailscale SSH identity check. Pi 4 settings disable DNS acceptance to avoid changing its resolver. The Mac client was stopped; reconnecting it restored fresh HP logins for both accounts. A running server daemon alone does not prove client connectivity or successful enrollment. The service register cited above owns current access facts.
 
 Both Pi system names and Tailscale DNS names now match the notebook names. Fresh SSH through `admin-lab` and `remote-lab` passed on 9 November 2026. Name preference changes alone were not immediate proof of advertised DNS; the later private-name login established it.
+
+On 10 November 2026, the Pi short names resolved through MagicDNS from home-lab, while the Mac reported name-resolution failures and succeeded by Tailscale IP. SSH aliases with explicit private IPs avoid this client DNS dependency without changing Pi-hole's resolver configuration. Lloyd reported the Mac shortcut setup worked; a full source-to-destination access matrix remains untested. The shared SSH guide separates these shortcuts from key authorization and Tailscale SSH identity checks.

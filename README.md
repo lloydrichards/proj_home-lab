@@ -26,6 +26,7 @@ The HP passed startup without a monitor. Finish the [remaining readiness checks]
 
 ## Look something up
 
+- [SSH shortcuts and key setup](devices/_reference/ssh-access.md): connect by lab name through Tailscale and check access from each account.
 - [What we know and why](.okf/index.md): technologies, choices, alternatives, and learnings.
 - [Devices and parts](devices/_reference/inventory.md), [services](devices/_reference/services.md), and [BOM](devices/_reference/bom.md).
 - [Shared research](research/README.md): private access, backups, and Mac client options.
