@@ -72,6 +72,37 @@ class Publishing(unittest.TestCase):
             with urllib.request.urlopen(old_url.rsplit('/', 1)[0] + '/image.txt') as response:
                 self.assertEqual(response.read(), b'first-image')
 
+    def test_nested_directory_indexes_preserve_links_without_listing_directories(self):
+        (self.source / 'index.html').write_text('<a href="details/">Details</a>')
+        details = self.source / 'details'
+        details.mkdir()
+        (details / 'index.html').write_text('<h1>Details</h1><img src="image.txt">')
+        (details / 'image.txt').write_text('nested-image')
+        (self.source / 'empty').mkdir()
+        report = self.publish()
+        with self.serving() as base:
+            with urllib.request.urlopen(base + report['path']) as response:
+                release = response.url.rsplit('/', 1)[0]
+                self.assertIn(b'href="details/"', response.read())
+            for method in ['GET', 'HEAD']:
+                for suffix in ['/details/', '/details?view=full']:
+                    with self.subTest(method=method, suffix=suffix):
+                        request = urllib.request.Request(release + suffix, method=method)
+                        with urllib.request.urlopen(request) as response:
+                            self.assertEqual(response.status, 200)
+                            self.assertIn('/reports/_releases/', response.url)
+                            self.assertIn('/details/', response.url)
+                            if '?' in suffix:
+                                self.assertTrue(response.url.endswith('/details/?view=full'))
+                            self.assertEqual(response.read(), b'' if method == 'HEAD' else (details / 'index.html').read_bytes())
+                for suffix in ['/empty/', '/empty', '/%2e%2e/%2e%2e/%2e%2e/state/reports.json']:
+                    with self.subTest(method=method, denied=suffix):
+                        with self.assertRaises(urllib.error.HTTPError) as error:
+                            urllib.request.urlopen(urllib.request.Request(release + suffix, method=method))
+                        self.assertEqual(error.exception.code, 404)
+            with urllib.request.urlopen(release + '/details/image.txt') as response:
+                self.assertEqual(response.read(), b'nested-image')
+
     def test_stale_author_keeps_draft_without_overwriting_published_report(self):
         first = self.publish()
         second = self.publish(first['revision'], first['id'])

@@ -23,6 +23,9 @@ jobs:
         with:
           python-version: "3.12"
       - name: Check shell syntax
-        run: bash -n tools/publishing/*.sh tools/publishing/lab-publish-route
+        run: |
+          for script in tools/publishing/*.sh tools/publishing/lab-publish-route; do
+            bash -n "$script"
+          done
       - name: Test isolated publishing contracts
         run: python3 -B -m unittest discover -s tools/publishing/tests -v
