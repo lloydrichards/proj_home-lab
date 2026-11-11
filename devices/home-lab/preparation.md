@@ -57,4 +57,4 @@ The earlier unencrypted-install preference was superseded by authorized TPM unlo
 
 ## Agent backup review fixes
 
-- [ ] Install the reviewed agent-backup script and repeat local/R2 restore checks. Confirm `.local/state/lab-skills` accompanies installed skills and that unsupported path layouts fail before backup. The PR regressions pass; the deployed job and older snapshots have not been updated or rechecked for this scope.
+- [x] Install the patched agent-backup script and repeat local/R2 restore checks. Lloyd reported both passing on 11 November; live script hashes and successful service results match. Ancestor and frozen-root regressions pass. Full restored skill-installer reconciliation remains untested; see the [service register](../_reference/services.md#home-lab-agent-state-backups).
