@@ -4,6 +4,31 @@ Use the local HP console as the maintenance account. This procedure targets the 
 
 Read the [boot explanation](../explanations/unattended-boot.md) before choosing a TPM policy. Recheck the [version-sensitive TPM research](../research/tpm-unlock.md) against your installed release. The existing machine's working enrollment is not a command to enroll it again.
 
+## Prevent system-managed sleep
+
+Skip the TPM sections if you only need the host to stay awake. On home-lab as `lloyd`:
+
+1. Inspect existing overrides before adding a policy. Reuse an existing lab sleep-policy drop-in if present; the recorded host uses the filename below. Save its current contents privately before editing.
+
+```bash
+	systemd-analyze cat-config systemd/sleep.conf
+	sudo install -d -m 755 /etc/systemd/sleep.conf.d
+	sudoedit /etc/systemd/sleep.conf.d/90-home-lab-no-sleep.conf
+```
+
+2. Set the drop-in to:
+
+```ini
+[Sleep]
+AllowSuspend=no
+AllowHibernation=no
+AllowSuspendThenHibernate=no
+AllowHybridSleep=no
+```
+
+3. Run `systemd-analyze cat-config systemd/sleep.conf` again. Confirm no later override re-enables these settings. Retain desktop screen locking; disabling it does not prevent power sleep.
+4. Check fresh SSH access after leaving the host idle overnight. This policy does not cover shutdown or firmware AC-loss behavior. To roll back, restore the saved contents if the file already existed. Remove it only if you created it in this procedure.
+
 ## Preserve password recovery
 
 1. Identify the encrypted device and active boot configuration:

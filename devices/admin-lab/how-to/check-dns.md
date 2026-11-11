@@ -20,7 +20,7 @@ Use these read-only checks to separate DNS failure, container health, and dashbo
    ```
 
    A successful response includes `status: NOERROR`, an answer, and the selected server address. A timeout indicates this path failed; it does not prove the container stopped. Record the client and path with the result.
-4. Query a domain known to be blocked by this Pi's current policy:
+4. If you know a domain blocked by this Pi's current policy, query it. Otherwise record filtering as unverified and continue with the web and container checks:
 
    ```bash
 	printf 'Domain known to be blocked here: '

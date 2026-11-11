@@ -38,17 +38,7 @@ Docker creates its own packet-filtering rules. Published container ports can byp
 
 Omarchy's `omarchy toggle suspend` controls whether Suspend appears in the menu. It does not establish a server-wide sleep policy. `omarchy toggle idle` controls desktop locking and the screensaver, not power management. Retain local screen locking. [Omarchy system sleep](https://omarchy.org/manual/system-sleep/), [Omarchy idle behavior](https://omarchy.org/manual/toggles-idle-screensaver/)
 
-For an always-on host, create `/etc/systemd/sleep.conf.d/90-home-lab.conf` with this proposed content:
-
-```ini
-[Sleep]
-AllowSuspend=no
-AllowHibernation=no
-AllowSuspendThenHibernate=no
-AllowHybridSleep=no
-```
-
-Systemd supports these settings and recommends administrator drop-ins rather than edits to the vendor file. Inspect other drop-ins because later filenames override earlier values. This blocks systemd-managed sleep paths, not shutdown, firmware behavior, or power failure. Removing this one file reverses the proposed policy. [systemd-sleep.conf manual](https://man.archlinux.org/man/systemd-sleep.conf.5.en)
+The [unattended-boot guide](../how-to/configure-unattended-boot.md#prevent-system-managed-sleep) owns the sleep-policy procedure. Systemd supports these settings and recommends administrator drop-ins rather than edits to the vendor file. Later filenames override earlier values. The policy blocks systemd-managed sleep paths, not shutdown, firmware behavior, or power failure. [systemd-sleep.conf manual](https://man.archlinux.org/man/systemd-sleep.conf.5.en)
 
 Recommendation: test the effective policy locally, leave the host idle overnight, and verify access after the monitor is disconnected. Check firmware settings for restoration after AC loss separately.
 

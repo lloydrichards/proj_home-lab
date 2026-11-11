@@ -1,10 +1,10 @@
 # Private access for the HP home lab
 
-Sources checked **2026-11-06**. This is a proposed configuration, not evidence that the HP or tailnet has been configured. Commands were checked against documentation; they have not been run on the new server. Replace example usernames, addresses and account identities before use.
+Sources initially checked on 6 November 2026. These examples explain the access mechanisms; current deployment and dated login checks belong in the [service register](../devices/_reference/services.md#private-ssh-access). Use the [SSH guide](../docs/how-to/connect-with-ssh.md) for operations. Replace example identities before reuse.
 
 ## How this research is used
 
-The [private-development choice](../.okf/decisions/home-lab/private-development.md) owns the proposed access approach and its rationale. Upcoming setup and checks belong in the [HP checklist](../devices/home-lab/preparation.md). The examples below explain the relevant mechanisms; adapt them when we perform the setup.
+The [private-development choice](../.okf/decisions/home-lab/private-development.md) owns the accepted access approach and its rationale. Upcoming setup and checks belong in the [HP checklist](../devices/home-lab/preparation.md). The examples below explain the relevant mechanisms; they are not a record of the installed configuration.
 
 ## OpenSSH over Tailscale versus Tailscale SSH
 
@@ -20,7 +20,7 @@ As of this check, Tailscale's October 28 security update fixes Tailscale SSH pri
 
 ### Pending Tailscale maintenance
 
-On **9 November 2026**, the [stable package registry](https://pkgs.tailscale.com/stable/?mode=json) was rechecked and reported **1.104.5**. This is a maintenance target, not a new host observation. The inventory records HP **1.104.2-1**; Pi 4 already records **1.104.5**. Pi 5 uses Tailscale SSH but its installed version is unknown, so check it first and prioritize remediation if below **1.104.4**. HP Tailscale SSH is disabled; the advisory does not prove that HP OpenSSH is vulnerable.
+On **9 November 2026**, the [stable package registry](https://pkgs.tailscale.com/stable/?mode=json) was rechecked and reported **1.104.5**. This is a maintenance target, not a new host observation. The inventory records HP **1.104.2-1**; Pi 4 already records **1.104.5**. The Pi 5 version remained unknown at that check. Later access changes disabled Tailscale SSH on all three hosts; ordinary OpenSSH now handles login. Recheck installed versions before maintenance. The advisory does not establish that ordinary OpenSSH has the same vulnerabilities.
 
 For a separately authorized maintenance window:
 

@@ -26,7 +26,7 @@ Expect the temporary hostname and a 64-bit architecture compatible with the sele
 
 ## Establish private maintenance access
 
-1. Install and enroll Tailscale using its instructions for the selected OS.
+1. Install and enroll Tailscale using its [Linux installation instructions](https://tailscale.com/docs/install/linux) for the selected OS.
 2. Follow [Connect with SSH](../../docs/how-to/connect-with-ssh.md) to pin the new host key and test a fresh maintenance login.
 3. Confirm password-required `sudo` from that login. Keep human maintenance outside the Docker group.
 4. Verify the intended Tailscale grants and actual reachability from the maintenance client. Preserve console access before tightening SSH.

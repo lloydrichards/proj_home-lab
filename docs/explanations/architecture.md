@@ -28,8 +28,6 @@ The diagram separates private management from public application traffic. Dashed
 
 ## Each device has a separate recovery boundary
 
-Home-lab hosts development, remote-lab hosts applications, and admin-lab supplies DNS. Keeping those roles separate avoids moving production services during development-host changes. It does not remove dependencies between them.
-
 The HP collects remote-lab backups and copies them to R2. Losing the HP therefore affects both development and backup automation. [Backup and recovery](backup-and-recovery.md) explains the copies and limits. Admin-lab's actual DNS consumers and upstream resolver remain unconfirmed; a permitted DNS connection is not proof of dependency.
 
 ## Private management and public hosting use different paths

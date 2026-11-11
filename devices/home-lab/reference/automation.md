@@ -86,17 +86,7 @@ The resume helper depends on the installed backup script, its success record, it
 
 ## Pi backup units on home-lab
 
-| Unit | Schedule or interface |
-|---|---|
-| `lab-backup-collect.service` | Consistent source export, encrypted local backup, restore checks, and local retention |
-| `lab-backup-collect.timer` | Daily 02:00 Europe/Zurich; persistent missed-run catch-up |
-| `lab-backup-health.timer` | Hourly local freshness and capacity check |
-| `lab-backup-r2.service` | Snapshot copy and cloud checks; starts after successful local collection |
-| `lab-backup-r2.timer` | Daily 03:00 Europe/Zurich retry; persistent missed-run catch-up |
-| `lab-backup-r2-health.timer` | Hourly copy/source-snapshot freshness check |
-| `lab-backup-alert.service` | Local journal and terminal alert |
-
-`/usr/local/sbin/lab-backup-r2 retention-preview` runs the agreed cloud policy with `forget --dry-run`. The source and cloud copy serialize through `/home/lab-backup/collector.lock`. Detailed source-export behavior and installation are in [Pi backup operations](../../remote-lab/backups.md).
+The [Pi backup reference](../../remote-lab/reference/backups.md#units-and-verification) owns collector and R2 units, schedules, locking, and retention-preview behavior. These run on home-lab separately from the agent backup above.
 
 ## Publishing interfaces
 
