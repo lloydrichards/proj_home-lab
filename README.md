@@ -13,7 +13,8 @@ Exact addresses, versions, and dated checks live in the [service register](devic
 ## Choose a starting point
 
 - **Build a machine:** follow [Build a private coding host](devices/home-lab/setup.md). It connects the new-machine tasks; the complete fresh-hardware sequence is not yet rehearsed end to end.
-- **Understand the design:** start with [architecture](devices/home-lab/explanations/architecture.md), then [security and isolation](devices/home-lab/explanations/security-and-isolation.md), [unattended boot](devices/home-lab/explanations/unattended-boot.md), or [backup and recovery](devices/home-lab/explanations/backup-and-recovery.md).
+- **Understand the design:** start with [architecture](docs/explanations/architecture.md), then [security and isolation](docs/explanations/security-and-access.md), [unattended boot](devices/home-lab/explanations/unattended-boot.md), or [backup and recovery](docs/explanations/backup-and-recovery.md).
+- **Connect to a host:** follow [Connect with SSH](docs/how-to/connect-with-ssh.md).
 - **Operate or recover:** use the [HP task guides](devices/home-lab/README.md#operate-and-recover) or [Pi task guides](devices/remote-lab/README.md#operate-and-recover).
 - **Find an unfinished HP check:** use [preparation](devices/home-lab/preparation.md), the single HP work list.
 
@@ -23,4 +24,4 @@ Initial local and R2 backups passed. One R2-restored Codex conversation reopened
 
 Work in `/home/coder/projects/proj_home-lab` as `coder` on home-lab. Keep each task in one active checkout and exchange committed changes through Git. Edit shared skills in their [source repository](research/shared-agent-skills.md), not generated installations.
 
-Reader-facing guides explain and operate the setup. [OKF](.okf/index.md) connects concepts, accepted decisions, and reusable learnings. [Research](research/README.md) retains source evidence and unresolved investigations. [Inventory](devices/_reference/inventory.md), the [service register](devices/_reference/services.md), and the [BOM](devices/_reference/bom.md) own their respective facts. Git keeps change history; secrets and raw private output stay outside Git.
+Shared explanations and how-to guides live in `docs/`. Device-specific setup and operation stay under `devices/`. [OKF](.okf/index.md) connects concepts, accepted decisions, and reusable learnings. [Research](research/README.md) retains source evidence and unresolved investigations. [Inventory](devices/_reference/inventory.md), the [service register](devices/_reference/services.md), and the [BOM](devices/_reference/bom.md) own their respective facts. Git keeps change history; secrets and raw private output stay outside Git.

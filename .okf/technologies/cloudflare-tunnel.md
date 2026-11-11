@@ -9,7 +9,7 @@ sources:
   - id: access-record
     resource: "../../devices/_reference/services.md"
   - id: security
-    resource: "../../devices/home-lab/explanations/security-and-isolation.md"
+    resource: "../../docs/explanations/security-and-access.md"
   - id: retired-ssh-recipe
     resource: "../../devices/remote-lab/cloudflare-ssh.md"
 ---

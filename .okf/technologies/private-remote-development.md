@@ -5,9 +5,9 @@ description: "Mac interfaces, persistent HP execution, and private delivery of r
 status: draft
 sources:
   - id: architecture
-    resource: "../../devices/home-lab/explanations/architecture.md"
+    resource: "../../docs/explanations/architecture.md"
   - id: security
-    resource: "../../devices/home-lab/explanations/security-and-isolation.md"
+    resource: "../../docs/explanations/security-and-access.md"
   - id: publishing
     resource: "../../devices/home-lab/publishing.md"
   - id: service-register
@@ -28,4 +28,4 @@ Private publishing gives reports stable canonical links and worktree services di
 
 A fixed administrator helper manages only reviewed private HTTPS route operations. That exception is narrower than general sudo, but still part of the authority boundary. The [publishing guide](../../devices/home-lab/publishing.md) owns its commands and lifecycle.
 
-The [architecture explanation](../../devices/home-lab/explanations/architecture.md) is the reader's complete overview. The service register owns installed client results and recovery gaps. One restored Codex conversation has reopened, but that does not prove all Rex/T3/OpenCode client, provider, or reboot paths. Remaining HP work stays in [preparation](../../devices/home-lab/preparation.md).
+The [architecture explanation](../../docs/explanations/architecture.md) is the reader's complete overview. The service register owns installed client results and recovery gaps. One restored Codex conversation has reopened, but that does not prove all Rex/T3/OpenCode client, provider, or reboot paths. Remaining HP work stays in [preparation](../../devices/home-lab/preparation.md).

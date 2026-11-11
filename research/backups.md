@@ -10,7 +10,7 @@ Omarchy root snapshots leave `/home` unchanged. They help with OS recovery but d
 
 ## Restore evidence and repository checks
 
-The initial local and cloud restore checks passed. One R2-restored Codex conversation also reopened in an isolated profile. These checks do not establish whole-machine recovery or recovery through every agent interface. The [service register](../devices/_reference/services.md) owns observed results; the [backup explanation](../devices/home-lab/explanations/backup-and-recovery.md) explains their limits.
+The initial local and cloud restore checks passed. One R2-restored Codex conversation also reopened in an isolated profile. These checks do not establish whole-machine recovery or recovery through every agent interface. The [service register](../devices/_reference/services.md) owns observed results; the [backup explanation](../docs/explanations/backup-and-recovery.md) explains their limits.
 
 A normal repository check does not read every stored data block. Full data verification is a separate check. Retain this distinction when evaluating successful backup jobs. [Repository checks](https://restic.readthedocs.io/en/stable/045_working_with_repos.html), [restore behavior](https://restic.readthedocs.io/en/stable/050_restore.html)
 

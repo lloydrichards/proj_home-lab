@@ -10,12 +10,14 @@ For the installed HP, use the task guides rather than repeating initial enrollme
 
 ## Understand the setup
 
+Start with the shared [lab architecture](../../docs/explanations/architecture.md), then use these explanations.
+
 | Explanation | Question it answers |
 |---|---|
-| [Architecture](explanations/architecture.md) | What runs on the Mac, HP, Pis, and hosted providers? |
-| [Security and isolation](explanations/security-and-isolation.md) | Which connections and privileges are restricted, and which remain powerful? |
+| [Coding environment](explanations/coding-environment.md) | How do agent sessions, files, and private previews fit together? |
+| [Security and isolation](../../docs/explanations/security-and-access.md) | Which connections and privileges are restricted, and which remain powerful? |
 | [Unattended boot](explanations/unattended-boot.md) | How does encrypted storage unlock without a monitor, and how does recovery work? |
-| [Backup and recovery](explanations/backup-and-recovery.md) | What is protected, what is excluded, and what do the restore checks prove? |
+| [Backup and recovery](../../docs/explanations/backup-and-recovery.md) | What is protected, what is excluded, and what do the restore checks prove? |
 
 ## Operate and recover
 
@@ -29,7 +31,7 @@ For the installed HP, use the task guides rather than repeating initial enrollme
 - [Collect and recover Pi backups](../remote-lab/backups.md).
 - [Synchronize shared skills](../../research/shared-agent-skills.md).
 
-The [automation reference](reference/automation.md) lists script contracts, paths, units, and schedules. The [SSH guide](../_reference/ssh-access.md) covers Mac aliases and Pi differences.
+The [automation reference](reference/automation.md) lists script contracts, paths, units, and schedules. The [SSH guide](../../docs/how-to/connect-with-ssh.md) covers Mac aliases and Pi differences.
 
 ## Verification boundary
 

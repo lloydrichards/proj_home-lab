@@ -56,7 +56,7 @@ If installation fails, inspect the executable path and runtime ownership before 
 
 For a persistent terminal, start `tmux new -s work`. Detach with **Ctrl+B**, then **D**. Reconnect and run `tmux attach -t work`. Confirm the same terminal remains after SSH disconnects.
 
-For Rex, follow its [official user installation](https://www.superlogical.com/rex/docs/linux/remote-access#ssh-forwarding). Start the personal server as `coder`, inspect its Unix socket, and forward that actual socket from the Mac. Do not copy another machine's numeric user ID. Use the [shared SSH guide](../../_reference/ssh-access.md) for the host alias.
+For Rex, follow its [official user installation](https://www.superlogical.com/rex/docs/linux/remote-access#ssh-forwarding). Start the personal server as `coder`, inspect its Unix socket, and forward that actual socket from the Mac. Do not copy another machine's numeric user ID. Use the [shared SSH guide](../../../docs/how-to/connect-with-ssh.md) for the host alias.
 
 For T3, review its [installer](https://github.com/pingdotgg/t3code/blob/main/docs/user/install.md) and [service lifecycle](https://github.com/pingdotgg/t3code/blob/main/docs/user/background-service.md). For a new installation, keep it on loopback before installing the user service. If `~/.t3/service.env` already exists, edit its host setting instead of running the `printf` line:
 

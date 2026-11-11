@@ -1,6 +1,6 @@
 # Secure remote access
 
-Use the home-lab console as the maintenance account. Keep a monitor, keyboard, and recovery USB available. This procedure targets Omarchy with OpenSSH, Tailscale, and UFW. Use the [shared SSH guide](../../_reference/ssh-access.md) for client aliases and Pi-specific differences.
+Use the home-lab console as the maintenance account. Keep a monitor, keyboard, and recovery USB available. This procedure targets Omarchy with OpenSSH, Tailscale, and UFW. Use the [shared SSH guide](../../../docs/how-to/connect-with-ssh.md) for client aliases and Pi-specific differences.
 
 ## Prepare the accounts and key
 
@@ -115,4 +115,4 @@ Repeat for the maintenance account, substituting your actual key and address. Ke
 
 Both attempts must fail. Replace `UNLISTED_PRIVATE_KEY` with an existing key absent from the HP's authorization. A missing key file is not a rejection test. Also confirm `PermitRootLogin no` in effective settings and rejection of a fresh root login.
 
-If the new login fails, keep the console session open. Restore the saved SSH configuration, validate it, reload SSH, and inspect Tailscale policy and UFW separately. Follow the [security explanation](../explanations/security-and-isolation.md) for the boundaries these checks establish.
+If the new login fails, keep the console session open. Restore the saved SSH configuration, validate it, reload SSH, and inspect Tailscale policy and UFW separately. Follow the [security explanation](../../../docs/explanations/security-and-access.md) for the boundaries these checks establish.

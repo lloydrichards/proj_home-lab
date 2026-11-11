@@ -85,4 +85,4 @@ The destination must not already exist. The command never overwrites the live ho
 6. Clone omitted projects and skill-source repositories from GitHub at the paths required by restored links. Reauthenticate where needed.
 7. Open an isolated copy before replacing the working agent profile.
 
-This replacement-host sequence has not been tested end to end. The existing helper depends on local backup metadata and installed paths. OpenCode, T3, and Rex reopening need their own application checks; terminal-process recovery is outside this test. See the [backup explanation](../explanations/backup-and-recovery.md) and [automation reference](../reference/automation.md).
+This replacement-host sequence has not been tested end to end. The existing helper depends on local backup metadata and installed paths. OpenCode, T3, and Rex reopening need their own application checks; terminal-process recovery is outside this test. See the [backup explanation](../../../docs/explanations/backup-and-recovery.md) and [automation reference](../reference/automation.md).

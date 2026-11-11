@@ -17,6 +17,7 @@ Help Lloyd set things up, troubleshoot, and remember what we explored and why. M
 
 - Keep `README.md` short: what runs where, known access details, the next task, and links when needed.
 - Keep `devices/home-lab/preparation.md` as the single list of upcoming HP work. Research and OKF explain the reasons and test details, linking to that list rather than maintaining parallel task lists.
+- Keep lab-wide explanations in `docs/explanations/` and shared operating procedures in `docs/how-to/`. Device guides link these rather than copying them. Keep device-specific explanations and procedures with their device.
 - Keep device guides under `devices/`, starting with `home-lab`, `remote-lab`, and `admin-lab`. Each device README links its status, guides, research, and relevant OKF decisions. A directory name is not evidence that the hostname has been applied.
 - Keep arriving hardware in a preparation checklist. Expand setup instructions when we perform the work, recording checks and recovery steps worth repeating.
 - Keep lab-wide inventory, BOM, and the service register in `devices/_reference/`. Update these owning records when device, service, or purchase facts change. Device pages summarize purpose and status and link the records rather than copying specifications or maintaining another inventory.

@@ -24,7 +24,7 @@ Current service placement, access boundaries, and verification limits. Observati
 
 ## Private SSH access
 
-All three hosts use ordinary OpenSSH over Tailscale; Tailscale SSH is disabled. Hostnames are applied system names, not just directory labels. The Mac's shortcuts use explicit Tailscale IPs because short-name resolution failed during setup. [SSH procedures](ssh-access.md) cover client configuration, host verification, and recovery.
+All three hosts use ordinary OpenSSH over Tailscale; Tailscale SSH is disabled. Hostnames are applied system names, not just directory labels. The Mac's shortcuts use explicit Tailscale IPs because short-name resolution failed during setup. [SSH procedures](../../docs/how-to/connect-with-ssh.md) cover client configuration, host verification, and recovery.
 
 | Host | Tailscale IPv4 | Recorded LAN fallback | Human accounts | Root SSH |
 |---|---|---|---|---|
@@ -53,7 +53,7 @@ LAN restrictions remain deferred. Home-lab retains its `192.168.8.0/24` SSH allo
 
 `lloyd` uses password-required sudo and has no Docker-group membership in fresh Pi sessions. Fresh direct Docker access was denied while `sudo docker` remained usable. The intended per-terminal sudo cache is five minutes through `/etc/sudoers.d/90-lloyd-session`. Remote-lab's complete `visudo -c` passed; admin-lab's fresh-session behavior passed, but its full final validation output was not supplied.
 
-Old sessions can retain prior supplementary groups. Recovery material remains root-only under `/root/lab-access-recovery`; removing an authorization does not delete its private key or recovery copy. [Permission checks and rollback](ssh-access.md#pi-maintenance-permissions) retain the commands.
+Old sessions can retain prior supplementary groups. Recovery material remains root-only under `/root/lab-access-recovery`; removing an authorization does not delete its private key or recovery copy. [Permission checks and rollback](../../docs/how-to/connect-with-ssh.md#pi-maintenance-permissions) retain the commands.
 
 ## Security review verification and access boundary
 

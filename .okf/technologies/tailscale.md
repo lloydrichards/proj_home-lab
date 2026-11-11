@@ -28,4 +28,4 @@ Serve provides private HTTPS for reports and previews. Funnel would expose them 
 
 Key expiry, client state, and host reboot can interrupt access. Maintenance needs independent recovery access and fresh-login tests rather than a reset through the only working session. Release-sensitive update findings belong in dated research and the single preparation checklist, not a permanent claim about the latest release.
 
-The [private-network learning](../learnings/private-network-is-not-isolation.md "limits") explains why reachability controls do not sandbox agent tools. [Architecture](../../devices/home-lab/explanations/architecture.md) shows the reader-facing topology.
+The [private-network learning](../learnings/private-network-is-not-isolation.md "limits") explains why reachability controls do not sandbox agent tools. [Architecture](../../docs/explanations/architecture.md) shows the reader-facing topology.

@@ -2,7 +2,7 @@
 
 Use home-lab as `coder`. You need the notebook checkout, Bash, Python 3, jq, flock, Git, curl, systemd user services, and Tailscale. The Mac must have permission to reach the private HTTPS route.
 
-Reports and preview records are outside Git and outside the accepted agent-backup scope. Keep another copy of content you need to recover. See [architecture](explanations/architecture.md) for the delivery path and [automation reference](reference/automation.md) for paths, flags, ports, and statuses.
+Reports and preview records are outside Git and outside the accepted agent-backup scope. Keep another copy of content you need to recover. See [coding environment](explanations/coding-environment.md) for the delivery path and [automation reference](reference/automation.md) for paths, flags, ports, and statuses.
 
 ## Install or update publishing
 

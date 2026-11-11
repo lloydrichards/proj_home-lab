@@ -7,7 +7,7 @@ sources:
   - id: current-authority
     resource: "../../devices/_reference/services.md"
   - id: security
-    resource: "../../devices/home-lab/explanations/security-and-isolation.md"
+    resource: "../../docs/explanations/security-and-access.md"
   - id: backup-contract
     resource: "../../devices/remote-lab/reference/backups.md"
   - id: historical-recipe

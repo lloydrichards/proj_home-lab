@@ -28,7 +28,7 @@ Firmware and boot changes can alter measurements or remove required unlock suppo
 
 ## Boot recovery and data recovery remain separate
 
-Omarchy's root snapshots can help recover an operating-system change. They do not protect `/home` from SSD loss. The [agent-state backups](backup-and-recovery.md) cover a selected part of that home data; project checkouts are excluded by choice.
+Omarchy's root snapshots can help recover an operating-system change. They do not protect `/home` from SSD loss. The [agent-state backups](../../../docs/explanations/backup-and-recovery.md) cover a selected part of that home data; project checkouts are excluded by choice.
 
 Monitor-free cold startup passed on the installed HP. Overnight availability and AC-loss recovery remain separate checks. The [preparation checklist](../preparation.md) owns those gaps, and the [inventory](../../_reference/inventory.md) owns observed disk and boot facts.
 

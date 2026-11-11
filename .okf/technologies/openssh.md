@@ -9,7 +9,7 @@ sources:
   - id: guide
     resource: "../../devices/home-lab/how-to/secure-remote-access.md"
   - id: client-guide
-    resource: "../../devices/_reference/ssh-access.md"
+    resource: "../../docs/how-to/connect-with-ssh.md"
   - id: research
     resource: "../../research/private-access.md"
 ---

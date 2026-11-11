@@ -5,7 +5,7 @@ description: "Boundaries around coding tools, credentials, and host administrati
 status: draft
 sources:
   - id: security-explanation
-    resource: "../../devices/home-lab/explanations/security-and-isolation.md"
+    resource: "../../docs/explanations/security-and-access.md"
   - id: source-1
     resource: "../../devices/home-lab/preparation.md"
   - id: source-2

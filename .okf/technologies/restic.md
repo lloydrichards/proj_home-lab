@@ -5,7 +5,7 @@ description: "Encrypted backup history, consistency boundaries, and tested data 
 status: draft
 sources:
   - id: design
-    resource: "../../devices/home-lab/explanations/backup-and-recovery.md"
+    resource: "../../docs/explanations/backup-and-recovery.md"
   - id: hp-automation
     resource: "../../devices/home-lab/reference/automation.md"
   - id: pi-automation
@@ -26,6 +26,6 @@ Source consistency comes before encryption. The Pi job stops writes and archives
 
 Lloyd's [agent-state scope decision](../decisions/home-lab/agent-state-backups.md "limits") excludes projects and worktrees. GitHub does not preserve uncommitted edits or unpushed commits. Shared-skill links require their omitted source repositories to be recovered separately.
 
-Initial local and cloud recovery checks passed. One R2-restored Codex conversation reopened in an isolated profile; its copied index needed transcript-path rebasing. This does not establish recovery of every agent interface, production Pi browser behavior, or a whole replacement machine. The [service register](../../devices/_reference/services.md) owns dates and results; the [backup explanation](../../devices/home-lab/explanations/backup-and-recovery.md) and its linked task guides own operation.
+Initial local and cloud recovery checks passed. One R2-restored Codex conversation reopened in an isolated profile; its copied index needed transcript-path rebasing. This does not establish recovery of every agent interface, production Pi browser behavior, or a whole replacement machine. The [service register](../../devices/_reference/services.md) owns dates and results; the [backup explanation](../../docs/explanations/backup-and-recovery.md) and its linked task guides own operation.
 
 [Systemd](systemd.md "schedules") runs the jobs. Local alerts cannot report an offline HP. Outside email alerts are deferred, and remaining verification belongs in [preparation](../../devices/home-lab/preparation.md).

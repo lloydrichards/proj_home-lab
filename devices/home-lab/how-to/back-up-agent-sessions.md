@@ -1,6 +1,6 @@
 # Back up agent sessions
 
-Use the maintenance account on home-lab. This procedure installs the lab-specific agent backup job. For the design and exclusions, read [backup and recovery](../explanations/backup-and-recovery.md). For exact inputs and paths, use the [automation reference](../reference/automation.md).
+Use the maintenance account on home-lab. This procedure installs the lab-specific agent backup job. For the design and exclusions, read [backup and recovery](../../../docs/explanations/backup-and-recovery.md). For exact inputs and paths, use the [automation reference](../reference/automation.md).
 
 If you are replacing a lost machine, retrieve the existing repository password and R2 credentials before proceeding. Do not initialize a new repository over the existing cloud prefix. Restore the required state before starting agents on the replacement.
 
