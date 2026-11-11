@@ -12,7 +12,7 @@ Exact addresses, versions, and dated checks live in the [service register](devic
 
 ## Choose a starting point
 
-- **Build a machine:** follow [Build a private coding host](devices/home-lab/setup.md). It connects the new-machine tasks; the complete fresh-hardware sequence is not yet rehearsed end to end.
+- **Build a machine:** follow [Build a private coding host](devices/home-lab/setup.md). For hosting, use [Build a Pi application host](devices/remote-lab/setup.md). Neither complete fresh-hardware sequence is rehearsed end to end; admin-lab has no verified rebuild guide yet.
 - **Understand the design:** start with [architecture](docs/explanations/architecture.md), then [security and isolation](docs/explanations/security-and-access.md), [unattended boot](devices/home-lab/explanations/unattended-boot.md), or [backup and recovery](docs/explanations/backup-and-recovery.md).
 - **Connect to a host:** follow [Connect with SSH](docs/how-to/connect-with-ssh.md).
 - **Operate or recover:** use the [HP task guides](devices/home-lab/README.md#operate-and-recover) or [Pi task guides](devices/remote-lab/README.md#operate-and-recover).

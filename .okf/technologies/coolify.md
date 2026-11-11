@@ -4,6 +4,10 @@ title: "Coolify"
 description: "Deployment authority, routing dependencies, and application recovery."
 status: draft
 sources:
+  - id: hosting-explanation
+    resource: "../../devices/remote-lab/explanations/application-hosting.md"
+  - id: rebuild-guide
+    resource: "../../devices/remote-lab/setup.md"
   - id: routing
     resource: "../../devices/remote-lab/coolify-cloudflare.md"
   - id: current-evidence
@@ -26,4 +30,4 @@ Application destinations reduce direct network sharing, but they do not establis
 
 Recovery requires more than Coolify's database dump. Application storage and the original `APP_KEY` are needed to recover encrypted credentials and workloads. [Restic](restic.md "retains verified data through") stores local/cloud history; isolated data and credential drills passed. Full restored dashboard operation, complete app cutover, and replacement-host recovery remain untested.
 
-The [backup reference](../../devices/remote-lab/reference/backups.md) owns scope and service contracts. The service register owns version, deployment, and test facts. Further network isolation and build-secret work remain explicitly deferred.
+The [backup reference](../../devices/remote-lab/reference/backups.md) owns scope and service contracts. The service register owns version, deployment, and test facts. Further network isolation and build-secret work remain explicitly deferred. The hosting explanation separates request routing, deployment control, and persistent data; the replacement-host guide connects their checks without claiming a rehearsed rebuild.

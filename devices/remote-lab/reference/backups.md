@@ -1,6 +1,6 @@
 # Pi backup reference
 
-This reference describes the maintained [backup scripts](../backup-tools/). Current deployment and dated verification belong in the [service register](../../_reference/services.md). The [design explanation](../../home-lab/explanations/backup-and-recovery.md) describes the tradeoffs.
+This reference describes the maintained [backup scripts](../backup-tools/). Current deployment and dated verification belong in the [service register](../../_reference/services.md). The [design explanation](../../../docs/explanations/backup-and-recovery.md) describes the tradeoffs.
 
 ## Scope and consistency
 

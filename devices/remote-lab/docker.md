@@ -1,6 +1,6 @@
 > Portainer was retired on both Pis on 11 November 2026. Do not reinstall it as part of routine maintenance. See [current status and recovery](../_reference/services.md#portainer-retirement).
 
-> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](../home-lab/preparation.md).
+> Historical installation recipe. Do not add human maintenance accounts to the Docker group or reinstall Portainer as a setup prerequisite. Use the [new-host guide](setup.md). The explicit retirement rollback below remains available.
 
 # Installing Docker
 

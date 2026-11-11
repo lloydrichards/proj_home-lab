@@ -2,7 +2,7 @@
 
 Remote-lab application data is collected by home-lab and copied to private Cloudflare R2 storage. Use the guide for your goal:
 
-- [Understand the backup design](../home-lab/explanations/backup-and-recovery.md).
+- [Understand the backup design](../../docs/explanations/backup-and-recovery.md).
 - [Configure Pi collection and the R2 copy](how-to/configure-backups.md).
 - [Run, inspect, or recover a failed backup](how-to/check-backups.md).
 - [Restore Pi application data](how-to/restore-backups.md).
