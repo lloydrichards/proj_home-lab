@@ -1,4 +1,4 @@
-> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](../home-lab/preparation.md).
+> Historical installer note. Recheck supported OS, architecture, privileges, and release instructions before a new installation. Use the [new-host guide](setup.md); the command below is not a version-pinned contract.
 
 # Add Coolify
 

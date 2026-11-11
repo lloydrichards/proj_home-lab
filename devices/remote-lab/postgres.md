@@ -1,4 +1,4 @@
-> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](../home-lab/preparation.md).
+> Historical PostgreSQL recipe. Do not run it against current or restored data. Its floating `postgres:latest` image, published database port, and mount path are not a supported migration plan. Use the [data recovery guide](how-to/restore-backups.md).
 
 # Add Postgres Server on Docker
 

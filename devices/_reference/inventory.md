@@ -11,7 +11,7 @@ HP and both Pis inspected over SSH on 9 November 2026. See the [service register
 | CPU | Intel i5-10500T, 6 cores / 12 threads, VT-x | Diagnostics and sustained-load test pending |
 | RAM | 32 GB purchased, 31 GiB usable | Module layout, speed and memory test pending |
 | SSD | SK hynix PC711 NVMe 1 TB, 953.9 GiB; firmware 41001131 | SMART passed 9 November; see health summary below |
-| Storage | 2 GiB FAT boot partition; LUKS root with Btrfs; before incoming backup setup, 38 GiB used and 915 GiB available, shared with `/home` | HP workspace backup restore not tested; incoming Pi backup checks recorded in the service register |
+| Storage | 2 GiB FAT boot partition; LUKS root with Btrfs; before incoming backup setup, 38 GiB used and 915 GiB available, shared with `/home` | Agent-state local/cloud restore and one Codex reopening passed on 11 November; project checkouts are excluded. See the service register |
 | Network | `eno1`, 1 Gbit/s Ethernet; DHCP `192.168.8.223/24`, gateway `192.168.8.1` | DHCP reservation not confirmed; purchased offer excluded Wi-Fi |
 | Rack | DeskPi RackMate T1 recorded | Shelf, fasteners, adapter support and airflow not confirmed |
 | Mac client | macOS 27.2, OpenSSH 10.5p1; Tailscale access works | Exact Mac model and Tailscale version not collected |
@@ -21,7 +21,7 @@ HP and both Pis inspected over SSH on 9 November 2026. See the [service register
 - Hostname and Tailscale name: `home-lab`. Addresses and connection commands live in the [service register](services.md).
 - Omarchy 4.5.0; kernel `7.2.15-1-omarchy`; timezone Europe/Zurich; clock synchronized.
 - `lloyd`, UID/GID 1000, home `/home/lloyd`, maintenance account in `wheel`. The username-specific sudo rule in `/etc/sudoers.d/07_home-lab` names `lloyd` and passed privileged policy validation. Root password set by user, never recorded here.
-- `coder`, UID/GID 1001, home `/home/coder`, primary group only. User-provided sudo policy showed no positive command grant. Projects belong under `/home/coder/projects`.
+- `coder`, UID/GID 1001, home `/home/coder`, primary group only. The initial policy had no positive command grant; the later publishing installation added only its fixed route-helper exception. Projects belong under `/home/coder/projects`.
 - Key-only OpenSSH permits `lloyd` and `coder`; password, keyboard-interactive and root SSH login disabled. Fresh key logins passed. Tailscale SSH is disabled; ordinary OpenSSH handles authentication.
 - OpenSSH 10.6p1-2, Tailscale 1.104.2-1, tmux 3.8-1 and Git 2.56.0 installed. `sshd` and `tailscaled` enabled. smartmontools 7.5-2 installed; restic 0.19.1-1 installed for incoming Pi backups.
 - No failed system services. Snapshot temperatures: CPU package about 48 C, NVMe about 45 C; these are idle observations, not a load test.
@@ -33,7 +33,7 @@ Password slot 0 remains; TPM slot 1 binds to PCR 7. Secure Boot is off. This all
 
 Configuration uses `/etc/mkinitcpio.conf.d/zzzz-local-tpm.conf`, `/etc/default/limine`, and `/etc/kernel/cmdline`. Root-only backups and a rollback script are at `/root/tpm-unlock-backup.4I3jrh`; account-rename backup is under `/root/account-rename.*`. A LUKS header backup also exists at `/root/home-lab-luks-before-tpm.img`. These on-host copies are not off-machine backups.
 
-Limine's image hash mismatch was repaired by rebuilding through `limine-mkinitcpio` and checking BLAKE2b without modifying the image. Old temporary `check-tpm-boot.sh`, `enable-tpm-unlock.sh` and `fix-tpm-boot.sh` scripts must not be reused: their `objcopy --dump-section` invocation could rewrite the input image. See the [setup recovery notes](../home-lab/setup.md#installed-configuration-and-recovery).
+Limine's image hash mismatch was repaired by rebuilding through `limine-mkinitcpio` and checking BLAKE2b without modifying the image. Old temporary `check-tpm-boot.sh`, `enable-tpm-unlock.sh` and `fix-tpm-boot.sh` scripts must not be reused: their `objcopy --dump-section` invocation could rewrite the input image. See the [setup recovery notes](../home-lab/how-to/update-and-recover.md).
 
 ## Device names
 
@@ -51,7 +51,7 @@ Pi services and IP addresses were retained during the rename. A Mac SSH alias is
 
 Lloyd supplied the privileged audit output on 9 November 2026. `/etc/systemd/sleep.conf.d/90-home-lab-no-sleep.conf` sets suspend, hibernation, hybrid sleep and suspend-then-hibernate to `no`. Removing that drop-in restores the previous system policy. Actual overnight availability remains untested.
 
-UFW is active with default incoming denial, outgoing allowance and routed traffic disabled. It allows SSH from `192.168.8.0/24` and TCP 22 on `tailscale0`; port 53317 TCP/UDP remains broadly allowed for IPv4/IPv6, with Docker DNS exceptions retained. No service was observed listening on 53317 at the earlier SSH audit; its owning app and need remain unverified. Router forwarding and Tailscale access policy have not been inspected.
+Lloyd reconfirmed on 10 November 2026 that UFW is active with default incoming denial, outgoing allowance and routed traffic disabled. The active Ethernet interface `eno1` has `192.168.8.223/24` and an IPv6 link-local address; the supplied interface output showed no LAN global IPv6 address. It allows SSH from `192.168.8.0/24` and TCP 22 on `tailscale0`; port 53317 TCP/UDP remains broadly allowed for IPv4/IPv6, with Docker DNS exceptions retained. No service was observed listening on 53317 at the earlier SSH audit; its owning app and need remain unverified. Router forwarding remains uninspected. The Tailscale policy was replaced on 10 November 2026; scope and checks are recorded in the [service register](services.md#private-ssh-access).
 
 Sudo syntax validation passed. `lloyd` has administrator permission plus Omarchy's scoped helper rules; `coder` has only the negated asdcontrol rule and no positive command grant. The effective-SSH output was not collected successfully; the installed SSH drop-in and connection tests are the evidence for the recorded SSH settings.
 

@@ -1,27 +1,31 @@
 ---
 type: Concept
 title: "Restic"
-description: "Encrypted Pi backup history on the HP and proposed HP workspace protection."
+description: "Encrypted backup history, consistency boundaries, and tested data recovery."
 status: draft
 sources:
-  - id: source-1
+  - id: design
+    resource: "../../docs/explanations/backup-and-recovery.md"
+  - id: hp-automation
+    resource: "../../devices/home-lab/reference/automation.md"
+  - id: pi-automation
+    resource: "../../devices/remote-lab/reference/backups.md"
+  - id: evidence
+    resource: "../../devices/_reference/services.md"
+  - id: research
     resource: "../../research/backups.md"
-  - id: source-2
-    resource: "../../devices/home-lab/preparation.md"
-  - id: incoming-pi-backups
-    resource: "../../devices/remote-lab/backups.md"
 ---
 
 # Restic
 
-For HP workspaces, the backup research still proposes an encrypted restic repository on another device or storage service. Its destination, schedule, retention and notifications remain undecided; no HP workspace restore is recorded.
+Encrypted repositories preserve data independently of a running service. A successful snapshot, repository check, restored file, and reopened application establish different recovery properties. The [recovery decision](../decisions/recovery-before-reliance.md "requires") prefers tested restoration before reliance.
 
-For incoming Pi data, Lloyd authorized and installed encrypted history on home-lab on 9 November 2026. A dedicated account pulls consistent [Coolify and application backups](coolify.md "protects data managed through") over Tailscale. The source has no repository credential, so it cannot delete retained HP history. `coder` cannot read the repository credentials. Daily retention is 14 daily, 8 weekly and 6 monthly snapshots; full data reads occur initially and each Sunday. The first actual repository restore, byte checksums and SQLite main-file integrity checks passed. PostgreSQL restores, nine complete SQLite/WAL restores and Coolify credential decryption passed in separate isolated tests against the matching source generation. These tests have narrower scope than a restored app UI or dashboard.
+The lab uses separate local and R2 repositories for Pi application data and HP agent state. Local copies avoid a cloud download; R2 adds geographic separation. Both remain accessible to HP root, and R2 write credentials permit deletion. This is not immutable storage or protection from every administrator compromise. R2 also shares the Cloudflare account used for application hosting.
 
-The restic password and Coolify key still need confirmed independent password-manager storage. Local journal/terminal alerts do not notify Lloyd if the HP itself is down. An independent off-site or disconnected copy and outside notification destination remain open in the HP preparation checklist.
+Source consistency comes before encryption. The Pi job stops writes and archives cold data. The HP job reads selected agent paths from a temporary Btrfs snapshot, preserving SQLite journals with their databases. The snapshot freezes a filesystem view, not a completed multi-file application transaction. The reviewed agent script rejects unsupported ancestors and nested storage and requires expected roots to survive in the frozen view. Installed shared skills need matching installer ownership and recovery metadata from that view. The patch was installed on 11 November 2026; the installed hash and service results were checked, and Lloyd reported fresh local/R2 restores passing. Older snapshots still lack assurance for the formerly omitted skill metadata.
 
-The proposed HP backup scope includes uncommitted repositories, agent conversations, configuration, and recovery material. A Git push does not preserve all of that state. Keep the backup password available outside the HP.
+Lloyd's [agent-state scope decision](../decisions/home-lab/agent-state-backups.md "limits") excludes projects and worktrees. GitHub does not preserve uncommitted edits or unpushed commits. Shared-skill links require their omitted source repositories to be recovered separately.
 
-The first drill restores selected data into a separate private directory and checks useful files. Repository checks and a restore drill answer different questions; a default repository check does not read every stored data block.
+Initial local and cloud recovery checks passed. One R2-restored Codex conversation reopened in an isolated profile; its copied index needed transcript-path rebasing. This does not establish recovery of every agent interface, production Pi browser behavior, or a whole replacement machine. The [service register](../../devices/_reference/services.md) owns dates and results; the [backup explanation](../../docs/explanations/backup-and-recovery.md) and its linked task guides own operation.
 
-A mounted destination check is needed if an external drive is later selected, to prevent a missing drive redirecting writes onto the HP filesystem. The incoming Pi repository currently uses the internal HP filesystem. Automation through [systemd](systemd.md "is scheduled by") followed the manual drill. This supports the [recovery-first decision](../decisions/recovery-before-reliance.md "implements") and [snapshot learning](../learnings/snapshots-are-not-backups.md "addresses").
+[Systemd](systemd.md "schedules") runs the jobs. Local alerts cannot report an offline HP. Outside email alerts are deferred, and remaining verification belongs in [preparation](../../devices/home-lab/preparation.md).

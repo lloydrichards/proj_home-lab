@@ -1,79 +1,77 @@
-> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](../home-lab/preparation.md).
+# Route Coolify through Cloudflare Tunnel
 
-# Setup Coolify with Cloudflare tunnel
+Use remote-lab as `lloyd`, with password-required `sudo docker` for container inspection. Keep private Tailscale dashboard access working throughout changes. You need a Cloudflare domain, a configured Coolify proxy, and the connector credential held privately.
 
-1. Buy or add a domain to Cloudflare.
-1. Add a new tunnel in the Zero Trust tab (separate from SSH in
-   [SSH through Cloudflare](cloudflare-ssh.md)).
-1. Use the Docker image to add the new tunnel, be sure to name it:
+This guide covers the applied routing pattern and repeatable repairs. It does not restore the retired public SSH route or replace the separate native connector whose purpose remains unresolved. Current endpoints and verification belong in the [service register](../_reference/services.md#cloudflare-route-inspection).
 
-   ```bash
-   docker run -d --name cloudflare-tunnel --restart unless-stopped --network coolify cloudflare/cloudflared:latest tunnel --no-autoupdate run --token <TUNNEL_TOKEN>
-   ```
+## Establish the application route
 
-1. Connect the tunnel to the coolify network:
+1. Create or retain the application tunnel in Cloudflare. Select an ARM64-compatible connector image for the Pi and preserve the old image/configuration for rollback.
+2. Create the Docker connector with the reviewed private credential, restart policy `unless-stopped`, and the proxy's `coolify` network. Keep populated credentials outside Git and shared output. Follow the [Cloudflare Docker connector instructions](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) for the credential flow.
+3. Route `*.YOUR_DOMAIN` to `http://coolify-proxy:80` and configure its tunnel DNS record.
+4. Set the Coolify wildcard application domain for your own domain. Check one intended app from the browser before changing dashboard routing.
 
-   ```bash
-   docker network connect coolify cloudflare-tunnel
-   ```
+Expect the connector to resolve `coolify-proxy` and the app to load through the public hostname. A wildcard rule alone does not configure every application's authentication.
 
-1. Add a new public hostname for the tunnel:
+## Protect human dashboard access
 
-   ```text
-   Public hostname: *.<domain>
-   Service: http://coolify-proxy:80
-   ```
+1. Create a Cloudflare Access application for the whole Coolify hostname. Restrict its Allow policy to the intended administrator identity.
+2. Open a private browser window. Confirm the email/identity challenge appears before the dashboard.
+3. Retain the private Tailscale dashboard path for recovery.
+4. For a GitHub App integration, create a separate bypass only for `/webhooks/source/github/events`. Keep browser installation callbacks behind the human gate.
+5. Set the GitHub App webhook, homepage, authorization callback, and setup URL to HTTPS. Preserve the setup URL's source query parameter and the webhook secret. Verify callback matching rather than assuming a wildcard is required.
 
-1. Add a DNS record for the new tunnel:
+Use GitHub's delivery view to test a real signed event separately. A ping response establishes reachability, not signature enforcement or a successful deployment. See [GitHub webhook practices](https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks).
 
-   ```text
-   Type: CNAME
-   Name: *
-   Target: <tunnel-id>.cfargotunnel.com
-   ```
+## Match the dashboard URL to the tunnel origin
 
-1. Login into the Coolify dashboard.
-1. Go to `Settings` -> `Configuration` -> `Instance Settings` and change the
-   Instance's Domain to somethign like `http://coolify.<domain>`.
-1. Click Save
-1. Go to your localhost Server and change the wildcard domain to
-   `http://<domain>`.
-1. Test by going to `http://coolify.<domain>`.
+Set the public instance URL to `https://coolify.YOUR_DOMAIN` while keeping dashboard HTTP-to-HTTPS redirection disabled for the HTTP tunnel origin. Preserve unrelated application redirect settings. The [recorded Caddy configuration](../_reference/services.md#coolify-instance-url-and-caddy-tunnel-routing) describes the applied result.
 
-## Verified recovery
-
-On 9 November 2026, the Pi 5 at `192.168.8.142`, hostname `homelab`, ran Coolify 4.4.7 and `cloudflare/cloudflared:2026.10.3`. The tunnel container ran on `bridge` only. Logs reported `lookup coolify-proxy on 192.168.8.1:53: no such host`. Local app routes worked, but public Yamtrack returned 502.
-
-Check attachment without printing container environment variables or token-bearing commands:
+If the redirect control is hidden while the saved URL is HTTP, on remote-lab run the inspected model update before changing the URL:
 
 ```bash
-docker inspect --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}} {{end}}' cloudflare-tunnel
+	sudo docker exec coolify php artisan tinker --execute='
+	$settings = instanceSettings();
+	$settings->is_dashboard_force_https_enabled = false;
+	$settings->save();
+	echo "dashboard_force_https=" . ($settings->fresh()->is_dashboard_force_https_enabled ? "true" : "false") . PHP_EOL;
+	'
 ```
 
-If `coolify` is missing and the proxy still belongs to that network, repair it:
+Expect `dashboard_force_https=false`. Reload the private General settings page, then save the HTTPS instance URL. Check private and public dashboard access and the generated HTTP/HTTPS site addresses. Do not patch generated Caddy files or disable HTTPS redirects globally.
+
+## Repair proxy name resolution
+
+<a id="verified-recovery"></a>
+
+If public routes fail while local routes work, inspect the connector's networks without printing its token:
 
 ```bash
-docker network connect coolify cloudflare-tunnel
+	sudo docker inspect --format '{{range $name, $_ := .NetworkSettings.Networks}}{{$name}} {{end}}' cloudflare-tunnel
 ```
 
-This restored the apps. A subsequent `docker restart cloudflare-tunnel` retained `bridge coolify`; six public app roots returned 200 or login redirects after reconnection. Full host reboot recovery remains untested.
+If `coolify` is absent and the proxy still belongs to that network, connect the existing container:
 
-Docker is enabled at boot; the tunnel and proxy have restart policy `unless-stopped`. Preserve both `--restart unless-stopped` and `--network coolify` when recreating the tunnel. The historical command above now includes these settings. Network attachment survives restarting an existing container, but replacement must declare the network again. See [Docker network connection semantics](https://docs.docker.com/reference/cli/docker/network/connect/).
-
-The original loss mechanism is unknown. A separate native `cloudflared.service` is also active; establish its purpose before changing or removing it. Keep existing tunnel tokens private and avoid copying full `docker inspect` or service command output into the notebook.
-
-## Pending connector update
-
-On **9 November 2026**, [upstream latest](https://api.github.com/repos/cloudflare/cloudflared/releases/latest) reported [2026.10.7](https://github.com/cloudflare/cloudflared/releases/tag/2026.10.7). The proposed Docker update is **2026.10.3 → 2026.10.7**, not an observed deployment. The historical `latest` command above is not an update instruction for the running container.
-
-The Docker Registry manifest for `cloudflare/cloudflared:2026.10.7` was checked read-only and includes **linux/arm64** for the Pi 5. Its multi-platform digest is `sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba`. Recheck before use:
-
-```sh
-docker manifest inspect cloudflare/cloudflared:2026.10.7
-docker inspect --format '{{.Config.Image}} {{.Image}}' cloudflare-tunnel
-docker inspect --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}} {{end}}' cloudflare-tunnel
+```bash
+	sudo docker network connect coolify cloudflare-tunnel
 ```
 
-For separately approved maintenance, retain the old image ID and privately preserve the existing launch configuration and token for rollback. Recreate only this Docker connector using the explicit target tag or digest, its existing options, `--restart unless-stopped` and `--network coolify`. Do not copy the placeholder token from the historical example or change the separate native connector. Container replacement can briefly interrupt all routed applications.
+Check all intended public apps afterward. Preserve the network declaration when replacing the connector; a repair to an existing container does not configure its future replacement. If the repair fails, restore the saved connector image and configuration. Do not change the unrelated native connector to diagnose this Docker path.
 
-Check container state, network attachment, the local proxy and every public application route, including login redirects. On failure, restore the saved image and configuration with the same network. Schedule full reboot recovery separately; it remains untested. No container was pulled, replaced or restarted during this documentation review.
+## Repair a dashboard self-redirect
+
+<a id="dashboard-url-and-caddy-redirects"></a>
+
+If the browser reports `ERR_TOO_MANY_REDIRECTS` and HTTPS redirects back to the same URL, use private Settings to restore the previous HTTP instance URL. Check the dashboard redirect flag before retrying the sequence above. Keep the GitHub webhook on HTTPS and preserve Access policies. Cookie deletion does not repair a reproduced server-side redirect.
+
+## Diagnose a 503 after an app network move
+
+Inspect the affected container's networks and saved ingress label:
+
+```bash
+	sudo docker inspect --format 'networks={{range $name, $_ := .NetworkSettings.Networks}}{{$name}} {{end}} ingress={{index .Config.Labels "caddy_ingress_network"}}' APP_CONTAINER
+```
+
+If the proxy can reach the app on its new network but the ingress label names the old network, correct only that saved label in Coolify and redeploy. Preserve the other labels. Check the new container, public route, login, and editing separately.
+
+Do not upgrade a database image or change its volume to repair a routing label. Destination moves and stateful migration need their own backup, identity, and rollback plan; this diagnosis is not a generic in-place migration procedure.

@@ -1,4 +1,4 @@
-> Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](../home-lab/preparation.md).
+> Historical SSH recipe. Do not apply this configuration to the current Pi. It disables PAM and root login without preserving Coolify's root deployment connection. Use the [shared SSH guide](../../docs/how-to/connect-with-ssh.md) and [new-host guide](setup.md).
 
 # Hardening the SSH
 

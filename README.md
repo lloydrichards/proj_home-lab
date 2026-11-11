@@ -1,36 +1,27 @@
 # Home lab notebook
 
-An assistant-maintained notebook for setting things up, troubleshooting, and remembering what we explored and why.
+A guide to a private coding host, existing Pi application hosting, and tested data recovery. It also records the choices and verification limits of Lloyd's installed lab.
 
-## The lab
-
-| Device | Machine and purpose | Access |
+| Device | Role | Access |
 |---|---|---|
-| [home-lab](devices/home-lab/README.md) | HP EliteDesk with Omarchy installed for remote development and AI coding | OpenSSH over Tailscale; `lloyd` for maintenance, `coder` for projects. See [access](devices/_reference/services.md). |
-| [remote-lab](devices/remote-lab/README.md) | Pi 5 with Coolify and Cloudflare Tunnel | SSH `lloyd@remote-lab` over Tailscale; LAN `192.168.8.142`; [Coolify](http://192.168.8.142:8000) |
-| [admin-lab](devices/admin-lab/README.md) | Pi 4 with Pi-hole | SSH `lloyd@admin-lab` over Tailscale; LAN `192.168.8.138`; [Pi-hole](http://192.168.8.138/admin/) |
+| [home-lab](devices/home-lab/README.md) | HP running Omarchy, coding agents, private previews, and backups | Ordinary OpenSSH over Tailscale; separate maintenance and coding accounts |
+| [remote-lab](devices/remote-lab/README.md) | Pi 5 running Coolify and public application routing | Private maintenance SSH; Cloudflare-gated public dashboard |
+| [admin-lab](devices/admin-lab/README.md) | Pi 4 running Pi-hole | Private maintenance SSH; DNS and browser status in the service register |
 
-System names are `home-lab` for HP, `remote-lab` for Pi 5, and `admin-lab` for Pi 4. All three Tailscale names match, with fresh SSH connections verified.
+Exact addresses, versions, and dated checks live in the [service register](devices/_reference/services.md) and [inventory](devices/_reference/inventory.md). A written recipe is not proof that its steps ran.
 
-Use devvm locally on the MacBook for selected projects that need isolation. Use the HP for ordinary remote coding and work that should continue while the Mac sleeps. HP project VMs are deferred. The HP receives [nightly Pi backups](devices/remote-lab/backups.md); its own project and workspace backup setup remain open.
+## Choose a starting point
 
-## Working on this notebook
+- **Build a machine:** follow [Build a private coding host](devices/home-lab/setup.md). For hosting, use [Build a Pi application host](devices/remote-lab/setup.md). Neither complete fresh-hardware sequence is rehearsed end to end; admin-lab has no verified rebuild guide yet.
+- **Understand the design:** start with [architecture](docs/explanations/architecture.md), then [security and isolation](docs/explanations/security-and-access.md), [unattended boot](devices/home-lab/explanations/unattended-boot.md), or [backup and recovery](docs/explanations/backup-and-recovery.md).
+- **Connect to a host:** follow [Connect with SSH](docs/how-to/connect-with-ssh.md).
+- **Operate or recover:** use the [HP task guides](devices/home-lab/README.md#operate-and-recover) or [Pi task guides](devices/remote-lab/README.md#operate-and-recover).
+- **Find an unfinished HP check:** use [preparation](devices/home-lab/preparation.md), the single HP work list.
 
-Use `/home/coder/projects/proj_home-lab` as `coder` on `home-lab`. Codex is authenticated there, and Lloyd confirmed the Mac app connection. Keep each task in one active checkout and exchange changes through Git. The Mac copies remain recovery fallbacks; see [project handoffs](devices/home-lab/setup.md#project-checkouts-and-source-handoffs).
+Initial local and R2 backups passed. One R2-restored Codex conversation reopened in an isolated profile. Project checkouts and worktrees are excluded by choice; GitHub does not preserve their uncommitted or unpushed work. Outside email alerts remain deferred.
 
-Edit maintained skills in `/home/coder/projects/skills`, then plan and apply the shared installation. See [synchronization and recovery](research/shared-agent-skills.md). The [service register](devices/_reference/services.md) owns installed versions and verification results.
+## Maintain the notebook
 
-## Next
+Work in `/home/coder/projects/proj_home-lab` as `coder` on home-lab. Keep each task in one active checkout and exchange committed changes through Git. Edit shared skills in their [source repository](research/shared-agent-skills.md), not generated installations.
 
-The HP passed startup without a monitor. Finish the [remaining readiness checks](devices/home-lab/preparation.md#before-routine-use-without-a-monitor), then choose and test an off-machine backup. Keep the existing Pi services in place.
-
-## Look something up
-
-- [SSH shortcuts and key setup](devices/_reference/ssh-access.md): connect by lab name through Tailscale and check access from each account.
-- [What we know and why](.okf/index.md): technologies, choices, alternatives, and learnings.
-- [Devices and parts](devices/_reference/inventory.md), [services](devices/_reference/services.md), and [BOM](devices/_reference/bom.md).
-- [Shared research](research/README.md): private access, backups, and Mac client options.
-
-Each device page links its guides, research, and OKF decisions. Add future devices under `devices/` with a short README; keep lab-wide records in `devices/_reference/`.
-
-The assistant maintains the affected records as we work. Git keeps the history.
+Shared explanations and how-to guides live in `docs/`. Device-specific setup and operation stay under `devices/`. [OKF](.okf/index.md) connects concepts, accepted decisions, and reusable learnings. [Research](research/README.md) retains source evidence and unresolved investigations. [Inventory](devices/_reference/inventory.md), the [service register](devices/_reference/services.md), and the [BOM](devices/_reference/bom.md) own their respective facts. Git keeps change history; secrets and raw private output stay outside Git.

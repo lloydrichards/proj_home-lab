@@ -6,7 +6,7 @@ okf_version: "0.2"
 
 The assistant's context for the lab: technologies, the reasons for choices, alternatives, and reusable learnings. Start with [private remote development](technologies/private-remote-development.md) for home-lab, [Coolify](technologies/coolify.md) for remote-lab hosting, or [Pi-hole](technologies/pi-hole.md) for admin-lab DNS.
 
-Machine and service facts live in `devices/_reference/`. The HP starts with `devices/home-lab/preparation.md`; repeatable recipes are recorded as we do the setup. Incoming Pi backups are installed and partially restore-tested; [Coolify](technologies/coolify.md) and [restic](technologies/restic.md) explain their boundaries. HP workspace protection remains open. Device pages under `devices/` link their guides and decisions. Research lives with its device or in `research/` when shared. This library owns the why, with Git keeping previous versions.
+Machine and service facts live in `devices/_reference/`. The HP starts with `devices/home-lab/preparation.md`; repeatable recipes are recorded as we do the setup. Incoming Pi backups are installed and partially restore-tested; [Coolify](technologies/coolify.md) and [restic](technologies/restic.md) explain their boundaries. HP agent-state backups and one isolated Codex reopening passed; project checkouts are explicitly excluded. Device pages under `devices/` link their guides and decisions. Research lives with its device or in `research/` when shared. This library connects bounded concepts, accepted choices, and reusable learnings. Lab-wide explanations live in `docs/explanations/`; device explanations stay with their guides; Git keeps previous versions.
 
 `draft` marks unsettled knowledge; `stable` marks established guidance. Neither status certifies deployment. User-confirmed choices and dated observations are identified in the text. Learning entries are conclusions from research unless an actual observation is stated. HP installation, TPM unlock and SSH have live checks recorded in the inventory; monitor-free cold startup passed, while overnight idle and power-loss recovery remain open. Both Pis were inspected on 9 November 2026. Pi-hole answered DNS; a repaired Docker tunnel network restored public Coolify app routing. Full Pi reboot recovery remains untested.
 
@@ -37,6 +37,7 @@ Device-specific choices live under `decisions/<device>/`. Choices spanning devic
 - [Keep remote development private](decisions/home-lab/private-development.md)
 - [Test recovery before relying on the HP](decisions/recovery-before-reliance.md)
 - [Use TPM for unattended boot](decisions/home-lab/unattended-boot.md)
+- [Back up agent state and recover projects from GitHub](decisions/home-lab/agent-state-backups.md)
 
 ## Learnings
 

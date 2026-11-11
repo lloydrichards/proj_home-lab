@@ -1,10 +1,10 @@
 # Private access for the HP home lab
 
-Sources checked **2026-11-06**. This is a proposed configuration, not evidence that the HP or tailnet has been configured. Commands were checked against documentation; they have not been run on the new server. Replace example usernames, addresses and account identities before use.
+Sources initially checked on 6 November 2026. These examples explain the access mechanisms; current deployment and dated login checks belong in the [service register](../devices/_reference/services.md#private-ssh-access). Use the [SSH guide](../docs/how-to/connect-with-ssh.md) for operations. Replace example identities before reuse.
 
 ## How this research is used
 
-The [private-development choice](../.okf/decisions/home-lab/private-development.md) owns the proposed access approach and its rationale. Upcoming setup and checks belong in the [HP checklist](../devices/home-lab/preparation.md). The examples below explain the relevant mechanisms; adapt them when we perform the setup.
+The [private-development choice](../.okf/decisions/home-lab/private-development.md) owns the accepted access approach and its rationale. Upcoming setup and checks belong in the [HP checklist](../devices/home-lab/preparation.md). The examples below explain the relevant mechanisms; they are not a record of the installed configuration.
 
 ## OpenSSH over Tailscale versus Tailscale SSH
 
@@ -20,7 +20,7 @@ As of this check, Tailscale's October 28 security update fixes Tailscale SSH pri
 
 ### Pending Tailscale maintenance
 
-On **9 November 2026**, the [stable package registry](https://pkgs.tailscale.com/stable/?mode=json) was rechecked and reported **1.104.5**. This is a maintenance target, not a new host observation. The inventory records HP **1.104.2-1**; Pi 4 already records **1.104.5**. Pi 5 uses Tailscale SSH but its installed version is unknown, so check it first and prioritize remediation if below **1.104.4**. HP Tailscale SSH is disabled; the advisory does not prove that HP OpenSSH is vulnerable.
+On **9 November 2026**, the [stable package registry](https://pkgs.tailscale.com/stable/?mode=json) was rechecked and reported **1.104.5**. This is a maintenance target, not a new host observation. The inventory records HP **1.104.2-1**; Pi 4 already records **1.104.5**. The Pi 5 version remained unknown at that check. Later access changes disabled Tailscale SSH on all three hosts; ordinary OpenSSH now handles login. Recheck installed versions before maintenance. The advisory does not establish that ordinary OpenSSH has the same vulnerabilities.
 
 For a separately authorized maintenance window:
 
@@ -128,3 +128,21 @@ ports:
 ```
 
 Keep databases un-published on their private Docker network when only containers need them. Do not use `network_mode: host` for this isolation pattern. Do not disable Docker's firewall management to solve exposure. Use Docker Engine **28.0.0 or newer**; older versions have a documented same-LAN exception to localhost publishing. Audit `docker ps` port mappings as well as host sockets, then try the service from another LAN machine and an unauthorized tailnet device. [Docker firewall behavior](https://docs.docker.com/engine/network/packet-filtering-firewalls/), [Publishing ports and localhost caveat](https://docs.docker.com/engine/network/port-publishing/)
+
+
+## Device access policy, 10 November 2026
+
+Lloyd supplied the active policy showing an unrestricted `*` to `*` grant and Tailscale SSH check access from members to their own devices. He agreed to replace broad connectivity with device-specific access and give the Pixel private web/report access without SSH administration. This is user-supplied policy evidence, not a live console read.
+
+The [device policy](../devices/_reference/tailscale-policy.json) was shown as eight matching grants in Lloyd's Tailscale console screenshot after replacement. The general-access view does not independently show the saved IP sets, SSH section or test results. Live home-lab checks below establish partial enforcement. Device names, IPv4/IPv6 addresses, tags and online status were read from home-lab's Tailscale peer view on 10 November. The Mac is `Lloyd's Mech`, `100.65.0.2`; the separate identities are `lloyds-mech-rex`, `100.76.12.16`, and `home-lab-rex`, `100.118.157.118`. IP sets explicitly include both address families. Re-enrollment or address changes require checking these definitions. A shared user-email source would include the user's server identities, so this first policy uses device addresses.
+
+The candidate permits Mac SSH and named management ports, private HP report/preview HTTPS, the existing HP-to-Pi restricted backup connection, and DNS to admin-lab. The Pixel can reach HP report/preview HTTPS and remote-lab proxy HTTP/HTTPS. Web reachability does not constrain application roles or guarantee read-only access; application authentication still applies. Direct published application ports outside the named rules are omitted. Existing Codeburn and development SSH tunnels use port 22.
+
+For Rex, the candidate provisionally permits all protocols/ports from the Mac and Mac Rex identity to the HP Rex identity only. This preserves the expected client-to-server direction, not a verified Rex integration. Required ports and real client behavior still need checking; no reverse initiation into the Mac Rex identity is granted. Both Rex identities remain part of the host review because they provide additional networking on the same physical devices.
+
+The prepared policy removes Tailscale SSH authorization with an empty `ssh` list. No host is intended to use that mode now. JSON parsing and IP-set reference checks passed locally; the console now displays the proposed grants. Embedded positive and negative TCP/UDP tests are policy assertions; their individual console results were not supplied. Keep the old policy as a private rollback copy and the Mac's tested LAN maintenance sessions open while saving. After saving, test fresh Mac private SSH, reports/previews, Rex, DNS and the backup endpoint, plus denied initiation from remote-lab. LAN and container forwarding restrictions remain separate work. Taildrop has separate same-user behavior and is not proven blocked by these network tests.
+
+Sources checked on 10 November 2026: [grants syntax](https://tailscale.com/docs/reference/syntax/grants), [policy reference and tests](https://tailscale.com/docs/reference/syntax/policy-file). Grants are additive, so the candidate replaces the old allow-all rule rather than appending exceptions.
+
+
+Live checks from home-lab as coder after the console change on 10 November: remote-lab TCP 2222 returned an OpenSSH banner; admin-lab TCP 53 accepted a connection; a UDP A query for example.com returned a successful DNS response with two answers. Fresh TCP 22 connections to both Pis timed out over Tailscale IPv4, and remote-lab TCP 22 also timed out over Tailscale IPv6. These denials differ from the pre-policy authentication failures and support network enforcement. The endpoint/banner check does not establish a complete authenticated backup or a fresh snapshot. Lloyd subsequently confirmed fresh Mac SSH logins as lloyd to all three Tailscale IPv4 addresses. His remote-lab TCP 22 probes to home-lab, admin-lab and the Mac all reported not reached. This supports the intended SSH restriction but does not test all denied ports or remote-lab outbound IPv6. Rex and Pixel behavior remain untested. No backup or production restart was triggered. `dig` was unavailable on home-lab, so the successful UDP check used Python's socket library.

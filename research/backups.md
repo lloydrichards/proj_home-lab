@@ -1,6 +1,6 @@
 # Backup research for the HP
 
-Distilled from the earlier proposed operations guide on 6 November 2026. No HP workspace backup or restore has run; its destination, retention, scheduling, and failure notification remain undecided. Incoming [remote-lab backups](../devices/remote-lab/backups.md) were separately installed and restore-checked on 9 November; they do not protect the HP's own workspaces.
+Research started on 6 November 2026; the cloud and agent-state sources below were checked on 11 November. The [service register](../devices/_reference/services.md) owns deployment and restore results. The [backup explanation](../docs/explanations/backup-and-recovery.md) explains their limits; [agent backup operations](../devices/home-lab/agent-backups.md) owns procedures.
 
 ## What needs protecting
 
@@ -8,14 +8,24 @@ Repositories include uncommitted work, Git metadata, and worktree dependencies. 
 
 Omarchy root snapshots leave `/home` unchanged. They help with OS recovery but do not replace workspace backups or protect against loss of the SSD. [Omarchy snapshots](https://omarchy.org/manual/system-snapshots/)
 
-## Proposed first experiment
+## Restore evidence and repository checks
 
-Use an encrypted restic repository on another device or storage service. Confirm that an external destination is actually mounted before writing, so a missing drive cannot redirect the backup onto the HP filesystem. An attached USB drive is a possible first copy; important work also needs an independent offline or off-site copy.
+A normal repository check does not read every stored data block. Full data verification is a separate check. Retain this distinction when evaluating successful backup jobs. [Repository checks](https://restic.readthedocs.io/en/stable/045_working_with_repos.html), [restore behavior](https://restic.readthedocs.io/en/stable/050_restore.html)
 
-Stop agents for the first consistent session backup. Databases need application-consistent dumps or a documented quiesce procedure. Investigate incomplete backups rather than treating a created snapshot as sufficient. [Restic backups](https://restic.readthedocs.io/en/stable/040_backup.html)
+## Cloud storage choice
 
-Restore a selected uncommitted file and agent session into a separate private directory, outside the backed-up tree. Check their contents. A normal repository check does not read every stored data block; full data verification is a separate check. [Repository checks](https://restic.readthedocs.io/en/stable/045_working_with_repos.html), [restore behavior](https://restic.readthedocs.io/en/stable/050_restore.html)
+On 11 November 2026, Lloyd chose cloud storage and preferred Cloudflare R2 because he already uses Cloudflare. R2 offers an S3-compatible API that restic can use directly. Use a private Standard-class bucket, keep credentials within the backup account and scope them to that bucket. Retain the existing local repository. A separate off-site repository should receive restic snapshot copies rather than an unsynchronized file copy of a live repository. This adds geographic separation but retains Cloudflare account dependency; it does not establish deletion-resistant storage.
 
-Choose automation after that experiment works. Check mount availability and last successful backup, report failures, and review retention before deleting snapshots. Avoid giving the coding account the only credentials capable of deleting every copy.
+Sources checked on 11 November 2026: [R2 S3 access](https://developers.cloudflare.com/r2/get-started/s3/), [R2 pricing](https://developers.cloudflare.com/r2/pricing/), and [restic repository backends](https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html). Standard pricing and free allowances must be rechecked before estimating an actual retained repository.
 
-The [restic concept](../.okf/technologies/restic.md) records lab relevance. The [recovery choice](../.okf/decisions/recovery-before-reliance.md) explains why we test restoration before depending on the machine. Write the actual recipe when we choose a destination and perform the experiment.
+## Outside backup notifications
+
+On 11 November 2026, Lloyd selected email notifications, then deferred their setup. Hosted Healthchecks.io is proposed, not yet selected or configured: separate daily completion checks for local collection and the R2 copy would detect missed runs even when home-lab cannot send a failure message. A one-day period and two-hour grace period allow for the nightly maintenance window. Only completion/failure signals should leave the host; do not send backup logs, credentials or archived data. Keep ping URLs private because they authorize status updates. Confirm email delivery with a deliberate alert test before relying on notifications. [Healthchecks cron monitoring](https://healthchecks.io/docs/monitoring_cron_jobs/) and [configuration](https://healthchecks.io/docs/configuring_checks/) were checked on 11 November 2026.
+
+## Home-lab project and session scope
+
+The [agent-state scope decision](../.okf/decisions/home-lab/agent-state-backups.md) owns the choice to exclude projects and worktrees. A separate repository prefix keeps agent and Pi retention independent. Agent state can contain credentials, so encryption and restricted access matter even when projects are excluded.
+
+The installed job uses a short-lived read-only Btrfs home snapshot for consistent input without stopping agents. Nested subvolumes and mounts need separate consideration: Btrfs snapshots are not recursive. Preserve database files together with WAL and rollback journals from that frozen view. This captures a filesystem point in time, not a completed multi-file application transaction. Test restored SQLite databases by opening writable disposable copies with their journals, and check a saved agent transcript before scheduling.
+
+References checked on 11 November 2026: [Btrfs subvolume behavior](https://btrfs.readthedocs.io/en/latest/Subvolumes.html), [SQLite backup consistency hazards](https://www.sqlite.org/howtocorrupt.html), and [Codex storage configuration](https://learn.chatgpt.com/docs/config-file/config-advanced).
