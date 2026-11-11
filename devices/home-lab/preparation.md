@@ -1,6 +1,6 @@
 # HP readiness and remaining work
 
-This is the single list of remaining HP work. Current facts live in the [inventory](../_reference/inventory.md), access in the [service register](../_reference/services.md), and commands in the [setup guide](setup.md).
+This is the single list of remaining HP work. Current facts live in the [inventory](../_reference/inventory.md), access in the [service register](../_reference/services.md), and commands in the [task guides](README.md#operate-and-recover).
 
 ## Completed on 9 November 2026
 
@@ -11,7 +11,7 @@ This is the single list of remaining HP work. Current facts live in the [invento
 - [x] Disable password and root SSH login; test key login and rejection without keys.
 - [x] Configure TPM disk unlock with retained password recovery; repair and verify Limine image hash; pass an untouched reboot.
 - [x] Join Tailscale with Tailscale SSH disabled; user confirmed Mac SSH works over the private address, and assistant verified `lloyd` over that address.
-- [x] Install OpenCode 2.2.6 for `coder`; verify terminal startup in tmux and a loopback-only server. See the [recipe](setup.md#opencode-on-the-installed-hp).
+- [x] Install OpenCode 2.2.6 for `coder`; verify terminal startup in tmux and a loopback-only server. See the [recipe](how-to/install-agent-tools.md#install-or-verify-opencode).
 
 ## Before routine use without a monitor
 
@@ -29,7 +29,7 @@ This is the single list of remaining HP work. Current facts live in the [invento
 
 - [x] Install T3 Code 0.1.7 as `coder`; confirm active and enabled user service, lingering, and loopback-only listener.
 - [ ] Connect the Mac T3 app through SSH, authenticate a provider on the HP, and test one trusted project and disconnect/reconnect.
-- [ ] Verify T3 service startup after a planned reboot. See the [recipe](setup.md#t3-code-remote-environment).
+- [ ] Verify T3 service startup after a planned reboot. See the [recipe](how-to/install-agent-tools.md#choose-terminal-persistence-or-a-client).
 
 ## Shared agent skills
 
@@ -39,14 +39,17 @@ This is the single list of remaining HP work. Current facts live in the [invento
 
 - [ ] Review Tailscale security maintenance: recorded HP **1.104.2-1** is below the **1.104.4** advisory fix; **1.104.5** is the stable target checked 9 November 2026. Follow the [lockout-safe maintenance guidance](../../research/private-access.md#pending-tailscale-maintenance) through Omarchy, then record the actual version. No update is recorded here.
 - [x] Configure incoming remote-lab backups through a dedicated account; first encrypted backup, file/SQLite checks and isolated PostgreSQL restores passed on 9 November. See [operations](../remote-lab/backups.md).
-- [ ] Save the incoming backup's restic password and the Pi's Coolify `APP_KEY` in the password manager outside both hosts; confirm retrieval without either host.
-- [ ] Add an independent off-site or disconnected copy of the incoming Pi backup and choose a notification destination outside the HP; current alerts are local journal/terminal only.
-- [ ] Choose an off-machine backup destination, then back up and restore a file and agent session. Install and configure backup tooling after choosing the destination. See [backup research](../../research/backups.md).
+- [x] Save the incoming backup's restic password and the Pi's Coolify `APP_KEY` in the password manager outside both hosts. Lloyd confirmed both saved on 11 November 2026; retrieval without either host remains to verify.
+- [x] Add an independent off-site copy of incoming Pi backups in Cloudflare R2. Copying, a full data check, eight restored file checksums, initial automation and 14-daily/8-weekly/6-monthly retention passed on 11 November 2026. Future scheduled execution remains to observe. See [R2 operations](../remote-lab/how-to/configure-backups.md#add-the-off-site-repository).
+- [ ] Configure email backup notifications outside the HP. Lloyd deferred this on 11 November 2026; current alerts remain local journal/terminal only.
+- [x] Install and verify the [agent-session backup](agent-backups.md). Local and R2 backups, both restore checks and freshness passed on 11 November 2026; nightly 04:00 Zurich and hourly health timers are enabled. Lloyd excluded project checkouts and worktrees; GitHub recovery omits uncommitted/unpushed work.
+- [x] Reopen a restored Codex conversation in an isolated profile. Lloyd's screenshot on 11 November showed the original 9 November user message and assistant reply from the R2-restored test profile.
+- [ ] Observe the next scheduled agent backup and check its service result. Other agent interfaces and replacement-host authentication have not undergone reopening tests.
 - [ ] Review Tailscale policy, device-key expiry and denial from an unauthorized device. Keep LAN SSH recovery until private access survives a cold start.
 - [ ] Review listeners and unused sharing rules without breaking Docker DNS. Confirm router has no public SSH port forwarding.
 - [ ] Run memory diagnostics and check firmware updates for the actual HP SKU during a recovery-ready maintenance window.
 - [ ] Try one trusted project as `coder` with tmux; test disconnect/reconnect and a Mac/HP Git handoff. tmux survives disconnects, not reboots.
-- [ ] Finish [Rex SSH access](setup.md#rex-over-ssh): enable linger with the maintenance password, open the host in Rex for Mac, and test reconnect. Remote Rex/OpenCode startup and SSH socket access passed.
+- [ ] Finish [Rex SSH access](how-to/install-agent-tools.md#choose-terminal-persistence-or-a-client): open the native remote host in Rex for Mac and test reconnect; user lingering is already enabled. Remote Rex/OpenCode startup and SSH socket access passed.
 - [ ] Connect OpenCode to the chosen provider and test one model request in a trusted project. No provider is authenticated yet.
 - [ ] If needed, trial remote desktop separately. SSH is the current access method. See [remote desktop research](research/omarchy-remote-desktop.md).
 

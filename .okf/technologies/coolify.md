@@ -1,29 +1,29 @@
 ---
 type: Concept
 title: "Coolify"
-description: "Pi deployment management, recovery dependencies and backup boundaries."
+description: "Deployment authority, routing dependencies, and application recovery."
 status: draft
 sources:
-  - id: source-1
-    resource: "../../devices/remote-lab/coolify.md"
-  - id: source-2
+  - id: routing
     resource: "../../devices/remote-lab/coolify-cloudflare.md"
-  - id: source-3
+  - id: current-evidence
     resource: "../../devices/_reference/services.md"
-  - id: backup-operations
-    resource: "../../devices/remote-lab/backups.md"
+  - id: backup-contract
+    resource: "../../devices/remote-lab/reference/backups.md"
+  - id: restore-guide
+    resource: "../../devices/remote-lab/how-to/restore-backups.md"
 ---
 
 # Coolify
 
-SSH inspection on 9 November 2026 initially confirmed Coolify 4.4.7, then 4.7.2 during backup setup, on the Pi 5 alongside a [Cloudflare tunnel](cloudflare-tunnel.md "accessed through"). Repairing the tunnel network restored six tested public routes. The service register owns current placement and access details.
+Coolify manages public workloads on remote-lab while HP development stays separate under the [hosting decision](../decisions/keep-pi-hosting-separate.md "is retained by"). Its root SSH deployment connection remains intentional. Removing privileges from the separate coolify host account did not reduce that deployment credential's authority.
 
-On 9 November Lloyd authorized nightly backups from remote-lab to home-lab through a dedicated account. The installed workflow uses an external collector rather than Coolify's scheduled backups. It stops application writes, makes PostgreSQL dumps, archives cold volumes and bind mounts, then restarts containers before transfer. This trades a brief nightly outage for consistency across SQLite databases and application files; the first sequence took 83.6 seconds. [Restic](restic.md "retains encrypted history through") keeps independently controlled history on the HP. Three successful source generations allow catch-up after an outage; source and destination share the same premises.
+The [Cloudflare tunnel](cloudflare-tunnel.md "receives traffic through") reaches a Docker proxy. Human dashboard authentication, GitHub event delivery, and application login require separate controls. A browser gate must not accidentally block machine webhooks, while a webhook bypass must not waive signature validation. Current route and callback verification limits belong in the service register.
 
-An instance database dump alone excludes application data and the `APP_KEY` needed to decrypt saved credentials. Recovery must include volumes, configuration and the original key. First checks restored all four PostgreSQL clusters, restored the separate Coolify dump, and decrypted a restored credential using the archived key. Nine SQLite databases restored with accompanying WAL files passed integrity checks; the off-machine file restore and nightly SQLite main-file checks passed separately. Full dashboard and end-to-end application recovery remain untested. Images and writable container layers are not included; custom apps need their source for rebuilding. Native host tunnel configuration outside mounted storage remains outside this backup scope.
+Instance URLs and proxy redirects need to match the tunnel origin. The applied public HTTPS URL retains an HTTP proxy site for the HTTP origin. A URL-only change previously caused a self-redirect; the operating guide owns its repair. Generated proxy files are output, not the configuration authority.
 
-The historical installation guide configures localhost as the deployment server. The tunnel guide attaches cloudflared to the Coolify container network and routes traffic to its proxy. Live inspection confirmed this tunnel-to-proxy topology on 9 November 2026.
+Application destinations reduce direct network sharing, but they do not establish complete host isolation. Plastic Map moved through a configuration clone; the original remained stopped for recovery. Outlier moved in place through an inspected same-server metadata change outside the documented UI workflow. It retained its volume and pinned image. Its saved ingress label also needed correction: changing destination metadata did not reconcile every proxy setting. Neither route is a generic stateful data-migration recipe.
 
-[Docker](docker.md "uses in the historical deployment recipe") permissions and port publication affect this design. A tunnel alone does not establish an authorization policy for the dashboard.
+Recovery requires more than Coolify's database dump. Application storage and the original `APP_KEY` are needed to recover encrypted credentials and workloads. [Restic](restic.md "retains verified data through") stores local/cloud history; isolated data and credential drills passed. Full restored dashboard operation, complete app cutover, and replacement-host recovery remain untested.
 
-The HP plan [keeps Pi hosting separate](../decisions/keep-pi-hosting-separate.md "is retained by") until there is a reason to migrate and a tested restore plan.
+The [backup reference](../../devices/remote-lab/reference/backups.md) owns scope and service contracts. The service register owns version, deployment, and test facts. Further network isolation and build-secret work remain explicitly deferred.

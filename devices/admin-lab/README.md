@@ -4,6 +4,10 @@ The Raspberry Pi 4 runs Pi-hole. `admin-lab` is its applied system and Tailscale
 
 SSH inspection on 9 November 2026 confirmed hostname `admin-lab`, access as `lloyd@192.168.8.138`, a healthy Pi-hole Docker container, and a successful DNS query. Debian 12 and Pi-hole versions are now recorded in the service register. Pi-hole DHCP is disabled; network DHCP ownership and upstream DNS remain unknown. Tailscale sign-in and fresh private SSH as `lloyd` passed. Current addresses live in the service register.
 
+Since 10 November, human maintenance as `lloyd` requires password-authenticated sudo, with no direct Docker group access in fresh sessions. Use `sudo docker` when needed. Root SSH was disabled on 11 November; fresh Mac lloyd login and sudo checks passed. See [permissions and checks](../_reference/services.md#pi-maintenance-permissions).
+
+Portainer was stopped with automatic restart disabled on 11 November 2026. Application containers stayed running. Its data remains available for [recovery](../_reference/services.md#portainer-retirement). Lloyd reports that Pi-hole browser access is currently unavailable and has deferred investigation until the new network is ready; container health alone does not verify DNS or browser access.
+
 ## Start here
 
 Establish which devices depend on Pi-hole and who supplies network DHCP before a restart, rename, or DNS change. The [service register](../_reference/services.md) owns the inspection gaps and dependency guidance. The [inventory](../_reference/inventory.md) owns hardware and naming facts; purchases stay in the [BOM](../_reference/bom.md).

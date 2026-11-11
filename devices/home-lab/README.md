@@ -1,37 +1,42 @@
 # home-lab
 
-The HP runs Omarchy with TPM automatic disk unlock and key-only SSH. The maintenance account is `lloyd`; coding uses `coder`. Tailscale is connected. The [service register](../_reference/services.md) owns current access details.
+Home-lab is the HP coding host. The Mac supplies its interface; agent processes and files stay on the HP. Maintenance uses `lloyd`, and coding uses `coder`. Hardware and installed versions belong in the [inventory](../_reference/inventory.md); endpoints and verified behavior belong in the [service register](../_reference/services.md).
 
-Monitor-free cold startup passed on 9 November 2026, with both accounts reachable over Tailscale. Overnight idle availability and AC-loss recovery remain open in the [readiness checklist](preparation.md#before-routine-use-without-a-monitor).
+## Build a new host
 
-The HP now receives [nightly remote-lab backups](../remote-lab/backups.md) through a dedicated account. This protects the Pi's data; backup of the HP's own workspaces remains open in the preparation checklist.
+Follow [Build a private coding host](setup.md) from installation to private access, a model response, and a recovered conversation. Use your own keys, addresses, and cloud credentials. The installers contain lab-specific inputs, so review the [automation contract](reference/automation.md) before using different names or hardware.
 
-## Start here
+For the installed HP, use the task guides rather than repeating initial enrollment. [Preparation](preparation.md) is the single list of unfinished HP checks.
 
-Follow the [preparation checklist](preparation.md), then the [post-install setup guide](setup.md) for repeatable commands and recovery. The checklist is the single list of upcoming HP work. Start with SSH and tmux from the MacBook; the daily client is still undecided.
+## Understand the setup
 
-[OpenCode 2.2.6](setup.md#opencode-on-the-installed-hp) is installed for `coder` and running in a [Rex session over SSH](setup.md#rex-over-ssh). Mac GUI access and logout persistence still need checks. Provider sign-in remains open. See the [OpenCode concept](../../.okf/technologies/opencode.md) for service behavior and access boundaries.
+| Explanation | Question it answers |
+|---|---|
+| [Architecture](explanations/architecture.md) | What runs on the Mac, HP, Pis, and hosted providers? |
+| [Security and isolation](explanations/security-and-isolation.md) | Which connections and privileges are restricted, and which remain powerful? |
+| [Unattended boot](explanations/unattended-boot.md) | How does encrypted storage unlock without a monitor, and how does recovery work? |
+| [Backup and recovery](explanations/backup-and-recovery.md) | What is protected, what is excluded, and what do the restore checks prove? |
 
-Hardware and name details live in the shared [inventory](../_reference/inventory.md). Service placement and access gaps live in the [service register](../_reference/services.md). Mounting and purchase details live in the [BOM](../_reference/bom.md).
+## Operate and recover
 
-[T3 Code 0.1.7](setup.md#t3-code-remote-environment) is installed as a background service for `coder`, listening only on loopback. Mac connection and provider setup remain pending.
+- [Secure remote access](how-to/secure-remote-access.md).
+- [Configure unattended boot](how-to/configure-unattended-boot.md).
+- [Install agent tools](how-to/install-agent-tools.md).
+- [Back up agent sessions](how-to/back-up-agent-sessions.md).
+- [Reopen a restored conversation](how-to/restore-agent-conversation.md).
+- [Update the host and recover from failures](how-to/update-and-recover.md).
+- [Publish reports and run private previews](publishing.md).
+- [Collect and recover Pi backups](../remote-lab/backups.md).
+- [Synchronize shared skills](../../research/shared-agent-skills.md).
 
-Shared skills are installed for Codex and OpenCode. Edit the source checkout and follow the [synchronization and recovery guide](../../research/shared-agent-skills.md); the service register owns the current selection and verification results.
+The [automation reference](reference/automation.md) lists script contracts, paths, units, and schedules. The [SSH guide](../_reference/ssh-access.md) covers Mac aliases and Pi differences.
 
-## Private reports and previews
+## Verification boundary
 
-Use the [publishing guide](publishing.md) for central HTML reports and persistent worktree previews. Shell scripts live in `tools/publishing/`; report content and allocation records stay outside Git. The service register records the current installation and verification limits.
+Monitor-free cold startup, initial local/R2 data restores, and one isolated Codex conversation reopening passed. Those results do not establish every agent client, replacement-host authentication, or future scheduled execution. Project checkouts, worktrees, and the publishing store are outside the accepted agent backup.
 
-## Choices and evidence
+## Choices and sources
 
-- [Shared agent skills](../../.okf/decisions/shared-agent-skills.md) explains source ownership, pinned upstream content, and conflict protection.
-- [Private remote development](../../.okf/decisions/home-lab/private-development.md) records the access and coding approach.
-- [TPM unattended boot](../../.okf/decisions/home-lab/unattended-boot.md) records the installed unlock approach and recovery tradeoff.
-- [Recovery before reliance](../../.okf/decisions/recovery-before-reliance.md) sets the initial recovery checks.
-- [Keep existing Pi hosting separate](../../.okf/decisions/keep-pi-hosting-separate.md) explains the rollout boundary.
-- [TPM unlock research](research/tpm-unlock.md) explains the measured-boot policy and its limits.
-- [Omarchy research](research/omarchy.md) and [post-install sources](research/setup-sources.md) support the setup guide.
-- [Remote desktop research](research/omarchy-remote-desktop.md) compares Mac access, headless operation, responsiveness, and when to retain a monitor.
-- [Shared research](../../research/README.md) covers private access, backups, and Mac-to-HP tools.
+The accepted choices are [private development](../../.okf/decisions/home-lab/private-development.md), [TPM unlock](../../.okf/decisions/home-lab/unattended-boot.md), [agent-state backup scope](../../.okf/decisions/home-lab/agent-state-backups.md), [shared skills](../../.okf/decisions/shared-agent-skills.md), and [recovery before reliance](../../.okf/decisions/recovery-before-reliance.md).
 
-See the [remote-development concept](../../.okf/technologies/private-remote-development.md) for how the tools fit together, or return to [all devices and lab records](../../README.md).
+[Device research](research/omarchy.md), [TPM source evidence](research/tpm-unlock.md), and [shared research](../../research/README.md) support the guides. They are not prerequisites for following the tutorial. Return to [all devices](../../README.md).

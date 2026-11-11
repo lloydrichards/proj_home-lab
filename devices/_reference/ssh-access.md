@@ -1,151 +1,170 @@
-# Connect to the lab with SSH shortcuts
+# Connect to the lab with SSH
 
-Use `ssh admin-lab`, `ssh remote-lab`, or `ssh home-lab` to reach the lab through Tailscale. Use `ssh home-lab-code` for the HP coding account. Configure each originating account separately; `coder` and `lloyd` do not share SSH settings or keys.
+Use this guide from the Mac or another deliberately authorized maintenance client. The [service register](services.md#private-ssh-access) owns current endpoints, fingerprints, and authorization. Ordinary OpenSSH handles login on all three hosts; Tailscale supplies private transport.
 
-The [service register](services.md#private-ssh-access) owns current addresses, authentication modes, fingerprints, and tested connections. This guide explains how to repeat the setup. It does not establish that every machine can log into every other machine.
+For the existing Pis, use the current Mac key. Home-lab's `coder` key was deliberately revoked. Adding a shortcut does not authorize a key or establish that one lab machine may administer another.
 
 ## Add shortcuts on the originating machine
 
-Connect Tailscale first. No `sudo` is needed for these account-local files.
+1. Connect Tailscale.
+2. Prepare account-local SSH configuration:
 
-```bash
-mkdir -p ~/.ssh
-chmod 700 ~/.ssh
-if [ -f ~/.ssh/config ]; then
-    cp -p ~/.ssh/config ~/.ssh/config.before-lab-shortcuts
-fi
-```
+	```bash
+	mkdir -p ~/.ssh
+	chmod 700 ~/.ssh
+	if [ -f ~/.ssh/config ]; then
+		cp -p ~/.ssh/config ~/.ssh/config.before-lab-shortcuts
+	fi
+	```
 
-Edit `~/.ssh/config`. Add or update these blocks before general `Host *` defaults, preserving existing entries. Do not append duplicate blocks each time you run the setup. The addresses below are the setup examples from 10 November 2026; check the service register before reusing them.
+3. Edit `~/.ssh/config`. Add or update these blocks before general defaults. Replace the addresses for another installation:
 
-```sshconfig
-Host home-lab
-    HostName 100.73.122.94
-    User lloyd
+	```sshconfig
+	Host home-lab
+		HostName 100.73.122.94
+		User lloyd
 
-Host home-lab-code
-    HostName 100.73.122.94
-    User coder
+	Host home-lab-code
+		HostName 100.73.122.94
+		User coder
 
-Host remote-lab
-    HostName 100.107.227.75
-    User lloyd
+	Host remote-lab
+		HostName 100.107.227.75
+		User lloyd
 
-Host admin-lab
-    HostName 100.122.53.80
-    User lloyd
-```
+	Host admin-lab
+		HostName 100.122.53.80
+		User lloyd
+	```
 
-Each block ends at the next `Host` or `Match` directive. If inserting these before existing global settings, put a `Host *` line between the new blocks and those settings so they remain global. Then run:
+	Do not append duplicate blocks. Each block ends at the next `Host` or `Match` directive. If inserting them before existing global settings, put `Host *` before those settings.
 
-```bash
-chmod 600 ~/.ssh/config
-ssh -G remote-lab 2>/dev/null | awk '$1 == "hostname" || $1 == "user"'
-```
+4. Check the selected destination:
 
-Expect `user lloyd` and the Pi's Tailscale IP. `Host` is the shortcut you type; `HostName` selects the destination. These aliases also work with SCP and SFTP. They do not configure names for browsers or other applications.
+	```bash
+	chmod 600 ~/.ssh/config
+	ssh -G remote-lab 2>/dev/null | awk '$1 == "hostname" || $1 == "user"'
+	```
 
-MagicDNS is an alternative for system name resolution. It worked for the Pi names from home-lab, but the Mac could not resolve them during setup. IP-based shortcuts avoid that dependency. Keep admin-lab's Tailscale DNS acceptance disabled unless its Pi-hole resolver dependencies have been reviewed. There is no need to edit `/etc/hosts` for these SSH shortcuts.
+	Expect `user lloyd` and the registered Pi address. Check `home-lab-code` separately; it must select `coder`.
+
+These shortcuts also work with SCP and SFTP. They do not configure browser or system DNS. For another originating account, repeat the configuration there; accounts do not share SSH settings.
 
 ## Install a public key for ordinary OpenSSH
 
-On the originating account, check for an existing key:
+1. On the authorized client, inspect an existing public key:
 
-```bash
-ls -l ~/.ssh/*.pub
-ssh-keygen -lf ~/.ssh/id_ed25519.pub
-```
+	```bash
+	ls -l ~/.ssh/*.pub
+	ssh-keygen -lf ~/.ssh/id_ed25519.pub
+	```
 
-If no suitable key exists, create one with `ssh-keygen -t ed25519` and choose a passphrase when prompted. Reuse an existing suitable key rather than overwriting it. If its filename differs, use that path below and configure `IdentityFile` in the relevant host blocks when needed.
+2. If no suitable key exists, run `ssh-keygen -t ed25519` and choose a passphrase. Do not overwrite an existing key. If using another filename, configure its `IdentityFile` in the relevant host block.
+3. Through an existing trusted destination login or console, add only the selected public key to the intended account. For example, from the Mac to admin-lab:
 
-Keep each private key on its originating machine. Copy only the `.pub` file. For an ordinary OpenSSH destination, use an existing trusted login to add the public key to the destination account:
+	```bash
+	cat ~/.ssh/id_ed25519.pub | ssh lloyd@100.122.53.80 '
+	set -eu
+	IFS= read -r key
+	case "$key" in
+		ssh-ed25519\ *) ;;
+		*) echo "Expected one Ed25519 public key" >&2; exit 1 ;;
+	esac
+	mkdir -p "$HOME/.ssh"
+	chmod 700 "$HOME/.ssh"
+	touch "$HOME/.ssh/authorized_keys"
+	chmod 600 "$HOME/.ssh/authorized_keys"
+	if ! grep -qxF "$key" "$HOME/.ssh/authorized_keys"; then
+		printf "\n%s\n" "$key" >> "$HOME/.ssh/authorized_keys"
+	fi
+	'
+	```
 
-```bash
-cat ~/.ssh/id_ed25519.pub | ssh lloyd@100.122.53.80 '
-set -eu
-IFS= read -r key
-case "$key" in
-    ssh-ed25519\ *) ;;
-    *) echo "Expected one Ed25519 public key" >&2; exit 1 ;;
-esac
-mkdir -p "$HOME/.ssh"
-chmod 700 "$HOME/.ssh"
-touch "$HOME/.ssh/authorized_keys"
-chmod 600 "$HOME/.ssh/authorized_keys"
-if ! grep -qxF "$key" "$HOME/.ssh/authorized_keys"; then
-    printf "\n%s\n" "$key" >> "$HOME/.ssh/authorized_keys"
-fi
-'
-```
+	Replace the destination for another intended connection. Use a console if no trusted remote login exists. Do not copy a private key to a server or enable SSH agent forwarding.
+4. Test a fresh connection before ending the recovery session.
 
-Replace the destination IP and username for each intended connection. Installing your own account's key needs no `sudo`. Installing a key in another user's account may require an administrator. Do not copy a Mac private key to a server or enable SSH agent forwarding.
-
-During this setup, Lloyd used the Mac's existing access to install home-lab's `coder` public key on both Pis. The command above normally installs the key of the account running it, so choose the public key deliberately when using a third machine to bootstrap access.
+To revoke access, remove only the exact public-key line while retaining a tested maintenance login. Keep private recovery copies outside Git. Restoring an old `authorized_keys` copy also restores its revoked authorizations.
 
 ## Verify the destination and test login
 
-For ordinary OpenSSH, read the destination's fingerprint through an existing trusted session or local console:
+1. Read the ordinary OpenSSH host fingerprint through a trusted session or console:
 
-```bash
-hostname
-ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
-```
+	```bash
+	hostname
+	ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
+	```
 
-Compare it with the fingerprint shown by the first new connection before accepting. If the key changes unexpectedly, investigate rather than deleting the saved key to bypass the warning. A host-key failure happens before user-key authentication.
+2. Compare that fingerprint with the first new connection before accepting it. Investigate unexpected changes; do not delete trust entries to silence a warning.
+3. Test without reusing an authenticated connection:
 
-This file identifies ordinary OpenSSH. Tailscale SSH uses a separate host key; see the mode-change procedure below before replacing a saved key.
+	```bash
+	ssh -o ControlPath=none \
+		-o BatchMode=yes \
+		-o PreferredAuthentications=publickey \
+		-o StrictHostKeyChecking=yes \
+		-o ConnectTimeout=5 \
+		admin-lab 'hostname; whoami'
+	```
 
-After saving the verified host key, test a fresh login. `ControlPath=none` disables connection sharing so an existing authenticated connection cannot bypass the check:
-
-```bash
-ssh -o ControlPath=none \
-    -o BatchMode=yes \
-    -o PreferredAuthentications=publickey \
-    -o StrictHostKeyChecking=yes \
-    -o ConnectTimeout=5 \
-    admin-lab 'hostname; whoami'
-```
-
-Expect the destination hostname and `lloyd`. Repeat for each intended source account and destination. Test `home-lab-code` separately. A successful login to your own machine is not evidence of another machine's access.
-
-`remote-lab` still uses Tailscale SSH on its Tailscale address. A successful connection there proves Tailscale identity access, not acceptance of the installed OpenSSH public key. From the home LAN, test its ordinary OpenSSH endpoint separately:
-
-```bash
-ssh -o ControlPath=none \
-    -o BatchMode=yes \
-    -o PreferredAuthentications=publickey \
-    -o StrictHostKeyChecking=yes \
-    -o ConnectTimeout=5 \
-    lloyd@192.168.8.142 'hostname; whoami'
-```
-
-Check the current LAN fallback in the service register before using this example.
+	Expect `admin-lab` and `lloyd`. Repeat for each intended host/account pair, including `home-lab-code`. A connection to the source machine itself does not test remote access.
 
 ## Keep the authentication modes distinct
 
-OpenSSH over Tailscale uses the private network for transport and `authorized_keys` for login. Tailscale SSH uses tailnet identity and SSH policy, and can require a browser identity check. It intercepts Tailscale connections to port 22 while ordinary OpenSSH remains available through other interfaces.
+The existing lab has already migrated to ordinary OpenSSH. Use this sequence only when deliberately changing another host from Tailscale SSH:
 
-Changing remote-lab to ordinary OpenSSH over Tailscale remains proposed. These steps have not been run during this setup.
+1. Keep a tested LAN OpenSSH session or console open. Validate the server with `sudo sshd -t` and verify the required public keys.
+2. Record `/etc/ssh/ssh_host_ed25519_key.pub` through that trusted path. Preserve the client's Tailscale SSH trust entry for rollback.
+3. Through the recovery session, run `sudo tailscale set --ssh=false`.
+4. On the client, inspect `ssh -G HOST` for the selected endpoint, port, `HostKeyAlias`, and known-hosts files. Back up the affected file. Replace only that endpoint's old entry with the trusted OpenSSH key.
+5. Repeat the strict fresh-login test above. Keep the recovery path until every required client passes.
 
-1. Obtain explicit approval. Keep a tested LAN OpenSSH session open, validate the server configuration with `sudo sshd -t`, and verify the required user keys are installed.
-2. Through that trusted LAN session, record the ordinary OpenSSH public host key from `/etc/ssh/ssh_host_ed25519_key.pub` and its fingerprint. Preserve each client's existing Tailscale SSH trust entry for rollback.
-3. Disable Tailscale SSH with `sudo tailscale set --ssh=false` through the LAN session. The same Tailscale IP now presents the ordinary OpenSSH host key. A saved Tailscale SSH key can cause an expected host-key mismatch.
-4. On each originating account, update trust only for the exact Tailscale endpoint used by the shortcut. Check `ssh -G remote-lab` for `hostname`, `port`, `hostkeyalias`, and known-hosts file settings. Back up the affected known-hosts file, replace only that endpoint's old entry with the public key obtained through the trusted LAN session, and compare its fingerprint. Keep unrelated entries. Do not trust a replacement solely because a new connection or `ssh-keyscan` presents it.
-5. Repeat the strict public-key login command above with `remote-lab` as the destination and retain `-o ControlPath=none`. Expect the destination hostname and `lloyd`. Keep the LAN session open until each required source account passes.
-
-If the check fails, use the open LAN session to restore `sudo tailscale set --ssh=true`. The Tailscale endpoint then presents its Tailscale SSH host key again. Restore the preserved trust entry for that endpoint, or verify it through Tailscale's authenticated host-key distribution before accepting it. Test a new Tailscale SSH login with `ssh -o ControlPath=none remote-lab`; its identity check does not prove OpenSSH public-key acceptance. Keep the LAN recovery session until this check passes.
+Do not trust a replacement key solely because `ssh-keyscan` or a new connection presents it. To roll back a failed mode change, use the recovery session to restore `sudo tailscale set --ssh=true`, restore or independently verify the returning Tailscale SSH host identity, and test a fresh connection. A Tailscale identity approval does not prove acceptance of an OpenSSH public key.
 
 ## Diagnose a failed connection
 
-| Result | Check next |
+| Result | Next check |
 |---|---|
-| `Could not resolve hostname` | Run `ssh -G NAME`; confirm `HostName` is the Tailscale IP. |
-| `Permission denied (publickey)` | Check the source key, selected username, and destination `authorized_keys`. Use `ssh -v NAME` to inspect offered keys. |
-| `Host key verification failed` | Compare the destination fingerprint through trusted access before saving it. |
-| Connection timeout | Check Tailscale connectivity, tailnet policy, firewall, and destination SSH service. |
-| Tailscale identity approval request | Complete the identity check; this is Tailscale SSH rather than ordinary public-key login. |
+| `Could not resolve hostname` | Inspect `ssh -G NAME`; confirm `HostName` selects the intended Tailscale IP. |
+| `Permission denied (publickey)` | Check the offered key, username, and destination `authorized_keys`. Use `ssh -v NAME`. |
+| `Host key verification failed` | Compare the fingerprint through trusted access before updating the exact trust entry. |
+| Timeout | Check Tailscale connectivity, policy, host firewall, and destination SSH service. |
+| Tailscale identity approval | Check whether Tailscale SSH is enabled on the destination; it is not the current lab mode. |
 
-To undo shortcut changes, restore the saved config if it contains the intended previous settings. If no config existed before setup, remove only the blocks added here. Revoke an installed public key by removing its exact line from the destination account's `authorized_keys` while retaining another working login.
+To undo shortcut changes, restore the saved configuration if it contains the intended prior state. Otherwise remove only the new blocks. Keep admin-lab's Tailscale DNS acceptance disabled unless its resolver dependencies have been reviewed; SSH aliases do not require editing `/etc/hosts`.
+
+## Pi maintenance permissions
+
+Use `lloyd` for human maintenance and `sudo docker` for container administration. Ordinary SSH key login and sudo password authentication are separate checks. The [service register](services.md#pi-maintenance-permissions) records the current permissions and verification limits.
+
+1. Open a fresh Mac SSH session and run `id`. Expect no `docker` group.
+2. Run `docker ps`. Expect a Docker socket permission error.
+3. Run `sudo -k`, then `sudo -n true`. Expect a password-required error.
+4. Run `sudo -v` and enter the host's maintenance password. Run `sudo id -u`; expect `0`.
+5. Run `sudo docker ps`. Expect the container list without a restart.
+6. Open another fresh terminal. Confirm that the first terminal's sudo authentication does not authorize it.
+
+During a permission change, keep a root recovery shell until fresh-session checks pass. Removed passwordless sudo rules are retained under `/root/lab-access-recovery/`: `010_pi-nopasswd` on both Pis and `lloyd` on remote-lab. A root shell can restore those files to `/etc/sudoers.d/` and run `visudo -c` if needed for recovery. That restores broad passwordless privilege, so it is not a secure final configuration. If the scoped cache rule is the problem, correct `/etc/sudoers.d/90-lloyd-session` instead.
+
+After successful checks, close old recovery and SSH sessions. Existing processes can retain prior groups. Do not stop production processes or reboot a DNS host solely to clear groups without checking dependencies.
+
+## Admin-lab root SSH
+
+The installed `/etc/ssh/sshd_config.d/00-lab-no-root-login.conf` sets `PermitRootLogin no`. The main daemon includes that directory. Keep remote-lab's separate Coolify root key path unchanged.
+
+If a future change breaks maintenance access, use an existing trusted root shell or console. Remove only that drop-in if rollback requires it, validate with `sshd -t`, and reload SSH. Removing it restores the preceding root-login policy; inspect effective settings before treating rollback as the final state.
+
+## Remote-lab SSH password hardening
+
+The inspected remote-lab daemon reads global settings from `/etc/ssh/sshd_config` without an active drop-in `Include`. Its installed `PasswordAuthentication no` and `KbdInteractiveAuthentication no` preserve public-key authentication and `PermitRootLogin prohibit-password` for Coolify.
+
+For recovery during a future change:
+
+1. Confirm `hostname -s` reports `remote-lab` and `whoami` reports `root` in the trusted remote recovery shell.
+2. Restore `/root/lab-access-recovery/sshd_config.before-key-only` only if reverting to the preceding policy is required.
+3. Run `sshd -t` before reloading SSH.
+4. Verify effective settings and fresh Mac login. Reapply key-only authentication after correcting the failure.
+
+The saved configuration re-enables earlier password methods. A quoted SSH command returns to the client when it finishes; subsequent shell commands do not continue on the Pi. The backup daemon on port 2222 has separate configuration.
 
 ## Sources
 

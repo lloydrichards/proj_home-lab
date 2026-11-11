@@ -8,6 +8,8 @@ sources:
     resource: "../../devices/remote-lab/postgres.md"
   - id: source-2
     resource: "../../research/backups.md"
+  - id: current-permissions
+    resource: "../../devices/_reference/services.md"
   - id: source-3
     resource: "../../research/remote-coding.md"
 ---
@@ -21,3 +23,5 @@ The guide mixes the terms Adminer and pgAdmin while its image is pgAdmin. Treat 
 For future HP use, the access research recommends an unpublished database on a private [Docker](docker.md "can run under") network when only containers need it. Database recovery needs an application-consistent dump or a documented quiesce procedure rather than an unqualified copy of live files.
 
 A real migration belongs under the [recovery-first decision](../decisions/recovery-before-reliance.md "requires"), with a restore check before cutover.
+
+On 11 November 2026, Lloyd separated Outlier runtime access from database administration. The application connects as outlier_app with public-schema read/write grants, without schema creation or drizzle migration-history access; database connection inspection and browser login/editing checks passed. The postgres administrator password was rotated separately and saved consumers synchronized. Keep migration ownership separate from runtime grants. Default privileges belong to the role that creates future objects, so changing the migration owner also requires reviewing those defaults. Outlier subsequently moved to its own network while retaining the original data volume and pinned database image. Current evidence, recovery archives and verification limits live in the service register.

@@ -1,27 +1,29 @@
 ---
 type: Concept
 title: "Cloudflare Tunnel"
-description: "Reported access to the existing Pi, distinct from planned private HP access."
+description: "Public application transport with separate authorization and proxy routing."
 status: draft
 sources:
-  - id: source-1
-    resource: "../../devices/remote-lab/cloudflare-ssh.md"
-  - id: source-2
+  - id: operating-guide
     resource: "../../devices/remote-lab/coolify-cloudflare.md"
-  - id: source-3
-    resource: "../../research/remote-coding.md"
-  - id: source-4
+  - id: access-record
     resource: "../../devices/_reference/services.md"
+  - id: security
+    resource: "../../devices/home-lab/explanations/security-and-isolation.md"
+  - id: retired-ssh-recipe
+    resource: "../../devices/remote-lab/cloudflare-ssh.md"
 ---
 
 # Cloudflare Tunnel
 
-Live inspection on 9 November 2026 confirmed a Docker cloudflared connector routing to `http://coolify-proxy:80` on the Pi 5. The connector must share the proxy's `coolify` network. A missing attachment caused public 502 responses despite running apps; reattachment restored routing and survived a container restart. Full host reboot recovery remains untested. Preserve the network declaration when replacing the container. Authentication policy remains unverified. A separate native connector is active, with purpose unresolved.
+A connector carries public application traffic to the Pi's [Coolify](coolify.md "routes through") proxy. DNS, connector routing, proxy host rules, and application authorization are distinct controls. A wildcard route does not establish that every service is reachable or protected.
 
-Historical guides describe two uses: SSH through Cloudflare Access and public application routing to the [Coolify](coolify.md "routes historical application traffic to") proxy. The Docker app route is confirmed; the native connector has not been mapped to the historical SSH route. Tokens remain outside Git.
+The Docker connector must share the proxy network to resolve its hostname. Losing that attachment caused public failures while local application routes worked. Reattachment restored traffic and survived a container restart; replacement must retain the network declaration. Full host reboot recovery remains untested.
 
-The pending connector update in source-2 targets Docker **2026.10.7** from recorded **2026.10.3**, based on upstream and ARM64 registry checks on 9 November 2026. Replacement needs its own authorized maintenance window, saved rollback configuration and route checks. No deployment was performed by the notebook review.
+Cloudflare Access protects human Coolify login. GitHub's exact event path has a separate browser-gate bypass, so webhook signature validation remains necessary. A successful ping proves handler reachability, not a verified signature or deployment. The service register owns the applied route, gate, and test results.
 
-A connector route and a hostname do not establish who may use the application. The [private-network learning](../learnings/private-network-is-not-isolation.md "requires separate authentication reasoning from") distinguishes reachability from authentication and process permissions.
+The old public SSH route and DNS record were removed after private Mac access worked. A native connector process remains with unresolved purpose; removing a route does not prove every connector or credential was removed. The [private-development decision](../decisions/home-lab/private-development.md "separates administration through") uses Tailscale and OpenSSH rather than public HP agent administration.
 
-The [HP private-development decision](../decisions/home-lab/private-development.md "is separate from") uses Tailscale and OpenSSH. Do not copy the historical public routing recipe into HP agent administration.
+Public HTTPS can terminate before an HTTP tunnel origin. Redirect settings therefore need to match the full path: the observed dashboard self-redirect was repaired without patching generated Caddy files or globally changing unrelated applications. The operating guide owns diagnosis and recovery.
+
+Private transport, an Access gate, and [process isolation](../learnings/private-network-is-not-isolation.md "does not replace") answer different questions. R2 storage shares this Cloudflare account, adding an account-level dependency beyond the application tunnel.

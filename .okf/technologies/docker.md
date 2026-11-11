@@ -1,25 +1,27 @@
 ---
 type: Concept
 title: "Docker"
-description: "Container hosting in historical Pi guides and a restricted option for the HP."
+description: "Container data, network exposure, and host-control boundaries."
 status: draft
 sources:
-  - id: source-1
+  - id: current-authority
+    resource: "../../devices/_reference/services.md"
+  - id: security
+    resource: "../../devices/home-lab/explanations/security-and-isolation.md"
+  - id: backup-contract
+    resource: "../../devices/remote-lab/reference/backups.md"
+  - id: historical-recipe
     resource: "../../devices/remote-lab/docker.md"
-  - id: source-2
-    resource: "../../devices/remote-lab/postgres.md"
-  - id: source-3
-    resource: "../../research/private-access.md"
-  - id: source-4
-    resource: "../../research/remote-coding.md"
 ---
 
 # Docker
 
-The historical Pi guide installs Docker and Portainer; another guide runs [PostgreSQL](postgresql.md "hosts in the historical Compose recipe") in Compose. These recipes establish prior documentation, not which containers are running now. The user reports [Coolify](coolify.md "supports deployment managed by") on the existing Pi, but live inspection is deferred.
+A container boundary depends on its permissions, mounts, and networks. Docker-group membership and daemon-socket access grant extensive host authority. Privileged mode or a host socket can defeat the intended [agent isolation](agent-isolation.md "can undermine"). A read-only socket mount does not limit Docker API methods.
 
-The proposed HP baseline gives the coding account neither Docker group membership nor access to the host socket. The Docker group and daemon socket grant extensive host control. A container with privileged mode or the host socket does not provide the intended [agent isolation](agent-isolation.md "can undermine").
+The HP coding account has no general host Docker access. Human Pi maintenance uses password-required sudo rather than Docker-group membership. Existing sessions can retain prior groups. Coolify retains its root deployment connection and Caddy/Sentinel retain socket access; removing the separate coolify account's privileges did not remove those management paths. Portainer is stopped with its data retained. Current facts belong in the service register.
 
-The access research warns that published ports can bypass ordinary UFW input filtering. Prefer unpublished database ports or explicit loopback publication when needed, and test actual reachability. See [exposure verification](../learnings/test-effective-exposure.md "requires").
+Published container ports can bypass ordinary UFW input filtering. Unpublished ports and explicit loopback binding reduce exposure, but actual reachability needs [verification](../learnings/test-effective-exposure.md "requires"). A separate Docker network does not prove isolation from host services or a shared proxy.
 
-The historical direct port publishing and group membership are not recommendations for the HP.
+Data volumes, container images, and writable container layers have different recovery requirements. The Pi backup preserves cold data and database dumps, not complete images or writable layers. Keep source access and compatible images available alongside [restic](restic.md "recovers data through").
+
+Outlier's move exposed tag drift: a floating local PostgreSQL tag named a different image from the running container. Pinning its observed digest and retaining the explicit volume separated a network move from an image upgrade. Recreation and data checks passed; the service register owns their evidence. Historical direct-port and group-membership recipes are not the HP baseline.

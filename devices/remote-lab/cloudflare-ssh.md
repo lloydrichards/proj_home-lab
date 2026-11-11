@@ -1,3 +1,5 @@
+> Retired access path. The public SSH route and DNS record were removed on 10 November 2026 after private OpenSSH access passed. Use [ordinary SSH over Tailscale](../_reference/ssh-access.md). The commands below are historical, not setup instructions for the current lab.
+
 > Historical Raspberry Pi setup. Do not use this as the HP/Omarchy security baseline. For the arriving HP, start with [its preparation checklist](../home-lab/preparation.md).
 
 # Setup SSH through Cloudflare
