@@ -15,6 +15,8 @@ Help Lloyd set things up, troubleshoot, and remember what we explored and why. M
 
 ## Keep only useful material
 
+Use the [maintain-lab-docs skill](.agents/skills/maintain-lab-docs/SKILL.md) when adding, updating, or reviewing notebook content. It applies the documentation structure, Diátaxis modes, and review workflow below.
+
 - Keep `README.md` short: what runs where, known access details, the next task, and links when needed.
 - Keep `devices/home-lab/preparation.md` as the single list of upcoming HP work. Research and OKF explain the reasons and test details, linking to that list rather than maintaining parallel task lists.
 - Keep lab-wide explanations in `docs/explanations/` and shared operating procedures in `docs/how-to/`. Device guides link these rather than copying them. Keep device-specific explanations and procedures with their device.
