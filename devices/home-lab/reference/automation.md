@@ -66,7 +66,9 @@ Editing repository source does not replace installed runtime copies. The agent a
 
 The `last-success.json` fields are `completed_unix`, `local_snapshot`, `cloud_snapshot`, `local_checks`, and `cloud_checks`. Each check object has `sqlite_databases` and `session_transcripts`. A health success reads this record; it does not contact R2 again.
 
-The maintained [agent script](../backup-tools/agents.py) owns the exact allowlist and exclusions. Its allowlist covers `.codex`, `.agents`, OpenCode configuration and state, `.t3/userdata`, `.t3/service.env`, and Rex state under `.local/state/rex`. Project roots, embedded worktrees, OpenCode project checkpoints, selected runtime controls, and Rex's Tailscale identity are excluded. The report store `~/.local/share/lab-publish` is outside this allowlist.
+The maintained [agent script](../backup-tools/agents.py) owns the exact allowlist and exclusions. Its allowlist covers `.codex`, `.agents`, OpenCode configuration and state, `.t3/userdata`, `.t3/service.env`, Rex state under `.local/state/rex`, and shared-skill ownership/recovery metadata under `.local/state/lab-skills`. Project roots, embedded worktrees, OpenCode project checkpoints, selected runtime controls, and Rex's Tailscale identity are excluded. The report store `~/.local/share/lab-publish` is outside this allowlist.
+
+The job rejects symlink ancestors, mounts, and nested subvolumes along included paths. Every root present at preflight must survive inside the frozen view before restic reads it. Installed shared skills and their ownership state, journal, and lock are captured from that same view.
 
 The job checks for 20 GiB free before starting. It preserves database journals from the filesystem snapshot, restores both repositories with restic file verification, and checks recovered SQLite integrity. It reads all cloud repository data each run. Retention keeps the union of 14 daily, 8 weekly, and 6 monthly snapshots, grouped by host and tag; repository checks follow pruning.
 

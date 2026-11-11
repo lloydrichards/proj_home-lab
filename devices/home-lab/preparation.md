@@ -54,3 +54,7 @@ This is the single list of remaining HP work. Current facts live in the [invento
 - [ ] If needed, trial remote desktop separately. SSH is the current access method. See [remote desktop research](research/omarchy-remote-desktop.md).
 
 The earlier unencrypted-install preference was superseded by authorized TPM unlock of the installed encrypted disk. See the [boot decision](../../.okf/decisions/home-lab/unattended-boot.md). Local devvm remains the choice for selected isolated Mac projects; HP project VMs remain deferred.
+
+## Agent backup review fixes
+
+- [ ] Install the reviewed agent-backup script and repeat local/R2 restore checks. Confirm `.local/state/lab-skills` accompanies installed skills and that unsupported path layouts fail before backup. The PR regressions pass; the deployed job and older snapshots have not been updated or rechecked for this scope.

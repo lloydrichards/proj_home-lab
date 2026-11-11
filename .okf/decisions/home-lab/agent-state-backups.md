@@ -18,7 +18,7 @@ On 11 November 2026, Lloyd explicitly chose to exclude project checkouts and wor
 
 Back up selected Codex, OpenCode, T3, and Rex state, agent configuration, and shared-skill links. Keep encrypted local history and a separate private R2 repository. The installed policy retains overlapping daily, weekly, and monthly recovery points. Keep repository credentials outside the coding account and recovery secrets outside both hosts.
 
-This scope avoids treating every regenerable checkout as backup data, while preserving conversations that GitHub does not contain. It also excludes the publishing report store. Skill links preserve references rather than the source checkout; recovery must clone the required repositories at compatible paths. Session text and attachments may still contain code and credentials.
+This scope avoids treating every regenerable checkout as backup data, while preserving conversations that GitHub does not contain. It also excludes the publishing report store. Installed skill copies need matching ownership and recovery metadata from the same frozen view. Skill links preserve references rather than the source checkout; recovery must clone the required repositories at compatible paths. Session text and attachments may still contain code and credentials.
 
 A temporary read-only home snapshot supplies stable input while agents run. Only allowed agent paths are uploaded. Initial local/cloud restores and one isolated Codex reopening passed; this is narrower than replacement-host recovery or reopening every agent interface.
 

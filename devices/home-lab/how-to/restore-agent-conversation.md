@@ -82,7 +82,7 @@ Before using the current-host helper on a replacement:
 The destination must not already exist. The command never overwrites the live home. Stop if verification fails. Keep each SQLite database with its WAL and rollback journal files.
 
 5. Map the saved `/var/lib/lab-agent-backup/home/coder` subtree to the replacement account's intended home. Keep destination agents stopped until ownership and path references are reconciled.
-6. Clone omitted projects and skill-source repositories from GitHub at the paths required by restored links. Reauthenticate where needed.
+6. Clone omitted projects and skill-source repositories from GitHub at the paths required by restored links. Restore installed shared skills together with `.local/state/lab-skills` from the same snapshot. Run the skills installer's doctor before apply; preserve any journal, lock, stage, or backup evidence and follow [manual skill recovery](../../../research/shared-agent-skills.md#recover-an-interrupted-or-unwanted-installation). Older snapshots without ownership metadata need manual reconciliation, not automatic adoption of generated directories. Reauthenticate where needed.
 7. Open an isolated copy before replacing the working agent profile.
 
 This replacement-host sequence has not been tested end to end. The existing helper depends on local backup metadata and installed paths. OpenCode, T3, and Rex reopening need their own application checks; terminal-process recovery is outside this test. See the [backup explanation](../../../docs/explanations/backup-and-recovery.md) and [automation reference](../reference/automation.md).

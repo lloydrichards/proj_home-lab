@@ -161,6 +161,8 @@ The installed root-owned job takes a temporary read-only Btrfs home snapshot, re
 
 Lloyd restored R2 snapshot `0d6f779f367e7c430437a0f80820cca6a6c425dbc5481c18598c7d6c468c91cc`, verified 728 Codex files, and reopened conversation `01a1c158-cbd5-7b81-bcff-601dd9bfebe8` with Codex 0.167.1. His screenshot showed the original 9 November user message and assistant reply in an isolated test workspace. He confirmed closing the test and removing its private copy. This verifies one Codex reopening, not OpenCode/T3/Rex reopening, terminal-process recovery, or replacement-host authentication.
 
+The later PR #14 review adds ancestor/frozen-root validation and shared-skill ownership metadata to the repository script. Isolated regressions passed; these changes are not yet installed or verified through a live local/R2 run. Older snapshots do not establish recovery of the omitted ownership metadata. Deployment and restore checks remain in [preparation](../home-lab/preparation.md#agent-backup-review-fixes).
+
 ## Private development publishing
 
 The recorded report index is `https://home-lab.tailc118cc.ts.net/reports/`. Runtime scripts are installed at `~/.local/lib/lab-publish/`; report content and allocation state are under `~/.local/share/lab-publish/`, outside Git. `lab-reports.service` serves loopback port 8379. The root-owned `/usr/local/sbin/lab-publish-route` helper has a narrow sudoers grant for `coder`; it permits only fixed report/preview route operations and rejects unrelated route removal and Funnel listeners.

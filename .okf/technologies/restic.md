@@ -22,7 +22,7 @@ Encrypted repositories preserve data independently of a running service. A succe
 
 The lab uses separate local and R2 repositories for Pi application data and HP agent state. Local copies avoid a cloud download; R2 adds geographic separation. Both remain accessible to HP root, and R2 write credentials permit deletion. This is not immutable storage or protection from every administrator compromise. R2 also shares the Cloudflare account used for application hosting.
 
-Source consistency comes before encryption. The Pi job stops writes and archives cold data. The HP job reads selected agent paths from a temporary Btrfs snapshot, preserving SQLite journals with their databases. The snapshot freezes a filesystem view, not a completed multi-file application transaction. Nested storage needs explicit handling.
+Source consistency comes before encryption. The Pi job stops writes and archives cold data. The HP job reads selected agent paths from a temporary Btrfs snapshot, preserving SQLite journals with their databases. The snapshot freezes a filesystem view, not a completed multi-file application transaction. The reviewed agent script rejects unsupported ancestors and nested storage and requires expected roots to survive in the frozen view. Installed shared skills need matching installer ownership and recovery metadata from that view. Deployment of these review fixes remains a separate check.
 
 Lloyd's [agent-state scope decision](../decisions/home-lab/agent-state-backups.md "limits") excludes projects and worktrees. GitHub does not preserve uncommitted edits or unpushed commits. Shared-skill links require their omitted source repositories to be recovered separately.
 

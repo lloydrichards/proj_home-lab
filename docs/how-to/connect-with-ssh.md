@@ -125,7 +125,7 @@ Do not trust a replacement key solely because `ssh-keyscan` or a new connection 
 | Result | Next check |
 |---|---|
 | `Could not resolve hostname` | Inspect `ssh -G NAME`; confirm `HostName` selects the intended Tailscale IP. |
-| `Permission denied (../../devices/_reference/publickey)` | Check the offered key, username, and destination `authorized_keys`. Use `ssh -v NAME`. |
+| `Permission denied (publickey)` | Check the offered key, username, and destination `authorized_keys`. Use `ssh -v NAME`. |
 | `Host key verification failed` | Compare the fingerprint through trusted access before updating the exact trust entry. |
 | Timeout | Check Tailscale connectivity, policy, host firewall, and destination SSH service. |
 | Tailscale identity approval | Check whether Tailscale SSH is enabled on the destination; it is not the current lab mode. |

@@ -20,7 +20,7 @@ CREDENTIALS = Path('/home/lab-backup/credentials')
 HOME = Path('/home/coder')
 ROOTS = ['.codex', '.agents', '.config/opencode', '.local/share/opencode',
          '.local/state/opencode', '.t3/userdata', '.t3/service.env',
-         '.local/state/rex']
+         '.local/state/rex', '.local/state/lab-skills']
 EXCLUDED = ['.codex/worktrees', '.codex/tmp', '.codex/.tmp', '.codex/cache',
             '.codex/app-server-control', '.codex/thread-writer-locks',
             '.codex/tui-thread-reference-capabilities',
@@ -57,36 +57,81 @@ def walk_error(error):
     raise error
 
 
+def mounted_paths(path):
+    output = sp.check_output(['findmnt', '--json', '-o', 'TARGET', '--submounts',
+                              '--target', str(path)], text=True)
+    pending = json.loads(output)['filesystems']
+    paths = set()
+    while pending:
+        mount = pending.pop()
+        paths.add(Path(mount['target']))
+        pending.extend(mount.get('children', []))
+    return paths
+
+
+def included_roots(home, names, mounts, *, require_all=False):
+    included = []
+    for name in names:
+        source = home / name
+        # Check every prefix before following it, including the coder home.
+        for current in (home, *(home / Path(*Path(name).parts[:i])
+                                for i in range(1, len(Path(name).parts) + 1))):
+            try:
+                info = current.lstat()
+            except FileNotFoundError:
+                if require_all:
+                    raise RuntimeError(f'Frozen agent root missing: {name}')
+                break
+            if stat.S_ISLNK(info.st_mode):
+                raise RuntimeError('Agent path has a symlink ancestor or root; review scope')
+            if current in mounts or os.path.ismount(current) or info.st_ino == 256:
+                raise RuntimeError('Included agent path has nested storage; review scope')
+            if current != source and not stat.S_ISDIR(info.st_mode):
+                raise RuntimeError('Agent path ancestor must be a directory')
+        else:
+            if not source.resolve().is_relative_to(home.resolve()):
+                raise RuntimeError('Agent root escapes the selected home view')
+            if not source.is_file() and not source.is_dir():
+                raise RuntimeError('Agent root must be a regular file or directory')
+            for mounted in mounts:
+                if mounted.is_relative_to(source) and not excluded(mounted.relative_to(home).as_posix()):
+                    raise RuntimeError('Included agent data has mounted storage; review scope')
+            if source.is_file():
+                included.append(name)
+                continue
+            for directory, dirs, files in os.walk(source, followlinks=False, onerror=walk_error):
+                current = Path(directory)
+                if excluded(current.relative_to(home).as_posix()):
+                    dirs[:] = []
+                    continue
+                if current in mounts or current.stat().st_ino == 256 or os.path.ismount(current):
+                    raise RuntimeError('Included agent data has nested storage; review scope')
+                dirs[:] = [d for d in dirs if not excluded((current / d).relative_to(home).as_posix())]
+            included.append(name)
+    return included
+
+
 def preflight():
     if sp.check_output(['findmnt', '-no', 'FSTYPE', '-T', '/home'], text=True).strip() != 'btrfs':
         raise RuntimeError('Expected Btrfs home filesystem')
-    if HOME.is_symlink():
-        raise RuntimeError('Unexpected coder home symlink')
-    for name in ROOTS:
-        source = HOME / name
-        if source.is_symlink():
-            raise RuntimeError('Agent root is a symlink; review backup scope')
-        if not source.exists():
-            continue
-        if os.path.ismount(source):
-            raise RuntimeError('Included agent root is mounted storage; review scope')
-        if source.is_file():
-            continue
-        if not source.is_dir():
-            raise RuntimeError('Agent root must be a regular file or directory')
-        for directory, dirs, files in os.walk(source, followlinks=False, onerror=walk_error):
-            current = Path(directory)
-            if excluded(current.relative_to(HOME).as_posix()):
-                dirs[:] = []
-                continue
-            if current.stat().st_ino == 256 or os.path.ismount(current):
-                raise RuntimeError('Included agent data has nested storage; review scope')
-            dirs[:] = [d for d in dirs if not excluded((current / d).relative_to(HOME).as_posix())]
+    roots = included_roots(HOME, ROOTS, mounted_paths('/home'))
     for required in ('.codex/sessions', '.local/share/opencode'):
         if not (HOME / required).is_dir():
             raise RuntimeError('Expected agent data missing')
     if shutil.disk_usage(BASE).free < 20 * 1024**3:
         raise RuntimeError('Less than 20 GiB free')
+    return roots
+
+
+def frozen_roots(expected):
+    if VIEW.is_symlink() or not VIEW.is_dir():
+        raise RuntimeError('Invalid frozen home view')
+    home = VIEW / HOME.name
+    names = included_roots(home, expected, mounted_paths(VIEW), require_all=True)
+    for required in ('.codex/sessions', '.local/share/opencode'):
+        if not (home / required).is_dir():
+            raise RuntimeError('Expected frozen agent data missing')
+    return [str(home / name) for name in names]
 
 
 def verify_restore(env, snapshot):
@@ -134,8 +179,8 @@ def health():
 def backup():
     with (BASE / 'backup.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        preflight()
-        if VIEW.exists():
+        expected = preflight()
+        if VIEW.exists() or VIEW.is_symlink():
             raise RuntimeError('Previous home snapshot remains; inspect before removing')
         local, cloud = envs()
         if not (BASE / 'repository/config').exists():
@@ -150,8 +195,7 @@ def backup():
             raise RuntimeError('Cannot open cloud agent repository')
         sp.run(['btrfs', 'subvolume', 'snapshot', '-r', '/home', str(VIEW)], check=True)
         try:
-            roots = [str(VIEW / 'coder' / name) for name in ROOTS
-                     if (VIEW / 'coder' / name).exists()]
+            roots = frozen_roots(expected)
             if not roots:
                 raise RuntimeError('Frozen agent data missing')
             exclusions = [arg for name in EXCLUDED
