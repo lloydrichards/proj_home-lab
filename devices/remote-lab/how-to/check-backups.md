@@ -65,11 +65,13 @@ To pause the nightly Pi outage, on home-lab:
 
 Existing snapshots remain. The independent freshness check will become stale; cloud retries do not create fresh source data.
 
-To refresh reviewed collector code and units without another outage:
+To refresh reviewed collector code and units without another outage, obtain the exporter overlay IPv4 address from the private inventory. Substitute it below. This provisions the address file required when upgrading an older installation:
 
 ```bash
-	sudo bash /home/coder/projects/proj_home-lab/devices/remote-lab/backup-tools/install-home.sh --refresh-services
+	sudo env BACKUP_EXPORTER_IP="<EXPORTER_OVERLAY_IPV4>" bash /home/coder/projects/proj_home-lab/devices/remote-lab/backup-tools/install-home.sh --refresh-services
 ```
+
+The installer validates the address before replacing collector code. If `BACKUP_EXPORTER_IP` is omitted, it requires a valid existing `/home/lab-backup/credentials/remote-ip`. Missing or invalid input stops the refresh before changes.
 
 Preserve the installed key and password. Re-enable the collection timer deliberately when ready:
 
