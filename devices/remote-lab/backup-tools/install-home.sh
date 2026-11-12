@@ -6,9 +6,32 @@ source_dir=$(cd -- "$(dirname -- "$0")" && pwd)
 repo_dir=$(cd -- "$source_dir/../../.." && pwd)
 bootstrap="$repo_dir/local/backup-bootstrap"
 [[ $(hostname) == home-lab ]] || { echo 'This installer is for home-lab only.' >&2; exit 1; }
+# Validate migration input before replacing collector code or changing services.
+remote_ip=$(python3 - "${BACKUP_EXPORTER_IP:-}" <<'PYTHON'
+import ipaddress
+from pathlib import Path
+import sys
+value = sys.argv[1]
+if not value:
+    path = Path('/home/lab-backup/credentials/remote-ip')
+    if not path.is_file():
+        raise SystemExit('Set BACKUP_EXPORTER_IP before installing or refreshing the collector.')
+    value = path.read_text().strip()
+try:
+    print(ipaddress.IPv4Address(value))
+except ipaddress.AddressValueError:
+    raise SystemExit('The exporter address must be a valid IPv4 address.')
+PYTHON
+)
 command -v restic >/dev/null || pacman -S --needed --noconfirm restic
 id lab-backup >/dev/null 2>&1 || useradd --system --user-group --create-home --home-dir /home/lab-backup --shell /usr/bin/nologin lab-backup
 install -d -m 700 -o lab-backup -g lab-backup /home/lab-backup /home/lab-backup/credentials /home/lab-backup/staging /home/lab-backup/repository
+# Install the validated private input before the collector that requires it.
+remote_ip_temp=$(mktemp /home/lab-backup/credentials/remote-ip.XXXXXX)
+printf '%s\n' "$remote_ip" > "$remote_ip_temp"
+chown lab-backup:lab-backup "$remote_ip_temp"
+chmod 600 "$remote_ip_temp"
+mv -f -- "$remote_ip_temp" /home/lab-backup/credentials/remote-ip
 install -m 755 -o root -g root "$source_dir/collect.py" /usr/local/sbin/lab-backup-collect
 for file in id_ed25519 id_ed25519.pub known_hosts; do
   if [[ ! -e /home/lab-backup/credentials/$file ]]; then

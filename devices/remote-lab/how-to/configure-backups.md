@@ -6,7 +6,7 @@ The supplied collector checks for at least five application SQLite databases, ma
 
 The first collection stops running Pi containers temporarily. Choose a maintenance window and pause deployments. To inspect existing backups without an outage, use [Check backups](check-backups.md).
 
-The installer requires both actual overlay IPv4 addresses. Before the first collection, save the exporter IPv4 address as a single line in `/home/lab-backup/credentials/remote-ip` on the collector. Keep this file private, owned by `lab-backup`, and readable only by that account. Obtain addresses from the private inventory. Existing installed scripts are unchanged by this repository edit; this input is required when installing the revised collector.
+The installer requires both actual overlay IPv4 addresses. Pass the exporter IPv4 address to the collector installer as `BACKUP_EXPORTER_IP`. The installer validates the address before replacing code and saves it privately in `/home/lab-backup/credentials/remote-ip`, owned by `lab-backup` with mode 0600. Obtain addresses from the private inventory. Existing installed scripts are unchanged by this repository edit; this input is required when installing the revised collector.
 
 ## Prepare the restricted SSH identity
 
@@ -33,10 +33,10 @@ If the identity already exists, retain it; do not overwrite it. The unattended j
 
 Expect the restricted daemon active on TCP 2222. Retain the fingerprint from this trusted session for the next check.
 
-4. On home-lab, collect the endpoint's public key into a candidate file:
+4. On home-lab, substitute the same exporter address supplied as `BACKUP_LISTEN_IP` above. Collect its public key into a candidate file:
 
 ```bash
-	sudo sh -c 'ssh-keyscan -t ed25519 -p 2222 192.0.2.175 > /home/coder/projects/proj_home-lab/local/backup-bootstrap/known_hosts'
+	sudo sh -c 'ssh-keyscan -t ed25519 -p 2222 "<EXPORTER_OVERLAY_IPV4>" > /home/coder/projects/proj_home-lab/local/backup-bootstrap/known_hosts'
 	sudo ssh-keygen -lf /home/coder/projects/proj_home-lab/local/backup-bootstrap/known_hosts
 ```
 
@@ -47,7 +47,7 @@ Stop unless the fingerprint matches the trusted Pi result. `ssh-keyscan` alone d
 1. On home-lab as `lloyd`, run the reviewed installer during the agreed window:
 
 ```bash
-	sudo bash /home/coder/projects/proj_home-lab/devices/remote-lab/backup-tools/install-home.sh
+	sudo env BACKUP_EXPORTER_IP="<EXPORTER_OVERLAY_IPV4>" bash /home/coder/projects/proj_home-lab/devices/remote-lab/backup-tools/install-home.sh
 ```
 
 Expect its backup and restore checks to pass before timers are enabled. If it fails, inspect [collection and recovery state](check-backups.md#recover-an-interrupted-export) before retrying.

@@ -69,3 +69,5 @@ The collector requires at least five restored SQLite databases, a workload-speci
 R2 copying shares the collector lock. It checks cloud data before retention and repository structure afterward; a full data read runs initially and at least every seven days of successful execution. Hourly cloud health reads recorded status, not R2 itself. PostgreSQL restoration, complete SQLite/WAL recovery, and dashboard credential decryption are separate manual drills.
 
 The R2 JSON schema is shared with the [HP automation reference](../../home-lab/reference/automation.md#credential-files). No R2 lifecycle deletion rule is configured. Retention is not an immutability guarantee.
+
+The collector installer accepts `BACKUP_EXPORTER_IP` or reuses a valid existing `credentials/remote-ip`. It validates this input before replacing collector code, including in `--refresh-services` mode. Older installations must supply the address explicitly on their first refresh.
