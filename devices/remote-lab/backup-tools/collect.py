@@ -3,6 +3,7 @@
 import datetime
 import fcntl
 import hashlib
+import ipaddress
 import json
 import os
 from pathlib import Path
@@ -78,6 +79,8 @@ def health():
 
 
 def collect():
+    remote_ip = str(ipaddress.IPv4Address(
+        (BASE / "credentials/remote-ip").read_text().strip()))
     if shutil.disk_usage(BASE).free < 20 * 1024**3:
         raise RuntimeError('Less than 20 GiB free on home-lab')
     incoming = STAGING / 'incoming.tar.partial'
@@ -89,7 +92,7 @@ def collect():
            '-o', 'UserKnownHostsFile=' + str(BASE / 'credentials/known_hosts'),
            '-o', 'ConnectTimeout=20', '-o', 'ServerAliveInterval=30',
            '-o', 'ServerAliveCountMax=30', '-i', str(BASE / 'credentials/id_ed25519'),
-           'lab-backup@100.107.227.75', 'export']
+           'lab-backup@' + remote_ip, 'export']
     with incoming.open('wb') as dst:
         run(ssh, stdout=dst, timeout=1800)
     with tarfile.open(incoming) as archive:

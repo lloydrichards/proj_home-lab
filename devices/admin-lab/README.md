@@ -5,6 +5,7 @@ The Pi 4 runs Pi-hole for DNS filtering. Hardware and naming facts belong in the
 ## Understand and check DNS
 
 - [How the DNS service fits into the lab](explanations/dns-service.md).
+- [Set up Pi-hole as the LAN DNS server](how-to/set-up-pihole.md).
 - [Check DNS, container health, and dashboard access](how-to/check-dns.md).
 - [Connect with private SSH](../../docs/how-to/connect-with-ssh.md).
 - [Review the dated image-maintenance investigation](research/image-maintenance.md).
@@ -13,7 +14,9 @@ The shared [architecture](../../docs/explanations/architecture.md), [security](.
 
 ## Rebuild boundary
 
-There is no verified setup or recovery recipe for this Pi. DHCP ownership, upstream DNS, client dependencies, deployment settings, and configuration recovery need inspection before a restart or rebuild. Lloyd deferred Pi-hole browser troubleshooting until the new network is ready. The separate Pi 4 PostgreSQL service also has unknown consumers and backup coverage.
+The router now advertises Pi-hole through IPv4 DHCP, and dashboard login works. IPv6 still advertises the router DNS resolver and can bypass filtering. Lloyd chose to stop before router console changes. The service register owns the dated evidence.
+
+There is no verified rebuild or configuration-restore recipe for this Pi. Persistent mounts, complete client dependencies, and restore compatibility need inspection before replacement. The separate Pi 4 PostgreSQL service also has unknown consumers and backup coverage.
 
 The historical Pi 5 recipes do not establish admin-lab's configuration. Keep working DNS and independent maintenance access available while investigating. The service register owns these gaps, so this page does not maintain another task list.
 

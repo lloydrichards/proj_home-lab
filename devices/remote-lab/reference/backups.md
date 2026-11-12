@@ -20,7 +20,7 @@ The root exporter records running container IDs, stops non-PostgreSQL containers
 |---|---|
 | Source | Hostname `remote-lab`; Docker and Python 3 |
 | Collector | Hostname `home-lab`; systemd, restic, Python 3, ordinary OpenSSH |
-| Source transport | Separate sshd on `100.107.227.75:2222`; key restricted to source `100.73.122.94` |
+| Source transport | Separate sshd on `192.0.2.175:2222`; key restricted to source `192.0.2.176` |
 | Source account | `lab-backup`; restricted shell, exact export dispatcher, argument-free exporter sudo grant |
 | Destination account | `lab-backup`; `/home/lab-backup`, mode 0700, no login shell |
 | Credentials | `/home/lab-backup/credentials/{id_ed25519,known_hosts,restic-password,r2.json}` |
@@ -39,10 +39,10 @@ R2 credentials permit object deletion. Source archives and HP staging contain se
 | Source | Installed path | Operations |
 |---|---|---|
 | `export.py` | `/usr/local/sbin/lab-backup-export` on Pi | Export through the dispatcher; `produce`, `recover` for root services |
-| `collect.py` | `/usr/local/sbin/lab-backup-collect` on HP | No argument collects and verifies; `health` checks status and capacity |
+| `collect.py` | `/usr/local/sbin/lab-backup-collect` on HP | No argument collects and verifies using `credentials/remote-ip`; `health` checks status and capacity |
 | `r2.py` | `/usr/local/sbin/lab-backup-r2` on HP | No argument copies and retains cloud snapshots; `health`; `retention-preview` |
 | `restore-test.py` | `/usr/local/sbin/lab-backup-restore-test` on Pi | Isolated PostgreSQL, Coolify credential, and SQLite/WAL drill |
-| `install-remote.sh` | Runs on Pi | Requires `id_ed25519.pub` beside installer; installs exporter, restricted sshd, recovery services |
+| `install-remote.sh` | Runs on Pi | Requires `BACKUP_CLIENT_IP`, `BACKUP_LISTEN_IP`, and `id_ed25519.pub` beside installer; installs exporter, restricted sshd, recovery services |
 | `install-home.sh` | Runs on HP | Requires ignored `local/backup-bootstrap` keys and host pin; starts one collection before enabling timers |
 | `install-home.sh --refresh-services` | Runs on HP | Refreshes reviewed code and units without triggering collection or changing timer activation |
 | `install-r2.sh` | Runs on HP | Requires private `r2.json` and restic password; runs cloud copy and health before enabling timers |

@@ -1,5 +1,7 @@
 # Connect to the lab with SSH
 
+Addresses below are documentation examples. Substitute hosts from your ignored local inventory and verify their fingerprints against the private service register.
+
 Use this guide from the Mac or another deliberately authorized maintenance client. The [service register](../../devices/_reference/services.md#private-ssh-access) owns current endpoints, fingerprints, and authorization. Ordinary OpenSSH handles login on all three hosts; Tailscale supplies private transport.
 
 For the existing Pis, use the current Mac key. Home-lab's `coder` key was deliberately revoked. Adding a shortcut does not authorize a key or establish that one lab machine may administer another.
@@ -21,19 +23,19 @@ For the existing Pis, use the current Mac key. Home-lab's `coder` key was delibe
 
 	```sshconfig
 	Host home-lab
-		HostName 100.73.122.94
+		HostName 192.0.2.176
 		User lloyd
 
 	Host home-lab-code
-		HostName 100.73.122.94
+		HostName 192.0.2.176
 		User coder
 
 	Host remote-lab
-		HostName 100.107.227.75
+		HostName 192.0.2.175
 		User lloyd
 
 	Host admin-lab
-		HostName 100.122.53.80
+		HostName 192.0.2.186
 		User lloyd
 	```
 
@@ -63,7 +65,7 @@ These shortcuts also work with SCP and SFTP. They do not configure browser or sy
 3. Through an existing trusted destination login or console, add only the selected public key to the intended account. For example, from the Mac to admin-lab:
 
 	```bash
-	cat ~/.ssh/id_ed25519.pub | ssh lloyd@100.122.53.80 '
+	cat ~/.ssh/id_ed25519.pub | ssh lloyd@192.0.2.186 '
 	set -eu
 	IFS= read -r key
 	case "$key" in
@@ -143,7 +145,7 @@ Use `lloyd` for human maintenance and `sudo docker` for container administration
 5. Run `sudo docker ps`. Expect the container list without a restart.
 6. Open another fresh terminal. Confirm that the first terminal's sudo authentication does not authorize it.
 
-During a permission change, keep a root recovery shell until fresh-session checks pass. Removed passwordless sudo rules are retained under `/root/lab-access-recovery/`: `010_pi-nopasswd` on both Pis and `lloyd` on remote-lab. A root shell can restore those files to `/etc/sudoers.d/` and run `visudo -c` if needed for recovery. That restores broad passwordless privilege, so it is not a secure final configuration. If the scoped cache rule is the problem, correct `/etc/sudoers.d/90-lloyd-session` instead.
+During a permission change, keep a root recovery shell until fresh-session checks pass. Save the preceding configuration privately and record its location in the local service register. Validate sudoers changes with `visudo -c` before closing recovery access. Restoring an older rule can restore broad passwordless privilege; review it before use.
 
 After successful checks, close old recovery and SSH sessions. Existing processes can retain prior groups. Do not stop production processes or reboot a DNS host solely to clear groups without checking dependencies.
 
@@ -160,7 +162,7 @@ The inspected remote-lab daemon reads global settings from `/etc/ssh/sshd_config
 For recovery during a future change:
 
 1. Confirm `hostname -s` reports `remote-lab` and `whoami` reports `root` in the trusted remote recovery shell.
-2. Restore `/root/lab-access-recovery/sshd_config.before-key-only` only if reverting to the preceding policy is required.
+2. Restore your privately recorded configuration backup only if reverting to the preceding policy is required.
 3. Run `sshd -t` before reloading SSH.
 4. Verify effective settings and fresh Mac login. Reapply key-only authentication after correcting the failure.
 

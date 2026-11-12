@@ -1,30 +1,40 @@
 # DNS filtering on admin-lab
 
-Pi-hole answers DNS queries and filters selected domains. DNS translates a name into an address; application traffic then travels to that address. A working DNS service therefore does not prove that a website or its Pi-hole dashboard works.
+Pi-hole answers DNS queries and filters selected domains. DNS translates a name into an address; application traffic then travels to that address. DNS can return both IPv4 and IPv6 addresses over an IPv4 connection to Pi-hole.
+
+## Automatic DNS has two paths
+
+The Fibre X6 supplies Pi-hole's reserved LAN address through IPv4 DHCP. It also advertises its own IPv6 DNS resolver through router advertisements and DHCPv6. A client can therefore use Pi-hole or bypass it through the router.
 
 ```mermaid
 flowchart LR
-    DHCP["Network DHCP provider<br/>Owner unknown"] -. "May advertise a resolver<br/>Settings unverified" .-> Client["DNS clients<br/>Dependencies unverified"]
-    Client -->|"Explicit query to Pi-hole"| Pi["admin-lab<br/>Pi-hole"]
-    Pi --> Filter{"Blocked by policy?"}
-    Filter -->|"Yes"| Block["Configured blocking response"]
-    Filter -->|"No, if uncached"| Upstream["Upstream DNS<br/>Configuration unknown"]
+    Router["Fibre X6"] -->|"IPv4 DHCP advertises Pi-hole"| Client["LAN client"]
+    Router -->|"IPv6 advertises router DNS"| Client
+    Client -->|"DNS to Pi-hole"| Pi["admin-lab Pi-hole"]
+    Pi -->|"Uncached permitted queries"| Upstream["Configured upstream DNS"]
+    Client -->|"Alternative DNS path"| Proxy["Router DNS resolver"]
 ```
 
-The solid client edge represents an explicit DNS test. It does not establish which devices normally use Pi-hole. DHCP can supply resolver addresses, but clients can also select their own resolver. Pi-hole's DHCP service was disabled at inspection; that does not identify the network's DHCP provider.
+The diagram shows available resolver paths, not a guarantee about which resolver a client selects. Explicit queries to Pi-hole passed. Test queries addressed to the router did not appear in Pi-hole's refreshed log. DHCPv4 configuration alone does not establish filtering for every client.
 
-## Three checks answer different questions
+On 12 November 2026, Lloyd accepted working IPv4 DNS and stopped before any router console writes. IPv6 remains enabled, including its DNS bypass. The [service register](../../_reference/services.md#pi-hole-network-configuration) owns exact configuration and verification limits.
+
+## Different checks establish different facts
 
 | Check | What it establishes | What it leaves open |
 |---|---|---|
 | Container health | The configured health command passes | DNS from a client and browser access |
-| Explicit DNS query | This client can query the selected resolver | The client's normal resolver and every other client |
-| Dashboard request | The web endpoint responds on this path | DNS filtering and administrative authorization |
+| Explicit DNS query | This client can query the selected resolver | The client's normal resolver |
+| DHCP lease | The router supplied a DNS address | VPN overrides, IPv6 DNS, and application-specific resolvers |
+| Query log | A particular query reached Pi-hole | Every other lookup and effective blocking policy |
+| Dashboard login | The web endpoint and saved credential work | Configuration recovery after a rebuild |
 
-DNS answered during the 9–10 November checks. Browser access was reported unavailable on 11 November. Those observations can coexist. Current addresses and evidence belong in the [service register](../../_reference/services.md).
+A secondary public resolver can provide another path around filtering. A VPN can replace the default resolver even when Wi-Fi has Pi-hole configured. IPv4 DNS transport can resolve AAAA records, so filtering IPv6 destinations does not itself require a Pi-hole IPv6 listener.
 
-## DNS recovery starts with dependencies
+## Recovery depends on configuration and access
 
-A resolver restart can affect clients even while SSH works. Before maintenance, the operator needs to know which clients depend on this Pi, who supplies DHCP, and how to recover configuration. Those facts and a tested Pi-hole restore remain missing. The remote-lab backup workflow does not establish coverage for admin-lab.
+The router reservation keeps the Pi-hole IPv4 address stable. Private maintenance SSH provides a separate administration path. A network lease change still needs console recovery because Tailscale depends on the host's underlying connectivity.
 
-[Check the service](../how-to/check-dns.md) without changing it. The shared [security explanation](../../../docs/explanations/security-and-access.md) distinguishes private maintenance access from DNS reachability.
+The existing Compose deployment and upstream DNS were identified, but persistent data and configuration restoration are not fully documented or tested. The remote-lab backup workflow does not establish coverage for admin-lab.
+
+Use the [Pi-hole setup guide](../how-to/set-up-pihole.md) to configure the router and clients or [check the service](../how-to/check-dns.md) without changing it. The shared [security explanation](../../../docs/explanations/security-and-access.md) distinguishes maintenance access from DNS reachability.
