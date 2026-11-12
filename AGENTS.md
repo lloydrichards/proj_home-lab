@@ -2,6 +2,18 @@
 
 Help Lloyd set things up, troubleshoot, and remember what we explored and why. Maintain this notebook as part of doing the work. The user should not need to read the repository end to end or synchronize several records by hand. Start with `README.md`, then follow the relevant device page or shared record.
 
+## Public repository and private operating records
+
+Follow [Keep local configuration private](docs/how-to/keep-local-configuration-private.md) for every notebook edit. This repository is public.
+
+- Keep reusable setup steps, architecture, hardware models, and sanitized examples in tracked files. Label example values before commands and distinguish them from live observations.
+- Keep actual MAC addresses, LAN and overlay address maps, global IPv6 addresses, trusted SSH fingerprints, deployed access policies, private service endpoints, account identifiers, backup destinations, and recovery locations in ignored `local/configuration/`. Preserve useful private details there before sanitizing public records.
+- Start private discovery with `local/configuration/README.md` when available. Public summaries under `devices/_reference/` remain navigation entry points. Never infer live values from sanitized examples. If local records are absent, ask for the required input or inspect an authorized source.
+- Keep passwords, tokens, private keys, personal documents, raw command output, receipts, configuration exports, and database or session backups out of tracked files. Use a secrets store for credentials. Do not paste private evidence into public research, OKF, comments, or PR descriptions.
+- Do not force-add ignored files. Before staging, check the diff, new files, source metadata, and attachments for private values. Confirm private records are ignored with `git check-ignore`. Ignore rules do not protect already tracked files or old commits.
+- Local records need a private backup. Do not claim Git backs them up, publish them, or rewrite repository history without explicit authorization.
+- Preserve public software documentation and intentional links to public source repositories. Generic paths and example configurations may remain when they explain a procedure without revealing deployed values.
+
 ## Plain-language responses
 
 - Lead with the answer, result, or decision.
@@ -22,7 +34,7 @@ Use the [maintain-lab-docs skill](.agents/skills/maintain-lab-docs/SKILL.md) whe
 - Keep lab-wide explanations in `docs/explanations/` and shared operating procedures in `docs/how-to/`. Device guides link these rather than copying them. Keep device-specific explanations and procedures with their device.
 - Keep device guides under `devices/`, starting with `home-lab`, `remote-lab`, and `admin-lab`. Each device README links its status, guides, research, and relevant OKF decisions. A directory name is not evidence that the hostname has been applied.
 - Keep arriving hardware in a preparation checklist. Expand setup instructions when we perform the work, recording checks and recovery steps worth repeating.
-- Keep lab-wide inventory, BOM, and the service register in `devices/_reference/`. Update these owning records when device, service, or purchase facts change. Device pages summarize purpose and status and link the records rather than copying specifications or maintaining another inventory.
+- Keep public inventory, BOM, and service summaries in `devices/_reference/`. Keep their live configuration and private purchase details in the corresponding ignored `local/configuration/devices/_reference/` records. Update the appropriate owner when facts change. Device pages summarize purpose and status and link the records rather than copying specifications or maintaining another inventory.
 - Use `.okf/` for concepts, why we prefer an approach, alternatives considered, unresolved questions, and reusable learnings. Keep device-specific choices in `.okf/decisions/<device>/` and cross-device choices directly in `.okf/decisions/`. Link decisions from the relevant device README. Do not create parallel ADRs or duplicate decisions in device guide directories.
 - Keep research spanning devices or the Mac client in `research/`. Put device-specific research under `devices/<device>/research/`. Retain research only when its sources or investigation help a real question, and recheck release-sensitive facts at the point of use.
 - Add future devices under `devices/` with a directory and a short README. Create guide, research, or decision directories only when they have useful content. Keep historical Pi recipes marked as unverified after moves; reorganizing a recipe does not validate its commands or deploy its services.

@@ -8,7 +8,7 @@ A guide to a private coding host, existing Pi application hosting, and tested da
 | [remote-lab](devices/remote-lab/README.md) | Pi 5 running Coolify and public application routing | Private maintenance SSH; Cloudflare-gated public dashboard |
 | [admin-lab](devices/admin-lab/README.md) | Pi 4 running Pi-hole | Private maintenance SSH; DNS and browser status in the service register |
 
-Exact addresses, versions, and dated checks live in the [service register](devices/_reference/services.md) and [inventory](devices/_reference/inventory.md). A written recipe is not proof that its steps ran.
+Public summaries live in the [service register](devices/_reference/services.md) and [inventory](devices/_reference/inventory.md). Actual configuration and dated operating checks belong in ignored `local/configuration/`. Follow [Keep local configuration private](docs/how-to/keep-local-configuration-private.md). A written recipe is not proof that its steps ran.
 
 ## Choose a starting point
 

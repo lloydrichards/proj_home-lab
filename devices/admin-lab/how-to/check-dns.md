@@ -66,4 +66,4 @@ An HTTP response establishes web reachability, not successful administrator logi
 	  "$PIHOLE_CONTAINER"
    ```
 
-Keep DNS, web, and health results separate in the [service register](../../_reference/services.md). If a check fails, retain independent SSH access and investigate the path before changing DNS or restarting the container. The [DNS explanation](../explanations/dns-service.md) lists the unresolved dependencies.
+Keep DNS, web, and health results separate in the [service register](../../_reference/services.md). If a check fails, retain independent SSH access and investigate the path before changing DNS or restarting the container. The [DNS explanation](../explanations/dns-service.md) explains the remaining IPv6 bypass and recovery limits. Follow the [LAN DNS guide](set-up-pihole.md#verify-the-setup) to check automatic client settings.

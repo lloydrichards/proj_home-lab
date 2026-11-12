@@ -1,6 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 [[ $EUID == 0 && $(hostname) == remote-lab ]] || exit 1
+# Supply actual overlay IPv4 addresses through the installer environment.
+: "${BACKUP_CLIENT_IP:?Set BACKUP_CLIENT_IP to the collector overlay IPv4 address}"
+: "${BACKUP_LISTEN_IP:?Set BACKUP_LISTEN_IP to the exporter overlay IPv4 address}"
+python3 - "$BACKUP_CLIENT_IP" "$BACKUP_LISTEN_IP" <<'PYTHON'
+import ipaddress
+import sys
+for value in sys.argv[1:]:
+    ipaddress.IPv4Address(value)
+PYTHON
 source_dir=$(cd -- "$(dirname -- "$0")" && pwd)
 [[ -s "$source_dir/id_ed25519.pub" ]] || exit 1
 id lab-backup >/dev/null 2>&1 || useradd --system --user-group --create-home --home-dir /var/lib/lab-backup --shell /bin/sh lab-backup
@@ -8,7 +17,7 @@ install -d -m 755 /etc/lab-backup
 install -d -m 700 /var/lib/lab-backup-export
 install -m 755 "$source_dir/export.py" /usr/local/sbin/lab-backup-export
 {
-  printf 'restrict,from="100.73.122.94" '
+  printf 'restrict,from="%s" ' "$BACKUP_CLIENT_IP"
   cat "$source_dir/id_ed25519.pub"
 } > /etc/lab-backup/authorized_keys
 chmod 644 /etc/lab-backup/authorized_keys
@@ -29,9 +38,9 @@ usermod --shell /usr/local/sbin/lab-backup-shell lab-backup
 printf 'lab-backup ALL=(root) NOPASSWD: /usr/local/sbin/lab-backup-export ""\n' > /etc/sudoers.d/lab-backup
 chmod 440 /etc/sudoers.d/lab-backup
 visudo -cf /etc/sudoers.d/lab-backup
-cat > /etc/lab-backup/sshd_config <<'EOF'
+cat > /etc/lab-backup/sshd_config <<EOF
 Port 2222
-ListenAddress 100.107.227.75
+ListenAddress $BACKUP_LISTEN_IP
 HostKey /etc/ssh/ssh_host_ed25519_key
 PidFile /run/lab-backup-sshd.pid
 UsePAM yes

@@ -6,6 +6,8 @@ The supplied collector checks for at least five application SQLite databases, ma
 
 The first collection stops running Pi containers temporarily. Choose a maintenance window and pause deployments. To inspect existing backups without an outage, use [Check backups](check-backups.md).
 
+The installer requires both actual overlay IPv4 addresses. Before the first collection, save the exporter IPv4 address as a single line in `/home/lab-backup/credentials/remote-ip` on the collector. Keep this file private, owned by `lab-backup`, and readable only by that account. Obtain addresses from the private inventory. Existing installed scripts are unchanged by this repository edit; this input is required when installing the revised collector.
+
 ## Prepare the restricted SSH identity
 
 1. On home-lab as `lloyd`, create the private bootstrap directory:
@@ -24,7 +26,7 @@ If the identity already exists, retain it; do not overwrite it. The unattended j
 3. On remote-lab as `lloyd`, install the reviewed source services:
 
 ```bash
-	sudo bash /PATH/TO/NOTEBOOK/devices/remote-lab/backup-tools/install-remote.sh
+	sudo env BACKUP_CLIENT_IP="<COLLECTOR_OVERLAY_IPV4>" BACKUP_LISTEN_IP="<EXPORTER_OVERLAY_IPV4>" bash /PATH/TO/NOTEBOOK/devices/remote-lab/backup-tools/install-remote.sh
 	sudo systemctl status lab-backup-sshd.service
 	sudo ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
 ```
@@ -34,7 +36,7 @@ Expect the restricted daemon active on TCP 2222. Retain the fingerprint from thi
 4. On home-lab, collect the endpoint's public key into a candidate file:
 
 ```bash
-	sudo sh -c 'ssh-keyscan -t ed25519 -p 2222 100.107.227.75 > /home/coder/projects/proj_home-lab/local/backup-bootstrap/known_hosts'
+	sudo sh -c 'ssh-keyscan -t ed25519 -p 2222 192.0.2.175 > /home/coder/projects/proj_home-lab/local/backup-bootstrap/known_hosts'
 	sudo ssh-keygen -lf /home/coder/projects/proj_home-lab/local/backup-bootstrap/known_hosts
 ```
 

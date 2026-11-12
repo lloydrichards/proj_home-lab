@@ -15,6 +15,9 @@ This is the single list of remaining HP work. Current facts live in the [invento
 
 ## Before routine use without a monitor
 
+- [x] Repair IPv4 after the router replacement. DHCP renewal restored the gateway and IPv4 HTTPS to GitHub and its API on 12 November; Tailscale remained connected. [Repair and checks](../_reference/services.md#private-ssh-access).
+- [ ] Test a fresh Mac SSH login after the router replacement. The old LAN SSH allowance may not cover the replacement router subnet; check the private network record. Keep Tailscale and console recovery available.
+
 - [x] Apply system-wide sleep prevention; privileged output confirms all four sleep modes disabled.
 - [x] Collect privileged SSD health, firewall, sudo policy and boot-hash checks; SMART passed with no media errors.
 - [ ] Complete RAM module inventory after installing `dmidecode`; optional before monitor removal.
