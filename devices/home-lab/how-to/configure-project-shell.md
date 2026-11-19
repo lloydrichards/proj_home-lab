@@ -28,6 +28,19 @@ eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/home-lab.toml")"
 
 Run `~/.nix-profile/bin/zsh -i` to test the prompt. Type `exit` to return to Bash.
 
+If Delete moves the cursor or does nothing, add these lines at the end of `~/.zshrc`. They bind the terminal's Delete sequence to forward deletion in both Zsh insert keymaps.
+
+```zsh
+zmodload zsh/terminfo
+for keymap in emacs viins; do
+  bindkey -M "$keymap" $'\e[3~' delete-char
+  if [[ -n ${terminfo[kdch1]} ]]; then
+    bindkey -M "$keymap" "$terminfo[kdch1]" delete-char
+  fi
+done
+unset keymap
+```
+
 ## Start Zsh in new terminals
 
 Add this near the top of `~/.bashrc`, before Bash-only prompt setup. For an account that already has a Zsh handoff, keep one block and use its existing fallback variable.
