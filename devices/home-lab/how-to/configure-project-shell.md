@@ -60,3 +60,33 @@ Open a new terminal and run `print -r -- "$ZSH_VERSION"`. Check that the Oh My P
 If direnv blocks the project, review its `.envrc` and run `direnv allow` from the project root. The approval belongs to the current account. Wait for the build or download on first use, then run `print -r -- "$IN_NIX_SHELL"` and check a tool version provided by the flake. Leave the project to unload its environment.
 
 If Bash opens in a new login terminal, check that its Bash login startup file sources `~/.bashrc`. If Zsh opens but the flake never loads, run `direnv status` in the project root to check which `.envrc` it found and whether approval is pending.
+
+## Fix stale characters after Backspace in Rex
+
+Use this workaround if Backspace removes a character from the command in Rex but leaves it visible on screen. Type `echo abc`, press Backspace once, then press Enter. If Rex still shows `echo abc` before Enter but prints `ab`, the edit worked and the screen failed to redraw. Check that `echo "$TERM"` prints `xterm-rex`.
+
+Rex's terminal description advertises shortcuts for inserting and deleting characters on screen. A per-account override disables those shortcuts so Zsh redraws the edited text. The workaround was verified in a fresh Rex terminal on home-lab with Oh My Posh and a project flake active.
+
+Run this on home-lab as the affected account. It uses the system's Rex terminal description and stops if the account already has an override. Review or back up an existing override before replacing it.
+
+```bash
+(
+  set -eu
+  for entry in "$HOME/.terminfo/x/xterm-rex" "$HOME/.terminfo/78/xterm-rex"; do
+    if [ -e "$entry" ] || [ -L "$entry" ]; then
+      printf 'Existing override: %s\n' "$entry" >&2
+      exit 1
+    fi
+  done
+
+  source_file=$(mktemp)
+  trap 'rm -f "$source_file"' EXIT
+  infocmp -x -1 -A /usr/share/terminfo xterm-rex > "$source_file"
+  sed -E -i 's/^([[:space:]]*)(dch1?|ich1?)=.*/\1\2@,/' "$source_file"
+  tic -x -o "$HOME/.terminfo" "$source_file"
+)
+```
+
+Open a fresh Rex terminal or run `exec zsh`. Repeat the `echo abc` check. The line should show `echo ab` before Enter, and the command should print `ab`.
+
+To roll back, run `infocmp xterm-rex | head -n 1` to find the active entry. Move the newly installed `xterm-rex` file out of `~/.terminfo` and start a fresh shell to use the system entry again.
