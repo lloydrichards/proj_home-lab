@@ -46,12 +46,30 @@ unset keymap
 Add this near the top of `~/.bashrc`, before Bash-only prompt setup. For an account that already has a Zsh handoff, keep one block and use its existing fallback variable.
 
 ```bash
-if [[ $- == *i* && ${KEEP_BASH:-} != 1 && -x "$HOME/.nix-profile/bin/zsh" ]]; then
-  exec "$HOME/.nix-profile/bin/zsh"
+if [[ $- == *i* && ${KEEP_BASH:-} != 1 && -z ${BASH_EXECUTION_STRING:-} &&
+      -t 0 && -t 1 && -x "$HOME/.nix-profile/bin/zsh" ]]; then
+	exec "$HOME/.nix-profile/bin/zsh"
 fi
 ```
 
-This starts Zsh for interactive Bash sessions. The account's login shell stays Bash, and the handoff skips non-interactive SSH commands. To bypass the example handoff, run `KEEP_BASH=1 bash -i`. For an existing handoff, use the variable named in your `.bashrc`. To revert the handoff, remove the block or restore your `.bashrc` backup.
+This starts Zsh only for interactive terminal sessions without a supplied command. The account's login shell stays Bash. Codex runs SSH setup commands through an interactive login shell, so checking `$-` alone is insufficient. `BASH_EXECUTION_STRING` preserves commands supplied with `-c`, and `-t` requires terminal input and output.
+
+To bypass the example handoff, run `KEEP_BASH=1 bash -i`. For an existing handoff, use the variable named in your `.bashrc`. To revert the handoff, remove the block or restore your `.bashrc` backup.
+
+## Verify command execution and Codex access
+
+On home-lab, run these checks as the account whose startup files you changed.
+
+```bash
+bash -n ~/.bashrc
+bash -lic 'printf "command survived\n"' </dev/null
+```
+
+The syntax check must pass, and the login-shell check must print `command survived`. Bash may also report that job control is unavailable without a terminal. If the expected text is missing, fix the handoff before continuing.
+
+Open a fresh terminal and run `print -r -- "$ZSH_VERSION"` to confirm that terminal sessions still start Zsh. In the Mac Codex app, reconnect to home-lab and open an existing remote chat. Confirm that the host connects and the chat loads.
+
+If Codex reports `SSH websocket open timed out`, check the handoff even when ordinary SSH works. Replacing Bash with Zsh before the supplied command runs can cause this timeout. A successful `codex remote-control start` or relay health check does not verify the Mac app's SSH connection.
 
 ## Verify a project flake
 
