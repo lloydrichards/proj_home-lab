@@ -24,6 +24,7 @@ Start with the shared [lab architecture](../../docs/explanations/architecture.md
 - [Secure remote access](how-to/secure-remote-access.md).
 - [Configure unattended boot](how-to/configure-unattended-boot.md).
 - [Install agent tools](how-to/install-agent-tools.md).
+- [Configure Zsh and project flakes](how-to/configure-project-shell.md).
 - [Back up agent sessions](how-to/back-up-agent-sessions.md).
 - [Reopen a restored conversation](how-to/restore-agent-conversation.md).
 - [Update the host and recover from failures](how-to/update-and-recover.md).
